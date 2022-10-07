@@ -1,0 +1,6 @@
+FinalProjectTester/Point.java
+ FinalProjectTester.Point
+FinalProjectTester/Main.java
+ FinalProjectTester.Main
+ FinalProjectTester.Main$1
+ FinalProjectTester.Main$2
