@@ -6,12 +6,13 @@ import javafx.scene.shape.Sphere;
 public class Point extends Sphere {
     
     double position;
+    double tempPosition;
     double vPrevious = 0;
     double velocity = 0;
     static final double DELTATIME = 0.01;
     double mass;
-    boolean isEdge;
-    ArrayList<Spring> connectors;
+    int edgeNumber = 0;
+    ArrayList<Spring> connectors = new ArrayList<>();
 
     //Constructors
     public Point() {
@@ -23,11 +24,15 @@ public class Point extends Sphere {
      * @param d
      * @param position Starting point of the node
      * @param mass Mass of node
+     * @param isEdge Boolean denoting when a point is on edge (velocity==0)
      */
-    public Point(double d, double position, double mass) {
+    public Point(double d, double position, double mass, boolean isEdge) {
         super(d);
         this.position = position;
         this.mass = mass;
+        if(isEdge) {
+            edgeNumber = 1;
+        }
     }
     
     /**
@@ -36,12 +41,24 @@ public class Point extends Sphere {
      * @param i Number of divisions
      * @param position Starting point of the node
      * @param mass Mass of node
+     * @param isEdge Boolean denoting when a point is on edge (velocity==0)
      */
-    public Point(double d, int i, double position, double mass) {
+    public Point(double d, int i, double position, double mass, boolean isEdge) {
         super(d, i);
         this.position = position;
         this.mass = mass;
+        if(isEdge) {
+            edgeNumber = 1;
+        }
         
+    }
+    
+    /**
+     * Positions the point in 1D
+     * @param x 
+     */
+    public void move(int x) {
+        this.translateXProperty().set(x);
     }
     
     //Getters and Setters
@@ -81,12 +98,20 @@ public class Point extends Sphere {
         this.mass = mass;
     }
     
-    public boolean isEdge() {
-        return isEdge;
+    public int getEdgeNumber() {
+        return edgeNumber;
     }
     
-    public void setIsEdge(boolean isEdge) {
-        this.isEdge = isEdge;
+    public void setEdgeNumber(int edgeNumber) {
+        this.edgeNumber = edgeNumber;
+    }
+    
+    public double getTempPosition() {
+        return tempPosition;
+    }
+    
+    public void setTempPosition(double tempPosition) {
+        this.tempPosition = tempPosition;
     }
 
     
@@ -101,7 +126,7 @@ public class Point extends Sphere {
      */
     
     public void updateCurrentVelocity(ArrayList<Point> array, int a, int c){
-        if(isEdge) {
+        if(edgeNumber == 1) {
             velocity = 0;
         }
         else{

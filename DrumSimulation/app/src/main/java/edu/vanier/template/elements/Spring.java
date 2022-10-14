@@ -5,7 +5,7 @@ public class Spring {
     /**
      * Pair of points that the spring connects. When doing recursion, go from couple[0] to couple[1]. -Ryan
      */
-    Point[] couple;
+    Point[] couple = new Point[2];
     /**
      * Spring constant of spring
      */
@@ -21,6 +21,10 @@ public class Spring {
         pointB.connectors.add(this);
     }
     
+    //Compares if another spring is the same
+    public boolean isCopy(Spring otherSpring) {
+        return otherSpring.getCouple() == this.couple;
+    }
     
     //Getters and Setters
 

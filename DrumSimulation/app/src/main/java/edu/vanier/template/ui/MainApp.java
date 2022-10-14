@@ -41,7 +41,7 @@ public class MainApp extends Application {
         
         for (int i = 0; i < totalPoints; i++){
             
-            array.add(new Point(50, 10, 2.5, 5));
+            //array.add(new Point(50, 10, 2.5, 5));
             
         }
         

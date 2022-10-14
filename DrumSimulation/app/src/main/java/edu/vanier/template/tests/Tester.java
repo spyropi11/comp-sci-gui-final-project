@@ -1,11 +1,12 @@
 package edu.vanier.template.tests;
 
-import edu.vanier.template.elements.Point;
-import java.util.ArrayList;
+import edu.vanier.template.elements.*;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -24,9 +25,15 @@ import javafx.stage.WindowEvent;
  */
 public class Tester extends Application {
 
-    public int totalPoints = 5;
-    public double time = 0;
-
+    private final Physics physics = new Physics();
+    
+    /**
+    * When defining the spring constant, we can make it a multiple of this constant.
+    * For example, if the animation only looks good when k is in the 1000s, then we can make this constant = 1000.
+    * Or, if the animation only looks good when k is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
+    */
+    private final double NATURAL_SPRING_CONSTANT = 1;
+    
     /**
      * @param stage
      * 
@@ -37,26 +44,32 @@ public class Tester extends Application {
         double WIDTH = 700;
         double HEIGHT = 700;
         
-        ArrayList<Point> array = new ArrayList<>();
+        Point p1 = new Point(50,10,2.5,5,true);
+        Point p2 = new Point(50,10,2.5,5,false);
+        Point p3 = new Point(50,10,2.5,5,false);
+        Point p4 = new Point(50,10,2.5,5,false);
+        Point p5 = new Point(50,10,2.5,5,true);
         
-        for (int i = 0; i < totalPoints; i++){
-            
-            array.add(new Point(50, 10, 2.5, 5));
-            
-        }
+        Spring s12 = new Spring(p1,p2,NATURAL_SPRING_CONSTANT);
+        Spring s23 = new Spring(p2,p3,NATURAL_SPRING_CONSTANT);
+        Spring s34 = new Spring(p3,p4,NATURAL_SPRING_CONSTANT);
+        Spring s45 = new Spring(p4,p5,NATURAL_SPRING_CONSTANT);
         
-        array.get(1).setPosition(100);
+        physics.getDrummer().addSpring(s12, s23, s34, s45);
+        
+        p1.move(50);
+        p2.move(150);
+        p3.move(250);
+        p4.move(350);
+        p5.move(450);
         
         Group group = new Group();
         
-        for (int i = 0; i < totalPoints; i++){
-            
-           group.getChildren().add(array.get(i));
-           array.get(i).translateXProperty().set(i*100);
-            
-        }
-        
-        
+        group.getChildren().add(p1);
+        group.getChildren().add(p2);
+        group.getChildren().add(p3);
+        group.getChildren().add(p4);
+        group.getChildren().add(p5);
         
         Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(group, WIDTH,HEIGHT);
@@ -99,9 +112,14 @@ public class Tester extends Application {
                     break;
             }
             
-            
         });
         
+        
+        p1.setTranslateY(-100);
+        p2.setTranslateY(0);
+        p3.setTranslateY(-100);
+        p4.setTranslateY(-100);
+        p5.setTranslateY(-100);
         
         
         stage.setTitle("Drum Sim 1D");
@@ -109,48 +127,47 @@ public class Tester extends Application {
         stage.sizeToScene();
         stage.show();
         
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(
-        new TimerTask() { 
-            
-            
+        
+        AnimationTimer timer = new AnimationTimer() {
+            int delay = 9;
+            int delayCounter = 0;
             @Override
-            public void run() {
-                
-                for (int i = 1; i < totalPoints -1; i++){
-                    
-                    
-                    
-                    //time = time + 5;
-                    
-                    //if (time%100 == 0){
-                        
-                    array.get(i).translateYProperty().set(array.get(i).getPosition());
-                    System.out.println(array.get(1).getPosition());
-                    
-                    array.get(i).updateCurrentVelocity(array, i-1, i+1);
-                    array.get(i).updateNextPosition();
-                        
-                    
-                    
-                    //}
-                    
-                    
-                    
-                    
-                    
-                    
+            public void handle(long now) {
+                if(delayCounter == delay) {
+                    delayCounter = 0;
                 }
-                
-            }
-            
-            
+                else{
+                    delayCounter++;
+                    
+                        p1.translateYProperty().set(p1.getPosition());
 
-        }, 0,10);
+                    
+                        /*
+                    for (int i = 1; i < totalPoints -1; i++){
+
+
+                        
+                        //time = time + 5;
+
+                        //if (time%100 == 0){
+
+                        array.get(i).translateYProperty().set(array.get(i).getPosition());
+                        System.out.println(array.get(1).getPosition());
+
+                        array.get(i).updateCurrentVelocity(array, i-1, i+1);
+                        array.get(i).updateNextPosition();
+    
+
+                    }*/
+                }
+            }
+        };
         
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
-            timer.cancel();
+            timer.stop();
+            Platform.exit();
         });
+        
     }
     
     public static void main(String[] args) {
@@ -158,7 +175,5 @@ public class Tester extends Application {
         launch(args);
         
     }
-    
-    
     
 }
