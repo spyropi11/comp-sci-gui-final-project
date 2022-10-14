@@ -6,12 +6,11 @@ import javafx.scene.shape.Sphere;
 public class Point extends Sphere {
     
     double position;
-    double tempPosition;
     double vPrevious = 0;
     double velocity = 0;
-    static final double DELTATIME = 0.01;
+    static final double DELTATIME = 0.1;
     double mass;
-    int edgeNumber = 0;
+    boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
 
     //Constructors
@@ -30,9 +29,7 @@ public class Point extends Sphere {
         super(d);
         this.position = position;
         this.mass = mass;
-        if(isEdge) {
-            edgeNumber = 1;
-        }
+        this.onEdge = isEdge;
     }
     
     /**
@@ -47,17 +44,15 @@ public class Point extends Sphere {
         super(d, i);
         this.position = position;
         this.mass = mass;
-        if(isEdge) {
-            edgeNumber = 1;
-        }
-        
+        this.onEdge = isEdge;
+        this.setTranslateY(position);
     }
     
     /**
      * Positions the point in 1D
      * @param x 
      */
-    public void move(int x) {
+    public void setup(int x) {
         this.translateXProperty().set(x);
     }
     
@@ -98,58 +93,50 @@ public class Point extends Sphere {
         this.mass = mass;
     }
     
-    public int getEdgeNumber() {
-        return edgeNumber;
+    public boolean getOnEdge() {
+        return onEdge;
     }
     
-    public void setEdgeNumber(int edgeNumber) {
-        this.edgeNumber = edgeNumber;
+    public void setOnEdge(boolean isEdge) {
+        this.onEdge = isEdge;
     }
-    
-    public double getTempPosition() {
-        return tempPosition;
-    }
-    
-    public void setTempPosition(double tempPosition) {
-        this.tempPosition = tempPosition;
-    }
-
     
     
     //I think that the calculations should be done in a separate class now that we're using Springs. -Ryan
     
     /**
-     * 
-     * @param array
-     * @param a The left neighbor of point b
-     * @param c The right neighbor of point b
+     * Updates the velocity
      */
     
-    public void updateCurrentVelocity(ArrayList<Point> array, int a, int c){
-        if(edgeNumber == 1) {
-            velocity = 0;
-        }
-        else{
-            /*
-            this.velocity = (((this.springConstant * DELTATIME) / this.mass) * 
-                    (array.get(a).getPosition() + array.get(c).getPosition() - (2 * this.position)) + vPrevious);
-            */
+    public void updateVelocity() {
+        if(!onEdge) {
+            //set previous velocity to velocity.
+            vPrevious = velocity;
+            //force.
+            double force = 0;
+            //individual force from each connected point is added on to get net force.
+            for(Spring spring : connectors) {
+                
+                Point otherPoint = spring.otherPoint(this);
+                force += spring.springConstant*(otherPoint.position - position);
+                
+            }
+            //divide by the mass (F=ma --> a=F/m).
+            double acc = force / mass;
+            //get new velocity.
+            velocity = vPrevious + DELTATIME*acc;
         }
     }
     
-    
-    public void updateNextPosition(){
-
-        /*
-
-        this.nextPosition = DELTATIME* (this.velocity) + position;
-
-        this.position = this.nextPosition;
-        this.vPrevious = this.velocity;
-        */
-
-        
+    public void updatePosition() {
+        if(!onEdge) {
+            position += DELTATIME*velocity;
+            move();
+        }
     }
     
+    public void move() {
+        this.setTranslateY(position);
+    }
     
 }

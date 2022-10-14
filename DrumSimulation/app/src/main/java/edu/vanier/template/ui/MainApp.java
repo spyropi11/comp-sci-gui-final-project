@@ -33,7 +33,7 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        
+        /*
         double WIDTH = 700;
         double HEIGHT = 700;
         
@@ -150,7 +150,7 @@ public class MainApp extends Application {
         
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
             timer.cancel();
-        });
+        });*/
     }
     
     public static void main(String[] args) {

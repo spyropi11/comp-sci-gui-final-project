@@ -8,7 +8,7 @@ import java.util.Set;
 public class DrumCreator {
     
     Set<Spring> drum = new HashSet<>();
-    //Set<Point> allPoints = new HashSet<>();
+    Set<Point> mesh = new HashSet<>();
     
     public DrumCreator() {
         
@@ -19,12 +19,15 @@ public class DrumCreator {
      * @param a Point a
      * @param b Point b
      * @param k Spring constant
-     * @return true if successful and false if there already exists a spring with Point a and Point b.
+     * @return true if successful and false if there already exists a spring with Point a and Point b, or a both points are the same.
      */
     public boolean addSpring(Point a, Point b, double k) {
+        if(a==b) {
+            return false;
+        }
         Spring toBeAdded = new Spring(a,b,k);
         for(Spring otherSpring : drum) {
-            if(toBeAdded.isCopy(otherSpring)) {
+            if(toBeAdded.isCopyOf(otherSpring)) {
                 return false;
             }
         }
@@ -37,11 +40,11 @@ public class DrumCreator {
      * @param springs Springs to be added
      * @return true if successful and false if any one of the spring parameters is a copy of a spring in drum.
      */
-    public boolean addSpring(Spring... springs) {
+    public boolean addSprings(Spring... springs) {
         Collection<Spring> sps = Arrays.asList(springs);
         for(Spring toBeAdded : sps) {
             for(Spring otherSpring : drum) {
-                if(toBeAdded.isCopy(otherSpring)) {
+                if(toBeAdded.isCopyOf(otherSpring)) {
                     return false;
                 }
             }
@@ -70,7 +73,7 @@ public class DrumCreator {
      * @param springs Springs to be removed
      * @return true if successful and false if there exists no such spring
      */
-    public boolean removeSpring(Spring... springs) {
+    public boolean removeSprings(Spring... springs) {
         try{
             drum.removeAll(Arrays.asList(springs));
             return true;
@@ -78,6 +81,28 @@ public class DrumCreator {
         catch(NullPointerException e) {
             return false;
         }
+    }
+    
+    public void addToMesh(Point... points) {
+        mesh.addAll(Arrays.asList(points));
+    }
+    
+    //Getters and Setters
+    
+    public Set<Spring> getDrum() {
+        return drum;
+    }
+    
+    public void setDrum(Set<Spring> drum) {
+        this.drum = drum;
+    }
+    
+    public Set<Point> getMesh() {
+        return mesh;
+    }
+    
+    public void setMesh(Set<Point> mesh) {
+        this.mesh = mesh;
     }
     
 }

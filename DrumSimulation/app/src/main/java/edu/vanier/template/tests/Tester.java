@@ -1,9 +1,6 @@
 package edu.vanier.template.tests;
 
 import edu.vanier.template.elements.*;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -44,24 +41,31 @@ public class Tester extends Application {
         double WIDTH = 700;
         double HEIGHT = 700;
         
-        Point p1 = new Point(50,10,2.5,5,true);
-        Point p2 = new Point(50,10,2.5,5,false);
-        Point p3 = new Point(50,10,2.5,5,false);
-        Point p4 = new Point(50,10,2.5,5,false);
-        Point p5 = new Point(50,10,2.5,5,true);
+        //Create points
+        Point p1 = new Point(50,10,0,5,true);
+        Point p2 = new Point(50,10,100,5,false);
+        Point p3 = new Point(50,10,0,5,false);
+        Point p4 = new Point(50,10,0,5,false);
+        Point p5 = new Point(50,10,0,5,true);
         
-        Spring s12 = new Spring(p1,p2,NATURAL_SPRING_CONSTANT);
-        Spring s23 = new Spring(p2,p3,NATURAL_SPRING_CONSTANT);
-        Spring s34 = new Spring(p3,p4,NATURAL_SPRING_CONSTANT);
-        Spring s45 = new Spring(p4,p5,NATURAL_SPRING_CONSTANT);
+        //Add points to mesh
+        physics.getDrummer().addToMesh(p1,p2,p3,p4,p5);
         
-        physics.getDrummer().addSpring(s12, s23, s34, s45);
+        //Create springs
+        Spring s12 = new Spring(p1,p2,2*NATURAL_SPRING_CONSTANT);
+        Spring s23 = new Spring(p2,p3,2*NATURAL_SPRING_CONSTANT);
+        Spring s34 = new Spring(p3,p4,2*NATURAL_SPRING_CONSTANT);
+        Spring s45 = new Spring(p4,p5,2*NATURAL_SPRING_CONSTANT);
         
-        p1.move(50);
-        p2.move(150);
-        p3.move(250);
-        p4.move(350);
-        p5.move(450);
+        //Add springs to drum
+        physics.getDrummer().addSprings(s12, s23, s34, s45);
+        
+        //Set x coordinates
+        p1.setup(50);
+        p2.setup(150);
+        p3.setup(250);
+        p4.setup(350);
+        p5.setup(450);
         
         Group group = new Group();
         
@@ -114,57 +118,15 @@ public class Tester extends Application {
             
         });
         
-        
-        p1.setTranslateY(-100);
-        p2.setTranslateY(0);
-        p3.setTranslateY(-100);
-        p4.setTranslateY(-100);
-        p5.setTranslateY(-100);
-        
-        
         stage.setTitle("Drum Sim 1D");
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
         
-        
-        AnimationTimer timer = new AnimationTimer() {
-            int delay = 9;
-            int delayCounter = 0;
-            @Override
-            public void handle(long now) {
-                if(delayCounter == delay) {
-                    delayCounter = 0;
-                }
-                else{
-                    delayCounter++;
-                    
-                        p1.translateYProperty().set(p1.getPosition());
-
-                    
-                        /*
-                    for (int i = 1; i < totalPoints -1; i++){
-
-
-                        
-                        //time = time + 5;
-
-                        //if (time%100 == 0){
-
-                        array.get(i).translateYProperty().set(array.get(i).getPosition());
-                        System.out.println(array.get(1).getPosition());
-
-                        array.get(i).updateCurrentVelocity(array, i-1, i+1);
-                        array.get(i).updateNextPosition();
-    
-
-                    }*/
-                }
-            }
-        };
+        physics.startTimer();
         
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
-            timer.stop();
+            physics.stopTimer();
             Platform.exit();
         });
         

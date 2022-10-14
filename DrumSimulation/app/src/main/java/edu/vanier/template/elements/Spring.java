@@ -3,7 +3,7 @@ package edu.vanier.template.elements;
 public class Spring {
     
     /**
-     * Pair of points that the spring connects. When doing recursion, go from couple[0] to couple[1]. -Ryan
+     * Pair of points that the spring connects.
      */
     Point[] couple = new Point[2];
     /**
@@ -22,8 +22,16 @@ public class Spring {
     }
     
     //Compares if another spring is the same
-    public boolean isCopy(Spring otherSpring) {
-        return otherSpring.getCouple() == this.couple;
+    public boolean isCopyOf(Spring otherSpring) {
+        return (couple[0]==otherSpring.couple[0] && couple[1]==otherSpring.couple[1]) || (couple[0]==otherSpring.couple[1] && couple[1]==otherSpring.couple[0]);
+    }
+    
+    //Gets other point
+    public Point otherPoint(Point point) {
+        if(couple[0] == point) {
+            return couple[1];
+        }
+        return couple[0];
     }
     
     //Getters and Setters
