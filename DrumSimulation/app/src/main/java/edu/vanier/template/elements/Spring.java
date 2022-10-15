@@ -21,13 +21,15 @@ public class Spring {
         //Specifying the spring between both points mentioned above
         this.springConstant = springConstant;
         
-        
+        //Adding this spring to the array of connectors in both Point objects
         pointA.connectors.add(this);
         pointB.connectors.add(this);
     }
     
     //Compares if another spring is the same
     public boolean isCopyOf(Spring otherSpring) {
+        
+        //If one of these statements is true the method will return true.
         return (couple[0]==otherSpring.couple[0] && couple[1]==otherSpring.couple[1]) || (couple[0]==otherSpring.couple[1] && couple[1]==otherSpring.couple[0]);
     }
     

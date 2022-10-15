@@ -20,7 +20,7 @@ public class Point extends Sphere {
 
     /**
      * 
-     * @param d
+     * @param d Radius
      * @param position Starting point of the node
      * @param mass Mass of node
      * @param isEdge Boolean denoting when a point is on edge (velocity==0)
@@ -35,7 +35,7 @@ public class Point extends Sphere {
     /**
      * 
      * @param d Radius
-     * @param i Number of divisions
+     * @param i Number of divisions (Resolution of sphere aka how choppy it looks)
      * @param position Starting point of the node
      * @param mass Mass of node
      * @param isEdge Boolean denoting when a point is on edge (velocity==0)
@@ -109,6 +109,7 @@ public class Point extends Sphere {
      */
     
     public void updateVelocity() {
+        //If onEdge boolean is set to false
         if(!onEdge) {
             //set previous velocity to velocity.
             vPrevious = velocity;
