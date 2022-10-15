@@ -47,13 +47,21 @@ public class Tester extends Application {
         double WIDTH = 700;
         double HEIGHT = 700;
         
+        double amplitude = 15;
+        int iShift = 200/2;
+        double spread = 4; 
+        
         //Create points
+        
+        //!remember to set the size to a variable
         Point[] points = new Point[200];
         for(int i = 0; i < points.length; i++) {
             if(i==0 || i==(points.length-1)) {
                 //This puts two points on the edges and sets their onEdge value to true
                 points[i] = new Point(2, 8, 0, NATURAL_MASS, true);
             }
+            
+            /*
             // plucking points
             else if(i==98 || i==101) {
                 points[i] = new Point(2, 8, 20, NATURAL_MASS, false);
@@ -61,12 +69,16 @@ public class Tester extends Application {
             
             //plucking points
             else if(i==99 || i==100) {
-                points[i] = new Point(2, 8, 20, NATURAL_MASS, false);
+                points[i] = new Point(2, 8, 40, NATURAL_MASS, false);
             }
+            */
+            
+            //Gausian initial condition (bell curve type shape)
             else{
-                points[i] = new Point(2, 8, 0, NATURAL_MASS, false);
+                
+                points[i] = new Point(2,8,(amplitude*Math.exp(((-1)*Math.pow((i - iShift), 2))/spread)),NATURAL_MASS, false);
             }
-            points[i].setMass(NATURAL_MASS*(1+i/50));
+            //points[i].setMass(NATURAL_MASS*(1+i/50));
         }
         
         //Add points to mesh
