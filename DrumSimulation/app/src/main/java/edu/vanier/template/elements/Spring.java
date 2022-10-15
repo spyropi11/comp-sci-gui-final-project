@@ -14,9 +14,14 @@ public class Spring {
 
     //Constructor
     public Spring(Point pointA, Point pointB, double springConstant) {
+        //Adding the first point that the spring is connected to
         couple[0] = pointA;
+        //Adding the second point
         couple[1] = pointB;
+        //Specifying the spring between both points mentioned above
         this.springConstant = springConstant;
+        
+        
         pointA.connectors.add(this);
         pointB.connectors.add(this);
     }

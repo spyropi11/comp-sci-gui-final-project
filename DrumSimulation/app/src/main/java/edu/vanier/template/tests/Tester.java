@@ -33,7 +33,7 @@ public class Tester extends Application {
     /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
-    * Or, if the animation only looks good when m is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
+    * Or, if the animation only looks good when m is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
     */
     private final double NATURAL_MASS = 1;
     
@@ -48,7 +48,7 @@ public class Tester extends Application {
         double HEIGHT = 700;
         
         //Create points
-        Point[] points = new Point[200];
+        Point[] points = new Point[1000];
         for(int i = 0; i < points.length; i++) {
             if(i==0 || i==(points.length-1)) {
                 points[i] = new Point(2, 8, 0, NATURAL_MASS, true);
