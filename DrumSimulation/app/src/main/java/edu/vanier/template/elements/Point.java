@@ -8,7 +8,7 @@ public class Point extends Sphere {
     double position;
     double vPrevious = 0;
     double velocity = 0;
-    static final double DELTATIME = 0.1;
+    static final double DELTATIME = 0.5;
     double mass;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();

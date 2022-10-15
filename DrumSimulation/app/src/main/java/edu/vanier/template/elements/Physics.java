@@ -6,9 +6,9 @@ public class Physics {
     
     DrumCreator drummer;
     
-    private AnimationTimer timer = new AnimationTimer() {
-        int delay = 1;
-        int delayCounter = 0;
+    private final AnimationTimer timer = new AnimationTimer() {
+        int delay = 0;
+        int delayCounter = -100;
         @Override
         public void handle(long now) {
             if(delayCounter == delay) {

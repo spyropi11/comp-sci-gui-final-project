@@ -30,6 +30,12 @@ public class Tester extends Application {
     * Or, if the animation only looks good when k is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
     */
     private final double NATURAL_SPRING_CONSTANT = 1;
+    /**
+    * When defining the mass, we can make it a multiple of this constant.
+    * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
+    * Or, if the animation only looks good when m is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
+    */
+    private final double NATURAL_MASS = 1;
     
     /**
      * @param stage
@@ -42,38 +48,46 @@ public class Tester extends Application {
         double HEIGHT = 700;
         
         //Create points
-        Point p1 = new Point(50,10,0,5,true);
-        Point p2 = new Point(50,10,100,5,false);
-        Point p3 = new Point(50,10,0,5,false);
-        Point p4 = new Point(50,10,0,5,false);
-        Point p5 = new Point(50,10,0,5,true);
+        Point[] points = new Point[200];
+        for(int i = 0; i < points.length; i++) {
+            if(i==0 || i==(points.length-1)) {
+                points[i] = new Point(2, 8, 0, NATURAL_MASS, true);
+            }
+            else if(i==98 || i==101) {
+                points[i] = new Point(2, 8, 20, NATURAL_MASS, false);
+            }
+            else if(i==99 || i==100) {
+                points[i] = new Point(2, 8, 40, NATURAL_MASS, false);
+            }
+            else{
+                points[i] = new Point(2, 8, 0, NATURAL_MASS, false);
+            }
+            points[i].setMass(NATURAL_MASS*(1+i/50));
+        }
         
         //Add points to mesh
-        physics.getDrummer().addToMesh(p1,p2,p3,p4,p5);
-        
-        //Create springs
-        Spring s12 = new Spring(p1,p2,2*NATURAL_SPRING_CONSTANT);
-        Spring s23 = new Spring(p2,p3,2*NATURAL_SPRING_CONSTANT);
-        Spring s34 = new Spring(p3,p4,2*NATURAL_SPRING_CONSTANT);
-        Spring s45 = new Spring(p4,p5,2*NATURAL_SPRING_CONSTANT);
-        
-        //Add springs to drum
-        physics.getDrummer().addSprings(s12, s23, s34, s45);
+        physics.getDrummer().addToMesh(points);
         
         //Set x coordinates
-        p1.setup(50);
-        p2.setup(150);
-        p3.setup(250);
-        p4.setup(350);
-        p5.setup(450);
+        for(int i = 0; i < points.length; i++) {
+            points[i].setup(i*2 + 25);
+        }
+        
+        //Create springs
+        Spring[] springs = new Spring[points.length];
+        for(int i = 1; i < points.length; i++) {
+            springs[i] = new Spring(points[i], points[i-1], 2*NATURAL_SPRING_CONSTANT);
+        }
+        
+        //Add springs to drum
+        physics.getDrummer().addSprings(springs);
+        
         
         Group group = new Group();
         
-        group.getChildren().add(p1);
-        group.getChildren().add(p2);
-        group.getChildren().add(p3);
-        group.getChildren().add(p4);
-        group.getChildren().add(p5);
+        for(Point point : points) {
+            group.getChildren().add(point);
+        }
         
         Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(group, WIDTH,HEIGHT);
