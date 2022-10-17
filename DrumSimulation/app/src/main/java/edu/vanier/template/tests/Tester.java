@@ -47,9 +47,9 @@ public class Tester extends Application {
         double WIDTH = 700;
         double HEIGHT = 700;
         
-        double amplitude = 15;
+        double amplitude = 100;
         int iShift = 200/2;
-        double spread = 4; 
+        double spread = 200; 
         
         //Create points
         
