@@ -1,16 +1,19 @@
 package edu.vanier.template.ui;
 
 import edu.vanier.template.elements.Point;
+import edu.vanier.template.controller.MainAppController;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -33,6 +36,34 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+       
+        // Load FXML file on Netbeans
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainWindowDrumSim.fxml"));
+
+        //Instantiate the controller   (Controller is where we do our event handling)
+        MainAppController mainController = new MainAppController();
+
+        //Set the controller to the loader
+        loader.setController(mainController);
+
+        //load the FXML
+        Pane root = loader.load();
+
+        
+        Scene scene = new Scene(root, 500, 500);
+        //--> Step 3) Load the scene into stage (window)
+        stage.setScene(scene);
+
+        stage.setTitle("Drum Simulation.");
+        // Resize the stage so the size matches the scene
+        stage.sizeToScene();
+        //--> Step 4) Show the window.
+        stage.show();
+        
+        
+        
+        
+        
         /*
         double WIDTH = 700;
         double HEIGHT = 700;

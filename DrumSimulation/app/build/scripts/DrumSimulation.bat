@@ -67,11 +67,11 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\DrumSimulation.jar;%APP_HOME%\lib\javafx-fxml-18.0.2-win.jar;%APP_HOME%\lib\javafx-controls-18.0.2-win.jar;%APP_HOME%\lib\javafx-controls-18.0.2.jar;%APP_HOME%\lib\javafx-media-18.0.2-win.jar;%APP_HOME%\lib\javafx-graphics-18.0.2-win.jar;%APP_HOME%\lib\javafx-graphics-18.0.2.jar;%APP_HOME%\lib\javafx-base-18.0.2-win.jar;%APP_HOME%\lib\javafx-base-18.0.2.jar
+set CLASSPATH=%APP_HOME%\lib\DrumSimulation.jar;%APP_HOME%\lib\javafx-fxml-18.0.2-mac.jar;%APP_HOME%\lib\javafx-controls-18.0.2-mac.jar;%APP_HOME%\lib\javafx-controls-18.0.2.jar;%APP_HOME%\lib\javafx-media-18.0.2-mac.jar;%APP_HOME%\lib\javafx-graphics-18.0.2-mac.jar;%APP_HOME%\lib\javafx-graphics-18.0.2.jar;%APP_HOME%\lib\javafx-base-18.0.2-mac.jar;%APP_HOME%\lib\javafx-base-18.0.2.jar
 
 
 @rem Execute DrumSimulation
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %DRUM_SIMULATION_OPTS%  -classpath "%CLASSPATH%" edu.vanier.template.tests.Tester %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %DRUM_SIMULATION_OPTS%  -classpath "%CLASSPATH%" edu.vanier.template.ui.MainApp %*
 
 :end
 @rem End local scope for the variables with windows NT shell
