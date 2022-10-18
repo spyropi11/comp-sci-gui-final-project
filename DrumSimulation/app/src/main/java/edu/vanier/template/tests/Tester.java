@@ -84,11 +84,7 @@ public class Tester extends Application {
         //Add points to mesh
         physics.getDrummer().addToMesh(points);
         
-        //Set x coordinates
-        for(int i = 0; i < points.length; i++) {
-            //sets up points every 2 units (not sure if its pixels or not)
-            points[i].setup(i*2 + 25);
-        }
+        //Set x and y coordinates
         
         //Create springs
         Spring[] springs = new Spring[points.length];

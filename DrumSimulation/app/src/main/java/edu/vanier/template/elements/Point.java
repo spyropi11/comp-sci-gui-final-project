@@ -1,6 +1,7 @@
 package edu.vanier.template.elements;
 
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Sphere;
 
 public class Point extends Sphere {
@@ -12,6 +13,12 @@ public class Point extends Sphere {
     double mass;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
+    double x;
+    double y;
+    
+    Color colour;
+    
+    static final double COLOUR_NORMALIZATION = 1;
 
     //Constructors
     public Point() {
@@ -51,9 +58,31 @@ public class Point extends Sphere {
     /**
      * Positions the point in 1D
      * @param x 
+     * @param y
      */
-    public void setup(int x) {
-        this.translateXProperty().set(x);
+    public void setup(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void projection(double[] p, double[] alpha, double[] beta) {
+        double v0 = x-p[0];
+        double v1 = y-p[1];
+        double v2 = position-p[2];
+        
+        double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
+        double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
+        
+        this.setTranslateX(sumX/norm(alpha));
+        this.setTranslateY(sumY/norm(beta));
+    }
+    
+    public static double norm(double[] vector) {
+        double sum = 0;
+        for(double v : vector) {
+            sum += Math.pow(v, 2);
+        }
+        return Math.sqrt(sum);
     }
     
     //Getters and Setters
@@ -138,6 +167,19 @@ public class Point extends Sphere {
     
     public void move() {
         this.setTranslateY(position);
+    }
+    
+    public void updateColour() {
+        int temperature = (int)(255*Math.tanh(COLOUR_NORMALIZATION*position));
+        
+        if(temperature > 0) {
+            colour = Color.rgb(temperature, 0, 0);
+        }
+        else{
+            colour = Color.rgb(0, 0, temperature);
+        }
+        
+        //set sphere colour to colour.
     }
     
 }
