@@ -53,94 +53,72 @@ public class Tester extends Application {
         
         //Create points
         
-        //!remember to set the size to a variable
-        Point[] points = new Point[200];
-        for(int i = 0; i < points.length; i++) {
-            if(i==0 || i==(points.length-1)) {
-                //This puts two points on the edges and sets their onEdge value to true
-                points[i] = new Point(2, 8, 0, NATURAL_MASS, true);
-            }
-            
-            /*
-            // plucking points
-            else if(i==98 || i==101) {
-                points[i] = new Point(2, 8, 20, NATURAL_MASS, false);
-            }
-            
-            //plucking points
-            else if(i==99 || i==100) {
-                points[i] = new Point(2, 8, 40, NATURAL_MASS, false);
-            }
-            */
-            
-            //Gausian initial condition (bell curve type shape)
-            else{
-                
-                points[i] = new Point(2,8,(amplitude*Math.exp(((-1)*Math.pow((i - iShift), 2))/spread)),NATURAL_MASS, false);
-            }
-            //points[i].setMass(NATURAL_MASS*(1+i/50));
-        }
-        
         //Add points to mesh
-        physics.getDrummer().addToMesh(points);
         
         //Set x and y coordinates
         
         //Create springs
-        Spring[] springs = new Spring[points.length];
-        for(int i = 1; i < points.length; i++) {
-            springs[i] = new Spring(points[i], points[i-1], 2*NATURAL_SPRING_CONSTANT);
-        }
         
         //Add springs to drum
-        physics.getDrummer().addSprings(springs);
         
         
         Group group = new Group();
         
-        for(Point point : points) {
-            group.getChildren().add(point);
-        }
-        
-        Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(group, WIDTH,HEIGHT);
 
-        camera.translateZProperty().set(-1500);
-        camera.translateXProperty().set(250);
-        
-        camera.setNearClip(1);
-        camera.setFarClip(10000);
-        
-        scene.setCamera(camera);
         scene.setFill(Color.AZURE);
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             
             switch(event.getCode()){
                 
-                case W: 
-                    camera.translateZProperty().set(camera.getTranslateZ() + 100);
+                case W:
+                    physics.translate(0, 10);
                     break;
                     
                 case S:
-                    camera.translateZProperty().set(camera.getTranslateZ() - 100);
+                    physics.translate(0, -10);
                     break;
                     
                 case D:
-                    camera.translateXProperty().set(camera.getTranslateX() + 25);
+                    physics.translate(10, 0);
                     break;
                     
                 case A:
-                    camera.translateXProperty().set(camera.getTranslateX() - 25);
+                    physics.translate(-10, 0);
                     break;
                     
-                case R:
-                    camera.translateYProperty().set(camera.getTranslateY() - 25);
+                case J:
+                    physics.zoom(5, 5);
                     break;
                     
-                case F:
-                    camera.translateYProperty().set(camera.getTranslateY() + 25);
+                case K:
+                    physics.zoom(0.2, 0.2);
                     break;
+                    
+                case M:
+                    physics.rotate(-0.1, Physics.Axis.N);
+                    break;
+                    
+                case N:
+                    physics.rotate(0.1, Physics.Axis.N);
+                    break;
+                    
+                case B:
+                    physics.rotate(0.1, Physics.Axis.BETA);
+                    break;
+                    
+                case V:
+                    physics.rotate(-0.1, Physics.Axis.BETA);
+                    break;
+                    
+                case C:
+                    physics.rotate(0.1, Physics.Axis.ALPHA);
+                    break;
+                    
+                case X:
+                    physics.rotate(-0.1, Physics.Axis.ALPHA);
+                    
             }
             
         });

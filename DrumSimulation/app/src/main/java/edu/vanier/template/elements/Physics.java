@@ -7,10 +7,10 @@ public class Physics {
     
     DrumCreator drummer;
     
-    private double[] p = new double[3];
-    private double[] alpha = new double[3];
-    private double[] beta = new double[3];
-    private double[] n = new double[3];
+    private double[] p = {0, 0, 0};
+    private double[] alpha = {1, 0, 0};
+    private double[] beta = {0, 1, 0};
+    private double[] n = {0, 0, 1};
     
     private final AnimationTimer timer = new AnimationTimer() {
         int delay = 0;
@@ -69,7 +69,7 @@ public class Physics {
     }
     
     //Axis of rotation
-    public enum Axis {
+    public static enum Axis {
         ALPHA,
         BETA,
         N
