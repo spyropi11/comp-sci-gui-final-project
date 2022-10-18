@@ -24,19 +24,17 @@ public class Point extends Sphere {
     public Point() {
         super();
     }
-
+    
     /**
      * 
      * @param d Radius
      * @param position Starting point of the node
      * @param mass Mass of node
-     * @param isEdge Boolean denoting when a point is on edge (velocity==0)
      */
-    public Point(double d, double position, double mass, boolean isEdge) {
+    public Point(double d, double position, double mass) {
         super(d);
         this.position = position;
         this.mass = mass;
-        this.onEdge = isEdge;
     }
     
     /**
@@ -45,14 +43,11 @@ public class Point extends Sphere {
      * @param i Number of divisions (Resolution of sphere aka how choppy it looks)
      * @param position Starting point of the node
      * @param mass Mass of node
-     * @param isEdge Boolean denoting when a point is on edge (velocity==0)
      */
-    public Point(double d, int i, double position, double mass, boolean isEdge) {
+    public Point(double d, int i, double position, double mass) {
         super(d, i);
         this.position = position;
         this.mass = mass;
-        this.onEdge = isEdge;
-        this.setTranslateY(position);
     }
     
     /**
@@ -65,7 +60,7 @@ public class Point extends Sphere {
         this.y = y;
     }
     
-    public void projection(double[] p, double[] alpha, double[] beta) {
+    public void projection(double[] p, double[] alpha, double[] beta, double cameraChangeX, double cameraChangeY) {
         double v0 = x-p[0];
         double v1 = y-p[1];
         double v2 = position-p[2];
@@ -73,8 +68,8 @@ public class Point extends Sphere {
         double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
         double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
         
-        this.setTranslateX(sumX/norm(alpha));
-        this.setTranslateY(sumY/norm(beta));
+        this.setTranslateX(sumX + cameraChangeX);
+        this.setTranslateY(sumY + cameraChangeY);
     }
     
     public static double norm(double[] vector) {
@@ -130,6 +125,14 @@ public class Point extends Sphere {
         this.onEdge = isEdge;
     }
     
+    public double getX() {
+        return x;
+    }
+    
+    public double getY() {
+        return y;
+    }
+    
     
     //I think that the calculations should be done in a separate class now that we're using Springs. -Ryan
     
@@ -176,10 +179,14 @@ public class Point extends Sphere {
             colour = Color.rgb(temperature, 0, 0);
         }
         else{
-            colour = Color.rgb(0, 0, temperature);
+            colour = Color.rgb(0, 0, -temperature);
         }
         
         //set sphere colour to colour.
+    }
+    
+    public double normal(double[] p, double[] n) {
+        return (x-p[0])*n[0] + (y-p[1])*n[1] + (position-p[2])*n[2];
     }
     
 }

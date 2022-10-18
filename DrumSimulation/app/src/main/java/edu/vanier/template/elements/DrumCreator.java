@@ -1,5 +1,6 @@
 package edu.vanier.template.elements;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,10 +9,19 @@ import java.util.Set;
 public class DrumCreator {
     
     Set<Spring> drum = new HashSet<>();
-    Set<Point> mesh = new HashSet<>();
+    ArrayList<Point> mesh = new ArrayList<>();
     
     public DrumCreator() {
         
+    }
+    
+    public Point getPoint(double x, double y) throws NullPointerException {
+        for(Point point : mesh) {
+            if(point.x==x && point.y==y) {
+                return point;
+            }
+        }
+        throw new NullPointerException();
     }
     
     /**
@@ -97,11 +107,11 @@ public class DrumCreator {
         this.drum = drum;
     }
     
-    public Set<Point> getMesh() {
+    public ArrayList<Point> getMesh() {
         return mesh;
     }
     
-    public void setMesh(Set<Point> mesh) {
+    public void setMesh(ArrayList<Point> mesh) {
         this.mesh = mesh;
     }
     

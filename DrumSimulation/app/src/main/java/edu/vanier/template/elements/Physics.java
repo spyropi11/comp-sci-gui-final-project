@@ -1,6 +1,8 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.linear.Matrix;
+import java.util.Collections;
+import java.util.Comparator;
 import javafx.animation.AnimationTimer;
 
 public class Physics {
@@ -11,6 +13,13 @@ public class Physics {
     private double[] alpha = {1, 0, 0};
     private double[] beta = {0, 1, 0};
     private double[] n = {0, 0, 1};
+    //Camera centre:
+    private double cX;
+    private double cY;
+    
+    
+    //Comparator is used to render spheres in specific order so they are stacked in that order.
+    //private final Comparator<Point> comp = (Point p1, Point p2) -> (int)(p1.normal(p, n)-p2.normal(p, n));
     
     private final AnimationTimer timer = new AnimationTimer() {
         int delay = 0;
@@ -38,13 +47,14 @@ public class Physics {
         for(Point point : drummer.mesh) {
             point.updatePosition();
             point.updateColour();
-            point.projection(p, alpha, beta);
+            point.projection(p, alpha, beta, cX, cY);
         }
+        //Collections.sort(drummer.mesh, comp);
     }
     
     public void translate(double x, double y) {
         for(int i = 0; i < 3; i++) {
-            p[i] += x*alpha[i] + y*alpha[i];
+            p[i] += x*alpha[i] + y*beta[i];
         }
     }
     
@@ -78,14 +88,6 @@ public class Physics {
     //theta is in radians
     public void rotate(double theta, Axis axis) {
         
-        double[][] restArr = {
-            {alpha[0], beta[0], n[0]},
-            {alpha[1], beta[1], n[1]},
-            {alpha[2], beta[2], n[2]}
-        };
-        
-        Matrix restoring = new Matrix(restArr);
-        
         double[][] arr = new double[3][3];
         switch(axis) {
             case ALPHA -> {
@@ -107,10 +109,21 @@ public class Physics {
         
         Matrix rotation = new Matrix(arr);
         
-        alpha = restoring.act(rotation.act(1,0,0));
-        beta = restoring.act(rotation.act(0,1,0));
-        n = restoring.act(rotation.act(0,0,1));
+        alpha = rotation.act(alpha);
+        beta = rotation.act(beta);
+        n = rotation.act(n);
         
+    }
+    
+    public void setOrigin(double px, double py, double pz) {
+        p[0] = px;
+        p[1] = py;
+        p[2] = pz;
+    }
+    
+    public void setCameraCentre(double oX, double oY) {
+        cX = oX;
+        cY = oY;
     }
     
     public void startTimer() {
