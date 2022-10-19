@@ -51,7 +51,7 @@ public class Physics {
     }
     
     public void update() {
-        tester.displayCameraLine(tester.getGroup(), cX, cY, true);
+        tester.displayCameraLine(tester.getRoot(), cX, cY, true);
         for(Spring spring : drummer.drum) {
             spring.updateLine();
         }

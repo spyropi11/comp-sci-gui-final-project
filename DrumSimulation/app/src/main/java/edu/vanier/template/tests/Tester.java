@@ -7,9 +7,9 @@ import java.util.Arrays;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -49,7 +49,7 @@ public class Tester extends Application {
     private int MESH_WIDTH;
     private int MESH_HEIGHT;
     
-    private Group group;
+    private Pane root;
     private Line cameraLine = new Line();
     
     /**
@@ -111,15 +111,15 @@ public class Tester extends Application {
             }
         }
         
-        group = new Group();
+        root = new Pane();
         /* This commented-out loop generates the spheres.
         for(Point[] pointLine : points) {
-            group.getChildren().addAll(Arrays.asList(pointLine));
+            root.getChildren().addAll(Arrays.asList(pointLine));
         }
         */
-        group.getChildren().addAll(physics.getDrummer().getDrum());
+        root.getChildren().addAll(physics.getDrummer().getDrum());
         cameraLine.setStrokeWidth(1);
-        group.getChildren().add(cameraLine);
+        root.getChildren().add(cameraLine);
         
         //Set camera and camera origin.
         double oX = (setX(0)+setX(MESH_WIDTH))/2;
@@ -133,7 +133,7 @@ public class Tester extends Application {
         cameraMaterial.setSpecularColor(Color.YELLOW);
         cameraMaterial.setDiffuseColor(Color.YELLOW);
         cameraCentre.setMaterial(cameraMaterial);
-        group.getChildren().add(cameraCentre);
+        root.getChildren().add(cameraCentre);
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             
@@ -167,7 +167,7 @@ public class Tester extends Application {
             
         });
         
-        Scene scene = new Scene(group, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(Color.AZURE);
         
         stage.setTitle("Drum Sim");
@@ -196,11 +196,11 @@ public class Tester extends Application {
         return (HEIGHT/2)-RADIUS*MESH_HEIGHT+2*RADIUS*j;
     }
     
-    public Group getGroup() {
-        return group;
+    public Pane getRoot() {
+        return root;
     }
     
-    public void displayCameraLine(Group group, double oX, double oY, boolean display) {
+    public void displayCameraLine(Pane root, double oX, double oY, boolean display) {
         if(!display){return;}
         
         cameraLine.setStartX(oX);
@@ -314,8 +314,14 @@ public class Tester extends Application {
         nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
         nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
         
-        cameraLine.setEndX(nend[0] + oX);
-        cameraLine.setEndY(nend[1] + oY);
+        if(Point.crossProduct(physics.getAlpha(), physics.getBeta())[2]>=0) {
+            cameraLine.setEndX(nend[0] + oX);
+            cameraLine.setEndY(nend[1] + oY);
+        }
+        else {
+            cameraLine.setEndX(-nend[0] + oX);
+            cameraLine.setEndY(-nend[1] + oY);
+        }
         
         Stop[] stops = new Stop[] {
             new Stop(0, Color.YELLOW),
