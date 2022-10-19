@@ -2,6 +2,7 @@ package edu.vanier.template.elements;
 
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
 public class Point extends Sphere {
@@ -16,9 +17,9 @@ public class Point extends Sphere {
     double x;
     double y;
     
-    Color colour;
+    PhongMaterial material = new PhongMaterial();
     
-    static final double COLOUR_NORMALIZATION = 1;
+    static final double COLOUR_NORMALIZATION = 0.2;
 
     //Constructors
     public Point() {
@@ -174,19 +175,19 @@ public class Point extends Sphere {
     
     public void updateColour() {
         int temperature = (int)(255*Math.tanh(COLOUR_NORMALIZATION*position));
-        
         if(temperature > 0) {
-            colour = Color.rgb(temperature, 0, 0);
+            material.setDiffuseColor(Color.rgb(temperature, 0, 0));
+            material.setSpecularColor(Color.rgb(temperature, 0, 0));
         }
         else{
-            colour = Color.rgb(0, 0, -temperature);
+            material.setDiffuseColor(Color.rgb(0, 0, -temperature));
+            material.setSpecularColor(Color.rgb(0, 0, -temperature));
         }
-        
-        //set sphere colour to colour.
+        setMaterial(material);
     }
     
-    public double normal(double[] p, double[] n) {
-        return (x-p[0])*n[0] + (y-p[1])*n[1] + (position-p[2])*n[2];
+    public int normal(double[] p, double[] n) {
+        return (int)((x-p[0])*n[0] + (y-p[1])*n[1] + (position-p[2])*n[2]);
     }
     
 }

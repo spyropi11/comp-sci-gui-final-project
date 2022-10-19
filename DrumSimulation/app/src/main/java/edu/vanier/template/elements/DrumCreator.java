@@ -1,27 +1,18 @@
 package edu.vanier.template.elements;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class DrumCreator {
     
     Set<Spring> drum = new HashSet<>();
-    ArrayList<Point> mesh = new ArrayList<>();
+    HashMap<int[], Point> mesh = new HashMap<>();
     
     public DrumCreator() {
         
-    }
-    
-    public Point getPoint(double x, double y) throws NullPointerException {
-        for(Point point : mesh) {
-            if(point.x==x && point.y==y) {
-                return point;
-            }
-        }
-        throw new NullPointerException();
     }
     
     /**
@@ -93,8 +84,8 @@ public class DrumCreator {
         }
     }
     
-    public void addToMesh(Point... points) {
-        mesh.addAll(Arrays.asList(points));
+    public void addToMesh(Point point, int... i) {
+        mesh.put(i, point);
     }
     
     //Getters and Setters
@@ -107,11 +98,11 @@ public class DrumCreator {
         this.drum = drum;
     }
     
-    public ArrayList<Point> getMesh() {
+    public HashMap<int[], Point> getMesh() {
         return mesh;
     }
     
-    public void setMesh(ArrayList<Point> mesh) {
+    public void setMesh(HashMap<int[], Point> mesh) {
         this.mesh = mesh;
     }
     

@@ -1,8 +1,10 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.linear.Matrix;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import javafx.animation.AnimationTimer;
 
 public class Physics {
@@ -19,7 +21,12 @@ public class Physics {
     
     
     //Comparator is used to render spheres in specific order so they are stacked in that order.
-    //private final Comparator<Point> comp = (Point p1, Point p2) -> (int)(p1.normal(p, n)-p2.normal(p, n));
+    private final Comparator<Point> comp = new Comparator<>() {
+        @Override
+        public int compare(Point p1, Point p2) {
+            return p1.normal(p, n) - p2.normal(p, n);
+        }
+    };
     
     private final AnimationTimer timer = new AnimationTimer() {
         int delay = 0;
@@ -41,15 +48,16 @@ public class Physics {
     }
     
     public void update() {
-        for(Point point : drummer.mesh) {
+        for(Point point : drummer.mesh.values()) {
             point.updateVelocity();
         }
-        for(Point point : drummer.mesh) {
+        for(Point point : drummer.mesh.values()) {
             point.updatePosition();
             point.updateColour();
             point.projection(p, alpha, beta, cX, cY);
         }
-        //Collections.sort(drummer.mesh, comp);
+        List<Point> values = new ArrayList<>(drummer.mesh.values());
+        Collections.sort(values, comp);
     }
     
     public void translate(double x, double y) {
