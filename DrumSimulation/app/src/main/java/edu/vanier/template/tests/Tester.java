@@ -1,6 +1,7 @@
 package edu.vanier.template.tests;
 
 import edu.vanier.template.elements.*;
+import edu.vanier.template.linear.Matrix;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.application.Application;
@@ -10,14 +11,18 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class Tester extends Application {
 
-    private final Physics physics = new Physics();
+    private final Physics physics = new Physics(this);
     
     /**
     * When defining the spring constant, we can make it a multiple of this constant.
@@ -32,6 +37,10 @@ public class Tester extends Application {
     */
     private final double NATURAL_MASS = 1;
     
+    private double CAMERA_LINE_LENGTH = 15;
+    private double CAMERA_LINE_LIMIT = 30;
+    private double CAMERA_LINE_DIST = 0.02;
+    
     private double WIDTH;
     private double HEIGHT;
     private double RADIUS;
@@ -39,6 +48,9 @@ public class Tester extends Application {
     //These are number of points, not pixels.
     private int MESH_WIDTH;
     private int MESH_HEIGHT;
+    
+    private Group group;
+    private Line cameraLine = new Line();
     
     /**
      * @param stage
@@ -99,12 +111,15 @@ public class Tester extends Application {
             }
         }
         
-        Group group = new Group();
+        group = new Group();
+        /* This commented-out loop generates the spheres.
         for(Point[] pointLine : points) {
-            for(Point point : pointLine) {
-                group.getChildren().add(point);
-            }
+            group.getChildren().addAll(Arrays.asList(pointLine));
         }
+        */
+        group.getChildren().addAll(physics.getDrummer().getDrum());
+        cameraLine.setStrokeWidth(1);
+        group.getChildren().add(cameraLine);
         
         //Set camera and camera origin.
         double oX = (setX(0)+setX(MESH_WIDTH))/2;
@@ -170,9 +185,7 @@ public class Tester extends Application {
     }
     
     public static void main(String[] args) {
-        
         launch(args);
-        
     }
     
     public double setX(int i) {
@@ -181,6 +194,135 @@ public class Tester extends Application {
     
     public double setY(int j) {
         return (HEIGHT/2)-RADIUS*MESH_HEIGHT+2*RADIUS*j;
+    }
+    
+    public Group getGroup() {
+        return group;
+    }
+    
+    public void displayCameraLine(Group group, double oX, double oY, boolean display) {
+        if(!display){return;}
+        
+        cameraLine.setStartX(oX);
+        cameraLine.setStartY(oY);
+        
+        double a0 = physics.getAlpha()[0]/Point.norm(physics.getAlpha());
+        double a1 = physics.getAlpha()[1]/Point.norm(physics.getAlpha());
+        double a2 = physics.getAlpha()[2]/Point.norm(physics.getAlpha());
+        double b0 = physics.getBeta()[0]/Point.norm(physics.getBeta());
+        double b1 = physics.getBeta()[1]/Point.norm(physics.getBeta());
+        double b2 = physics.getBeta()[2]/Point.norm(physics.getBeta());
+        
+        double[][] m = new double[2][3];
+        
+        if(a0 != 0) {
+            if(b0 != 0) {
+                if(b1 != ((a1*b0)/a0)) {
+                    double f = b1/b0 - a1/a0;
+                    m[0][0] = 1/a0 - (a1/a0)*(-1/(f*a0));
+                    m[0][1] = -1/(f*a0);
+                    m[0][2] = 0;
+                    m[1][0] = -a1/(f*a0*b0);
+                    m[1][1] = 1/(f*b0);
+                    m[1][2] = 0;
+                }
+                else {
+                    double c = b2/b0 - a2/a0;
+                    m[0][0] = 1/a0 + (a2/a0)*(1/a0*c);
+                    m[0][1] = 0;
+                    m[0][2] = -1/(a0*c);
+                    m[1][0] = -a2/(a0*b0*c);
+                    m[1][1] = 0;
+                    m[1][2] = 1/(b0*c);
+                }
+            }
+            else {
+                if(b1 != 0) {
+                    m[0][0] = 1/a0;
+                    m[0][1] = 0;
+                    m[0][2] = 0;
+                    m[1][0] = -a1/(a0*b1);
+                    m[1][1] = 1/b1;
+                    m[1][2] = 0;
+                }
+                else {
+                    m[0][0] = 1/a0;
+                    m[0][1] = 0;
+                    m[0][2] = 0;
+                    m[1][0] = -a2/(a0*b2);
+                    m[1][1] = 0;
+                    m[1][2] = 1/b2;
+                }
+            }
+        }
+        else {
+            if(b0 != 0) {
+                if(a1 != 0) {
+                    m[0][0] = -(b1/a1*b0);
+                    m[0][1] = 1/a1;
+                    m[0][2] = 0;
+                    m[1][0] = 1/b0;
+                    m[1][1] = 0;
+                    m[1][2] = 0;
+                }
+                else {
+                    m[0][0] = -b2/(a2*b0);
+                    m[0][1] = 0;
+                    m[0][2] = 1/a2;
+                    m[1][0] = 1/b1;
+                    m[1][1] = 0;
+                    m[1][2] = 0;
+                }
+            }
+            else {
+                if(a1 != 0) {
+                    if(b1 != 0) {
+                        m[0][0] = 0;
+                        m[0][1] = (a2*b2 - a1*b2 - a2*b1)/(a1*(a2*b2 - a1*b2));
+                        m[0][2] = b1/(a2*b2 - a1*b2);
+                        m[1][0] = 0;
+                        m[1][1] = -a2/(a1*b2 - a2*b1);
+                        m[1][2] = a1/(a1*b2 - a2*b1);
+                    }
+                    else {
+                        m[0][0] = 0;
+                        m[0][1] = 1/a1;
+                        m[0][2] = 0;
+                        m[1][0] = 0;
+                        m[1][1] = -a2/(a1*b2);
+                        m[1][2] = 1/b2;
+                    }
+                }
+                else {
+                    m[0][0] = 0;
+                    m[0][1] = -b2/(b1*a1);
+                    m[0][2] = 1/a2;
+                    m[1][0] = 0;
+                    m[1][1] = 1/b1;
+                    m[1][2] = 0;
+                }
+            }
+        }
+        
+        Matrix matrix = new Matrix(m);
+        double[] projN = matrix.act(physics.getN());
+        
+        double[] end = {CAMERA_LINE_LENGTH*projN[0], CAMERA_LINE_LENGTH*projN[1]};
+        
+        double[] nend = new double[2];
+        
+        nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
+        nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
+        
+        cameraLine.setEndX(nend[0] + oX);
+        cameraLine.setEndY(nend[1] + oY);
+        
+        Stop[] stops = new Stop[] {
+            new Stop(0, Color.YELLOW),
+            new Stop(1, Color.GREEN)
+        };
+        LinearGradient gradient = new LinearGradient(cameraLine.getStartX(), cameraLine.getStartY(), cameraLine.getEndX(), cameraLine.getEndY(), false, CycleMethod.NO_CYCLE, stops);
+        cameraLine.setStroke(gradient);
     }
     
 }

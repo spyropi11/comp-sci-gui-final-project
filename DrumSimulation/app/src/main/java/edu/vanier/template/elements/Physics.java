@@ -1,6 +1,7 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.linear.Matrix;
+import edu.vanier.template.tests.Tester;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +20,7 @@ public class Physics {
     private double cX;
     private double cY;
     
+    Tester tester;
     
     //Comparator is used to render spheres in specific order so they are stacked in that order.
     private final Comparator<Point> comp = new Comparator<>() {
@@ -43,11 +45,16 @@ public class Physics {
         }
     };
     
-    public Physics() {
+    public Physics(Tester tester) {
+        this.tester = tester;
         drummer = new DrumCreator();
     }
     
     public void update() {
+        tester.displayCameraLine(tester.getGroup(), cX, cY, true);
+        for(Spring spring : drummer.drum) {
+            spring.updateLine();
+        }
         for(Point point : drummer.mesh.values()) {
             point.updateVelocity();
         }
@@ -163,6 +170,22 @@ public class Physics {
     
     public void setDrummer(DrumCreator drummer) {
         this.drummer = drummer;
+    }
+    
+    public double[] getN() {
+        return n;
+    }
+    
+    public double[] getP() {
+        return p;
+    }
+    
+    public double[] getAlpha() {
+        return alpha;
+    }
+    
+    public double[] getBeta() {
+        return beta;
     }
     
 }
