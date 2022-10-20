@@ -7,6 +7,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
 
 public class Physics {
     
@@ -21,6 +27,8 @@ public class Physics {
     private double cY;
     
     Tester tester;
+    private final Timeline timeline;
+    private double DELTA_TIME = 100;
     
     //Comparator is used to render spheres in specific order so they are stacked in that order.
     private final Comparator<Point> comp = new Comparator<>() {
@@ -30,25 +38,29 @@ public class Physics {
         }
     };
     
-    private final AnimationTimer timer = new AnimationTimer() {
-        int delay = 0;
-        int delayCounter = -100;
-        @Override
-        public void handle(long now) {
-            if(delayCounter == delay) {
-                update();
-                delayCounter = 0;
-            }
-            else{
-                delayCounter++;
-            }
-        }
-    };
-    
     public Physics(Tester tester) {
         this.tester = tester;
         drummer = new DrumCreator();
+        timeline = new Timeline();
+        KeyValue kvDelay = null;
+        KeyFrame delay = new KeyFrame(Duration.millis(DELTA_TIME), updateOnFinished, kvDelay);
+        timeline.getKeyFrames().add(delay);
+        timeline.setAutoReverse(false);
+        timeline.setCycleCount(Timeline.INDEFINITE);
     }
+    
+    /*
+    private AnimationTimer timer = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            update();
+        }
+    };
+    */
+    
+    public EventHandler<ActionEvent> updateOnFinished = (event) -> {
+        update();
+    };
     
     public void update() {
         tester.displayCameraLine(tester.getRoot(), cX, cY, true);
@@ -141,25 +153,22 @@ public class Physics {
         cY = oY;
     }
     
-    public void startTimer() {
-        timer.start();
+    public void startTimeline() {
+        timeline.playFromStart();
+        //timer.start();
     }
     
-    public void stopTimer() {
-        timer.stop();
+    public void stopTimeline() {
+        timeline.stop();
+        //timer.stop();
     }
     
-    public void pauseTimer() {
-        try {
-            timer.wait();
-        }
-        catch (InterruptedException ex) {
-            System.out.println("Could not execute timer.wait()");
-        }
+    public void pauseTimeline() {
+        timeline.pause();
     }
     
-    public void resumeTimer() {
-        timer.notify();
+    public void resumeTimeline() {
+        timeline.play();
     }
     
     //Getters and Setters

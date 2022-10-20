@@ -186,10 +186,10 @@ public class Tester {
         stage.sizeToScene();
         stage.show();
         
-        physics.startTimer();
+        physics.startTimeline();
         
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
-            physics.stopTimer();
+            physics.stopTimeline();
             Platform.exit();
         });
         
