@@ -12,6 +12,7 @@ public class Point extends Sphere {
     double velocity = 0;
     static final double DELTATIME = 0.25;
     double mass;
+    double decay;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
     double x;
@@ -142,6 +143,14 @@ public class Point extends Sphere {
         return y;
     }
     
+    public double getDecay() {
+        return decay;
+    }
+    
+    public void setDecay(double decay) {
+        this.decay = decay;
+    }
+    
     
     //I think that the calculations should be done in a separate class now that we're using Springs. -Ryan
     
@@ -163,6 +172,7 @@ public class Point extends Sphere {
                 force += spring.springConstant*(otherPoint.position - position);
                 
             }
+            force -= decay*vPrevious;
             //divide by the mass (F=ma --> a=F/m).
             double acc = force / mass;
             //get new velocity.

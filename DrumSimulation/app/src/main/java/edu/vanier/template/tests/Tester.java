@@ -20,7 +20,7 @@ import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class Tester extends Application {
+public class Tester {
 
     private final Physics physics = new Physics(this);
     
@@ -29,13 +29,15 @@ public class Tester extends Application {
     * For example, if the animation only looks good when k is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when k is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
     */
-    private final double NATURAL_SPRING_CONSTANT = 1;
+    private final double NATURAL_SPRING_CONSTANT = 2;
     /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when m is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
     */
-    private final double NATURAL_MASS = 1;
+    private final double NATURAL_MASS = 0.8;
+    
+    private final double NATURAL_DECAY = 0.1;
     
     private double CAMERA_LINE_LENGTH = 15;
     private double CAMERA_LINE_LIMIT = 30;
@@ -52,12 +54,7 @@ public class Tester extends Application {
     private Pane root;
     private Line cameraLine = new Line();
     
-    /**
-     * @param stage
-     * 
-     */
-    @Override
-    public void start(Stage stage) throws Exception {
+    public Tester(Stage stage) throws Exception {
         
         WIDTH = 700;
         HEIGHT = 700;
@@ -67,14 +64,15 @@ public class Tester extends Application {
         int iShift = 200/2;
         double spread = 200; 
         
-        MESH_WIDTH = 80;
-        MESH_HEIGHT = 80;
+        MESH_WIDTH = 100;
+        MESH_HEIGHT = 100;
         
         //Create points and add them to mesh.
         Point[][] points = new Point[MESH_WIDTH][MESH_HEIGHT];
         for(int i = 0; i < MESH_WIDTH; i++) {
             for(int j = 0; j < MESH_HEIGHT; j++) {
                 points[i][j] = new Point(RADIUS, 6, 0, NATURAL_MASS);
+                points[i][j].setDecay(NATURAL_DECAY);
                 points[i][j].setup(setX(i), setY(j));
                 if(i==0 || i==(MESH_WIDTH-1) || j==0 || j==(MESH_HEIGHT-1)) {
                     points[i][j].setOnEdge(true);
@@ -86,9 +84,17 @@ public class Tester extends Application {
             }
         }
         
-        for(int i = 35; i < 45; i++) {
-            for(int j = 35; j < 45; j++) {
-                points[i][j].setPosition(100);
+        //Setting pulses (just some random position values)
+        for(int i = 1; i < 15; i++) {
+            for(int j = 1; j < 15; j++) {
+                if(i>5 && i<10 && j>5 && j<10) {
+                    points[i][j].setPosition(40);
+                    points[i+84][j+84].setPosition(-40);
+                }
+                else {
+                    points[i][j].setPosition(20);
+                    points[i+84][j+84].setPosition(-20);
+                }
             }
         }
         
@@ -167,6 +173,11 @@ public class Tester extends Application {
             
         });
         
+        physics.rotate(1.2, Physics.Axis.ALPHA);
+        physics.rotate(-0.05, Physics.Axis.BETA);
+        physics.rotate(-0.05, Physics.Axis.N);
+        physics.zoom(1.5);
+        
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(Color.AZURE);
         
@@ -182,10 +193,6 @@ public class Tester extends Application {
             Platform.exit();
         });
         
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
     }
     
     public double setX(int i) {
