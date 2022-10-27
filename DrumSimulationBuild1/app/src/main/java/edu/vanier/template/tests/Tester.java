@@ -1,19 +1,22 @@
 package edu.vanier.template.tests;
 
 import edu.vanier.template.elements.*;
-import javafx.application.Application;
-import static javafx.application.Application.launch;
+import edu.vanier.template.linear.Matrix;
 import javafx.application.Platform;
-import javafx.event.EventType;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -24,9 +27,9 @@ import javafx.stage.WindowEvent;
  * @see: Build Scripts/build.gradle
  * @author Sleiman Rabah.
  */
-public class Tester extends Application {
+public class Tester {
 
-    private final Physics physics = new Physics();
+    private final Physics physics = new Physics(this);
     
     /**
     * When defining the spring constant, we can make it a multiple of this constant.
@@ -41,25 +44,43 @@ public class Tester extends Application {
     */
     private final double NATURAL_MASS = 1;
     
-    public static int nOfPoints = 2500;
-    public static Point[] points = new Point[nOfPoints];
+    private final double NATURAL_DECAY = 0.1;
+    
+    private Pane root;
+    private Line cameraLine = new Line();
+    
+    private double CAMERA_LINE_LENGTH = 15;
+    private double CAMERA_LINE_LIMIT = 30;
+    private double CAMERA_LINE_DIST = 0.02;
+    
+    
+    private double WIDTH;
+    private double HEIGHT;
+    private double RADIUS;
+    
+    
+    //These are number of points, not pixels.
+    public int MESH_WIDTH = 50;
+    public int MESH_HEIGHT = 50;
+    
+    
+    private int nOfPoints = MESH_WIDTH*MESH_HEIGHT;
+    private Point[] points = new Point[nOfPoints];
 
-    public static Point[] getPoints() {
+    public Point[] getPoints() {
         return points;
     }
-
     
     
     /**
      * @param stage
      * 
      */
-    @Override
-    public void start(Stage stage) throws Exception {
+    public Tester(Stage stage) throws Exception {
         
-        double WIDTH = 700;
-        double HEIGHT = 700;
-        
+        WIDTH = 700;
+        HEIGHT = 700;
+        RADIUS = 2;
         
         
         
@@ -70,19 +91,21 @@ public class Tester extends Application {
         
         
         counter = 0;
-        for (int j = 0; j < Math.sqrt(nOfPoints); j++){
+        for (int j = 0; j < MESH_HEIGHT; j++){
             
-            for(int i = 0; i < Math.sqrt(nOfPoints); i++) {
+            for(int i = 0; i < MESH_WIDTH; i++) {
                 
-                if(j == 0|| j == Math.sqrt(nOfPoints) - 1) {
+                if(j == 0 || j == MESH_HEIGHT - 1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[counter] = new Point(2, 1, 0, NATURAL_MASS, true);
+                    points[counter] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[counter].setOnEdge(true);
                     
                 }
                 
-                else if(i==0 && j > 0 && j < Math.sqrt(nOfPoints) -1 || i==(Math.sqrt(nOfPoints)-1) && j > 0 && j < Math.sqrt(nOfPoints) -1) {
+                else if(i == 0 || i == MESH_WIDTH-1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[counter] = new Point(2, 1, 0, NATURAL_MASS, true);
+                    points[counter] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[counter].setOnEdge(true);
                     
                 }
                 
@@ -94,7 +117,8 @@ public class Tester extends Application {
                     
                     
                     //points[counter] = new Point(2,1,(amplitude*Math.exp(-((Math.pow(i - shift, 2))+(Math.pow(j - shift, 2)))/spread)),NATURAL_MASS, false);
-                    points[counter] = new Point(2,1,0,NATURAL_MASS, false);
+                    points[counter] = new Point(RADIUS, 1, 0,NATURAL_MASS);
+                    points[counter].setOnEdge(false);
                 }
                 
                 
@@ -108,16 +132,17 @@ public class Tester extends Application {
         
         
         //Add points to mesh
+        physics.setPoints(points);
         physics.getDrummer().addToMesh(points);
         
         counter = 0;
         //Set x coordinates
-        for(int j = 0; j < Math.sqrt(nOfPoints); j++){
+        for(int j = 0; j < MESH_HEIGHT; j++){
             
-            for(int i = 0; i < Math.sqrt(nOfPoints); i++) {
+            for(int i = 0; i < MESH_WIDTH; i++) {
                 
                 //sets up points every 2 units (not sure if its pixels or not)
-                points[counter].setup(i*4,j*4);
+                points[counter].setup(i*2*RADIUS,j*2*RADIUS);
                 System.out.println(counter);
                 counter++;
             }
@@ -126,14 +151,13 @@ public class Tester extends Application {
         
         
         //Create springs
-        Spring[] springs = new Spring[(99*100) + (99*100)];
-        
+        Spring[] springs = new Spring[(MESH_WIDTH-1)*MESH_HEIGHT + (MESH_HEIGHT-1)*MESH_WIDTH];
         
         int pointCounter = 1;
         int springCounter = 0;
-        for(int i = 0; i < Math.sqrt(points.length); i++){
+        for(int i = 0; i < MESH_WIDTH; i++){
             
-            for(int j = 0; j < Math.sqrt(points.length)-1; j++){
+            for(int j = 0; j < MESH_HEIGHT-1; j++){
                 
                 springs[springCounter] = new Spring(points[pointCounter], points[pointCounter-1],2*NATURAL_SPRING_CONSTANT);
                 springCounter++;
@@ -144,9 +168,9 @@ public class Tester extends Application {
             
         }
         
-        for(int i = 0; i < points.length - Math.sqrt(points.length); i++){
+        for(int i = 0; i < points.length - MESH_WIDTH; i++){
             
-            springs[springCounter] = new Spring(points[i], points[i+ (int)Math.sqrt(points.length)], 2*NATURAL_SPRING_CONSTANT);
+            springs[springCounter] = new Spring(points[i], points[i+MESH_HEIGHT], 2*NATURAL_SPRING_CONSTANT);
             springCounter++;
         }
         
@@ -158,75 +182,63 @@ public class Tester extends Application {
         physics.getDrummer().addSprings(springs);
         
         
-        Group group = new Group();
+        root = new Pane();
         
         for(Point point : points) {
-            group.getChildren().add(point);
+            root.getChildren().add(point);
         }
         
-        Camera camera = new PerspectiveCamera(true);
-        Scene scene = new Scene(group, WIDTH,HEIGHT);
-        
-        camera.translateZProperty().set(-700);
-        camera.translateXProperty().set(150);
-        camera.translateYProperty().set(-350);
-        
-        Rotate rotateDown = new Rotate(-20);
-        rotateDown.setAxis(Rotate.X_AXIS);
-        camera.getTransforms().add(rotateDown);
-        
-        camera.setNearClip(1);
-        camera.setFarClip(10000);
-        
-        scene.setCamera(camera);
+        Scene scene = new Scene(root, WIDTH,HEIGHT);
+        root.getChildren().addAll(physics.getDrummer().getDrum());
+        cameraLine.setStrokeWidth(1);
+        root.getChildren().add(cameraLine);
         scene.setFill(Color.AZURE);
+        
+        //Set camera and camera origin.
+        double oX = (setX(0)+setX(MESH_WIDTH))/2;
+        double oY = (setY(0)+setY(MESH_HEIGHT))/2;
+        physics.setOrigin(oX, oY, 0);
+        physics.setCameraCentre(oX, oY);
+        Sphere cameraCentre = new Sphere(4, 4);
+        cameraCentre.setTranslateX(oX);
+        cameraCentre.setTranslateY(oY);
+        PhongMaterial cameraMaterial = new PhongMaterial();
+        cameraMaterial.setSpecularColor(Color.YELLOW);
+        cameraMaterial.setDiffuseColor(Color.YELLOW);
+        cameraCentre.setMaterial(cameraMaterial);
+        root.getChildren().add(cameraCentre);
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             
             switch(event.getCode()){
                 
-                case W: 
-                    camera.translateZProperty().set(camera.getTranslateZ() + 100);
-                    break;
+                case W -> physics.translate(0, 3);
                     
-                case S:
-                    camera.translateZProperty().set(camera.getTranslateZ() - 100);
-                    break;
+                case S -> physics.translate(0, -3);
                     
-                case D:
-                    camera.translateXProperty().set(camera.getTranslateX() + 25);
-                    break;
+                case D -> physics.translate(-3, 0);
                     
-                case A:
-                    camera.translateXProperty().set(camera.getTranslateX() - 25);
-                    break;
+                case A -> physics.translate(3, 0);
                     
-                case R:
-                    camera.translateYProperty().set(camera.getTranslateY() - 25);
-                    break;
+                case J -> physics.zoom(1.01);
                     
-                case F:
-                    camera.translateYProperty().set(camera.getTranslateY() + 25);
-                    break;
+                case K -> physics.zoom(0.99);
                     
-                case T:
-                    Rotate rotateTransformUp = new Rotate(-10, 0, 0, 0);
-                    rotateTransformUp.setAxis(Rotate.X_AXIS);
-                    camera.getTransforms().add(rotateTransformUp);
-                    break;
-                
-                case G:
-                    Rotate rotateTransformDown = new Rotate(10, 0, 0, 0);
-                    rotateTransformDown.setAxis(Rotate.X_AXIS);
-                    camera.getTransforms().add(rotateTransformDown);
-                    break;
-                
+                case M -> physics.rotate(-0.01, Physics.Axis.N);
+                    
+                case N -> physics.rotate(0.01, Physics.Axis.N);
+                    
+                case B -> physics.rotate(0.02, Physics.Axis.BETA);
+                    
+                case V -> physics.rotate(-0.02, Physics.Axis.BETA);
+                    
+                case C -> physics.rotate(0.02, Physics.Axis.ALPHA);
+                    
+                case X -> physics.rotate(-0.02, Physics.Axis.ALPHA);
+                    
             }
             
         });
-        
-        
-        
         
         
         stage.setTitle("Drum Sim 2D");
@@ -243,10 +255,149 @@ public class Tester extends Application {
         
     }
     
-    public static void main(String[] args) {
+    public Pane getRoot() {
+        return root;
+    }
+    
+    public void displayCameraLine(Pane root, double oX, double oY, boolean display) {
+        if(!display){return;}
         
-        launch(args);
+        cameraLine.setStartX(oX);
+        cameraLine.setStartY(oY);
         
+        double a0 = physics.getAlpha()[0]/Point.norm(physics.getAlpha());
+        double a1 = physics.getAlpha()[1]/Point.norm(physics.getAlpha());
+        double a2 = physics.getAlpha()[2]/Point.norm(physics.getAlpha());
+        double b0 = physics.getBeta()[0]/Point.norm(physics.getBeta());
+        double b1 = physics.getBeta()[1]/Point.norm(physics.getBeta());
+        double b2 = physics.getBeta()[2]/Point.norm(physics.getBeta());
+        
+        double[][] m = new double[2][3];
+        
+        if(a0 != 0) {
+            if(b0 != 0) {
+                if(b1 != ((a1*b0)/a0)) {
+                    double f = b1/b0 - a1/a0;
+                    m[0][0] = 1/a0 - (a1/a0)*(-1/(f*a0));
+                    m[0][1] = -1/(f*a0);
+                    m[0][2] = 0;
+                    m[1][0] = -a1/(f*a0*b0);
+                    m[1][1] = 1/(f*b0);
+                    m[1][2] = 0;
+                }
+                else {
+                    double c = b2/b0 - a2/a0;
+                    m[0][0] = 1/a0 + (a2/a0)*(1/a0*c);
+                    m[0][1] = 0;
+                    m[0][2] = -1/(a0*c);
+                    m[1][0] = -a2/(a0*b0*c);
+                    m[1][1] = 0;
+                    m[1][2] = 1/(b0*c);
+                }
+            }
+            else {
+                if(b1 != 0) {
+                    m[0][0] = 1/a0;
+                    m[0][1] = 0;
+                    m[0][2] = 0;
+                    m[1][0] = -a1/(a0*b1);
+                    m[1][1] = 1/b1;
+                    m[1][2] = 0;
+                }
+                else {
+                    m[0][0] = 1/a0;
+                    m[0][1] = 0;
+                    m[0][2] = 0;
+                    m[1][0] = -a2/(a0*b2);
+                    m[1][1] = 0;
+                    m[1][2] = 1/b2;
+                }
+            }
+        }
+        else {
+            if(b0 != 0) {
+                if(a1 != 0) {
+                    m[0][0] = -(b1/a1*b0);
+                    m[0][1] = 1/a1;
+                    m[0][2] = 0;
+                    m[1][0] = 1/b0;
+                    m[1][1] = 0;
+                    m[1][2] = 0;
+                }
+                else {
+                    m[0][0] = -b2/(a2*b0);
+                    m[0][1] = 0;
+                    m[0][2] = 1/a2;
+                    m[1][0] = 1/b1;
+                    m[1][1] = 0;
+                    m[1][2] = 0;
+                }
+            }
+            else {
+                if(a1 != 0) {
+                    if(b1 != 0) {
+                        m[0][0] = 0;
+                        m[0][1] = (a2*b2 - a1*b2 - a2*b1)/(a1*(a2*b2 - a1*b2));
+                        m[0][2] = b1/(a2*b2 - a1*b2);
+                        m[1][0] = 0;
+                        m[1][1] = -a2/(a1*b2 - a2*b1);
+                        m[1][2] = a1/(a1*b2 - a2*b1);
+                    }
+                    else {
+                        m[0][0] = 0;
+                        m[0][1] = 1/a1;
+                        m[0][2] = 0;
+                        m[1][0] = 0;
+                        m[1][1] = -a2/(a1*b2);
+                        m[1][2] = 1/b2;
+                    }
+                }
+                else {
+                    m[0][0] = 0;
+                    m[0][1] = -b2/(b1*a1);
+                    m[0][2] = 1/a2;
+                    m[1][0] = 0;
+                    m[1][1] = 1/b1;
+                    m[1][2] = 0;
+                }
+            }
+        }
+        
+        Matrix matrix = new Matrix(m);
+        double[] projN = matrix.act(physics.getN());
+        
+        double[] end = {CAMERA_LINE_LENGTH*projN[0], CAMERA_LINE_LENGTH*projN[1]};
+        
+        double[] nend = new double[2];
+        
+        nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
+        nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
+        
+        if(Point.crossProduct(physics.getAlpha(), physics.getBeta())[2]>=0) {
+            cameraLine.setEndX(nend[0] + oX);
+            cameraLine.setEndY(nend[1] + oY);
+        }
+        else {
+            cameraLine.setEndX(-nend[0] + oX);
+            cameraLine.setEndY(-nend[1] + oY);
+        }
+        
+        Stop[] stops = new Stop[] {
+            new Stop(0, Color.YELLOW),
+            new Stop(1, Color.GREEN)
+        };
+        LinearGradient gradient = new LinearGradient(cameraLine.getStartX(), cameraLine.getStartY(), cameraLine.getEndX(), cameraLine.getEndY(), false, CycleMethod.NO_CYCLE, stops);
+        cameraLine.setStroke(gradient);
+    }
+    
+    
+    
+    public double setX(int i) {
+        return (WIDTH/2)-RADIUS*MESH_WIDTH+2*RADIUS*i;
+    }
+    
+    public double setY(int j) {
+        return (HEIGHT/2)-RADIUS*MESH_HEIGHT+2*RADIUS*j;
     }
     
 }

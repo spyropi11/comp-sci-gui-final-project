@@ -1,6 +1,8 @@
 package edu.vanier.template.elements;
 
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
 public class Point extends Sphere {
@@ -10,9 +12,17 @@ public class Point extends Sphere {
     double velocity = 0;
     static final double DELTATIME = 0.1;
     double mass;
+    double decay;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
-
+    
+    double x;
+    double y;
+    
+    PhongMaterial material = new PhongMaterial();
+    
+    static final double COLOUR_NORMALIZATION = 0.2;
+    
     //Constructors
     public Point() {
         super();
@@ -23,13 +33,11 @@ public class Point extends Sphere {
      * @param d Radius
      * @param position Starting point of the node
      * @param mass Mass of node
-     * @param isEdge Boolean denoting when a point is on edge (velocity==0)
      */
-    public Point(double d, double position, double mass, boolean isEdge) {
+    public Point(double d, double position, double mass) {
         super(d);
         this.position = position;
         this.mass = mass;
-        this.onEdge = isEdge;
     }
     
     /**
@@ -38,24 +46,49 @@ public class Point extends Sphere {
      * @param i Number of divisions (Resolution of sphere aka how choppy it looks)
      * @param position Starting point of the node
      * @param mass Mass of node
-     * @param isEdge Boolean denoting when a point is on edge (velocity==0)
      */
-    public Point(double d, int i, double position, double mass, boolean isEdge) {
+    public Point(double d, int i, double position, double mass) {
         super(d, i);
         this.position = position;
         this.mass = mass;
-        this.onEdge = isEdge;
-        this.setTranslateY(position);
     }
     
     /**
      * Positions the point in 1D
      * @param x 
-     * @param z
+     * @param y
      */
-    public void setup(int x,int z) {
-        this.translateXProperty().set(x);
-        this.translateZProperty().set(z);
+    public void setup(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void projection(double[] p, double[] alpha, double[] beta, double cameraChangeX, double cameraChangeY) {
+        double v0 = x-p[0];
+        double v1 = y-p[1];
+        double v2 = position-p[2];
+        
+        double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
+        double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
+        
+        this.setTranslateX(sumX + cameraChangeX);
+        this.setTranslateY(sumY + cameraChangeY);
+    }
+    
+    public static double norm(double[] vector) {
+        double sum = 0;
+        for(double v : vector) {
+            sum += Math.pow(v, 2);
+        }
+        return Math.sqrt(sum);
+    }
+    
+    public static double[] crossProduct(double[] u, double[] v) {
+        double[] cross = new double[3];
+        cross[0] = u[1]*v[2] - u[2]*v[1];
+        cross[1] = u[2]*v[0] - u[0]*v[2];
+        cross[2] = u[0]*v[1] - u[1]*v[0];
+        return cross;
     }
     
     //Getters and Setters
@@ -103,6 +136,22 @@ public class Point extends Sphere {
         this.onEdge = isEdge;
     }
     
+    public double getX() {
+        return x;
+    }
+    
+    public double getY() {
+        return y;
+    }
+    
+    public double getDecay() {
+        return decay;
+    }
+    
+    public void setDecay(double decay) {
+        this.decay = decay;
+    }
+    
     
     //I think that the calculations should be done in a separate class now that we're using Springs. -Ryan
     
@@ -124,6 +173,7 @@ public class Point extends Sphere {
                 force += spring.springConstant*(otherPoint.position - position);
                 
             }
+            force -= decay*vPrevious;
             //divide by the mass (F=ma --> a=F/m).
             double acc = force / mass;
             //get new velocity.
@@ -134,12 +184,24 @@ public class Point extends Sphere {
     public void updatePosition() {
         if(!onEdge) {
             position += DELTATIME*velocity;
-            move();
         }
     }
     
-    public void move() {
-        this.setTranslateY(position);
+    public void updateColour() {
+        int temperature = (int)(255*Math.tanh(COLOUR_NORMALIZATION*position));
+        if(temperature > 0) {
+            material.setDiffuseColor(Color.rgb(0, 0, temperature));
+            material.setSpecularColor(Color.rgb(0, 0, temperature));
+        }
+        else{
+            material.setDiffuseColor(Color.rgb(-temperature, 0, 0));
+            material.setSpecularColor(Color.rgb(-temperature, 0, 0));
+        }
+        setMaterial(material);
+    }
+    
+    public int normal(double[] p, double[] n) {
+        return (int)((x-p[0])*n[0] + (y-p[1])*n[1] + (position-p[2])*n[2]);
     }
     
 }
