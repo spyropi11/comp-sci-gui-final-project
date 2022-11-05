@@ -43,6 +43,7 @@ public class MainApp extends Application {
         stage.sizeToScene();
         //--> Step 4) Show the window.
         stage.show();
+        
         */
         
         Tester tester = new Tester(stage);
