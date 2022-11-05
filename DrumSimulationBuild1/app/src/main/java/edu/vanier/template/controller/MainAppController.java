@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -43,6 +44,15 @@ public class MainAppController  {
     @FXML
     TextField textF2;
     
+    @FXML
+    Slider slider;
+    
+    @FXML
+    Button btnSaveButton;
+    
+    @FXML
+    Button btnConfirm;
+    
     
     
     MenuItem square;
@@ -62,6 +72,7 @@ public class MainAppController  {
         System.out.println("Initialising the process");
         
 
+        
         //  btnLoadFile.setOnAction((event) ->{System.out.println("loading the file")};) ;
       //   btnCreateNewDrum.setOnAction((e) -> {
          
@@ -77,7 +88,8 @@ public class MainAppController  {
 
     public void handleCreateNewDrum(ActionEvent event) throws IOException, Exception {
 
-     
+     double arcWidth = 0;
+     double arcHeight = 0;
         
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene2NewDream.fxml"));
 
@@ -87,11 +99,20 @@ public class MainAppController  {
         stage.show();
         
          
+       
+            
+              arcWidth = Double.parseDouble(textF1.getText());
+               arcHeight = Double.parseDouble(textF2.getText());
+        
+            
+       
+        
+      //  System.out.println(arcWidth);
+     //   System.out.println(arcHeight);
         
         
-       double arcWidth = Double.parseDouble(textF1.getText());
-       double arcHeight = Double.parseDouble(textF2.getText());
-        
+      
+      
       
        
 

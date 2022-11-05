@@ -33,7 +33,7 @@ public class MainApp extends Application {
         //load the FXML
         Pane root = loader.load();
         
-        /*
+        
         Scene scene = new Scene(root, 500, 500);
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
@@ -44,9 +44,9 @@ public class MainApp extends Application {
         //--> Step 4) Show the window.
         stage.show();
         
-        */
         
-        Tester tester = new Tester(stage);
+        
+       // Tester tester = new Tester(stage);
         
     }
     
