@@ -20,6 +20,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -31,38 +32,14 @@ public class MainAppController  {
     
     
     
-  private Stage stage;
+  private Stage stage = new Stage();
     private Scene scene;
     private Parent root;
 
-    @FXML
-    Rectangle rect1;
-    
-    @FXML
-    TextField textF1;
-    
-    @FXML
-    TextField textF2;
-    
-    @FXML
-    Slider slider;
-    
-    @FXML
-    Button btnSaveButton;
-    
-    @FXML
-    Button btnConfirm;
+   
     
     
     
-    MenuItem square;
-    
-    @FXML
-    MenuItem rectangle;
-
-    Button btnLoadDrum;
-
-    Button btnCreateNewDrum;
 
     
     public void initialize() {
@@ -88,34 +65,30 @@ public class MainAppController  {
 
     public void handleCreateNewDrum(ActionEvent event) throws IOException, Exception {
 
-     double arcWidth = 0;
-     double arcHeight = 0;
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene2NewDream.fxml"));
 
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
+
+        //Instantiate the controller   (Controller is where we do our event handling)
+        CreateNewDrumController mainController = new CreateNewDrumController();
+
+        //Set the controller to the loader
+        loader.setController(mainController);
+
+        //load the FXML
+        Pane root = loader.load();
+        
+         Scene scene = new Scene(root, 500, 500);
+        //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
-        stage.show();
-        
-         
-       
-            
-              arcWidth = Double.parseDouble(textF1.getText());
-               arcHeight = Double.parseDouble(textF2.getText());
-        
-            
-       
-        
-      //  System.out.println(arcWidth);
-     //   System.out.println(arcHeight);
-        
-        
-      
-      
-      
-       
 
+        stage.setTitle("Drum Simulation.");
+        // Resize the stage so the size matches the scene
+        stage.sizeToScene();
+        //--> Step 4) Show the window.
+        stage.show();
+         
+     
+     
     }
     
     
