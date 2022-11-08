@@ -83,8 +83,10 @@ public class DrumCreator {
         }
     }
     
-    public void addToMesh(Point... points) {
-        mesh.addAll(Arrays.asList(points));
+    public void addToMesh(Point[][] points) {
+        for(Point[] pointList : points) {
+            mesh.addAll(Arrays.asList(pointList));
+        }
     }
     
     //Getters and Setters

@@ -2,6 +2,7 @@ package edu.vanier.template.tests;
 
 import edu.vanier.template.elements.*;
 import edu.vanier.template.linear.Matrix;
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.scene.Camera;
 import javafx.scene.Group;
@@ -61,13 +62,13 @@ public class Tester {
     
     //These are number of points, not pixels.
     public int MESH_WIDTH = 50;
-    public int MESH_HEIGHT = 50;
+    public int MESH_HEIGHT = 20;
     
     
     private int nOfPoints = MESH_WIDTH*MESH_HEIGHT;
-    private Point[] points = new Point[nOfPoints];
+    private Point[][] points = new Point[MESH_WIDTH][MESH_HEIGHT];
 
-    public Point[] getPoints() {
+    public Point[][] getPoints() {
         return points;
     }
     
@@ -84,28 +85,26 @@ public class Tester {
         
         
         
-        int counter = 0;
         
         //Create points
         
         
         
-        counter = 0;
         for (int j = 0; j < MESH_HEIGHT; j++){
             
             for(int i = 0; i < MESH_WIDTH; i++) {
                 
                 if(j == 0 || j == MESH_HEIGHT - 1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[counter] = new Point(RADIUS, 1, 0, NATURAL_MASS);
-                    points[counter].setOnEdge(true);
+                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[i][j].setOnEdge(true);
                     
                 }
                 
                 else if(i == 0 || i == MESH_WIDTH-1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[counter] = new Point(RADIUS, 1, 0, NATURAL_MASS);
-                    points[counter].setOnEdge(true);
+                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[i][j].setOnEdge(true);
                     
                 }
                 
@@ -117,15 +116,14 @@ public class Tester {
                     
                     
                     //points[counter] = new Point(2,1,(amplitude*Math.exp(-((Math.pow(i - shift, 2))+(Math.pow(j - shift, 2)))/spread)),NATURAL_MASS, false);
-                    points[counter] = new Point(RADIUS, 1, 0,NATURAL_MASS);
-                    points[counter].setOnEdge(false);
+                    points[i][j] = new Point(RADIUS, 1, 0,NATURAL_MASS);
+                    points[i][j].setOnEdge(false);
                 }
                 
                 
                 
                 //points[i].setMass(NATURAL_MASS*(1+i/50));
                 
-                counter++;
             }
             
         }
@@ -135,57 +133,67 @@ public class Tester {
         physics.setPoints(points);
         physics.getDrummer().addToMesh(points);
         
-        counter = 0;
         //Set x coordinates
         for(int j = 0; j < MESH_HEIGHT; j++){
             
             for(int i = 0; i < MESH_WIDTH; i++) {
                 
                 //sets up points every 2 units (not sure if its pixels or not)
-                points[counter].setup(i*2*RADIUS,j*2*RADIUS);
-                System.out.println(counter);
-                counter++;
+                points[i][j].setup(i*2*RADIUS,j*2*RADIUS);
             }
             
         }
         
         
         //Create springs
-        Spring[] springs = new Spring[(MESH_WIDTH-1)*MESH_HEIGHT + (MESH_HEIGHT-1)*MESH_WIDTH];
+        ArrayList<Spring> springs = new ArrayList<>();
         
-        int pointCounter = 1;
-        int springCounter = 0;
         for(int i = 0; i < MESH_WIDTH; i++){
             
             for(int j = 0; j < MESH_HEIGHT-1; j++){
                 
-                springs[springCounter] = new Spring(points[pointCounter], points[pointCounter-1],2*NATURAL_SPRING_CONSTANT);
-                springCounter++;
-                pointCounter++;
+                try {
+                    springs.add(new Spring(points[i][j], points[i][j+1],2*NATURAL_SPRING_CONSTANT));
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    
+                }
+                try {
+                    springs.add(new Spring(points[i][j], points[i][j-1],2*NATURAL_SPRING_CONSTANT));
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    
+                }
+                try {
+                    springs.add(new Spring(points[i][j], points[i+1][j],2*NATURAL_SPRING_CONSTANT));
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    
+                }
+                try {
+                    springs.add(new Spring(points[i][j], points[i-1][j],2*NATURAL_SPRING_CONSTANT));
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    
+                }
                 
             }
-            pointCounter++;
             
         }
         
-        for(int i = 0; i < points.length - MESH_WIDTH; i++){
-            
-            springs[springCounter] = new Spring(points[i], points[i+MESH_HEIGHT], 2*NATURAL_SPRING_CONSTANT);
-            springCounter++;
-        }
         
         /*for(int i = 1; i < points.length; i++) {
             springs[i] = new Spring(points[i], points[i-1], 2*NATURAL_SPRING_CONSTANT);
         }*/
         
         //Add springs to drum
-        physics.getDrummer().addSprings(springs);
+        for(Spring spring : springs) {
+            physics.getDrummer().addSprings(spring);
+        }
         
         
         root = new Pane();
         
-        for(Point point : points) {
-            root.getChildren().add(point);
+        for(Point[] pointList : points) {
+            for(Point point : pointList) {
+                root.getChildren().add(point);
+            }
         }
         
         Scene scene = new Scene(root, WIDTH,HEIGHT);

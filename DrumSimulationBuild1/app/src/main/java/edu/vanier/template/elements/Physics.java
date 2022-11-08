@@ -19,7 +19,7 @@ public class Physics {
     
     final Tester tester;
     
-    public Point[] points;
+    public Point[][] points;
     
     //The color is already handled in Point
     //PhongMaterial mBlue = new PhongMaterial(Color.LIGHTBLUE);
@@ -31,7 +31,7 @@ public class Physics {
         drummer = new DrumCreator();
     }
     
-    public void setPoints(Point... points) {
+    public void setPoints(Point[][] points) {
         this.points = points;
     }
     
@@ -85,8 +85,8 @@ public class Physics {
             
                 double amplitude = 30;
                 double spread = 10;
-                double shiftX = point.getTranslateX()/4;
-                double shiftZ = point.getTranslateZ()/4;
+                double shiftX = point.getX()/4;
+                double shiftZ = point.getY()/4;
                 
                 int counter = 0;
                 
@@ -98,9 +98,9 @@ public class Physics {
                 for (int j = 0; j < tester.MESH_HEIGHT; j++){
                     for(int i = 0; i < tester.MESH_WIDTH; i++) {
                         
-                        if(points[counter].getOnEdge() ==  false){
+                        if(points[i][j].getOnEdge() ==  false){
                             
-                            points[counter].setPosition(points[counter].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftZ, 2)))/spread));
+                            points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftZ, 2)))/spread));
                             
                         }
 
