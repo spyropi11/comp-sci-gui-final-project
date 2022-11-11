@@ -20,6 +20,8 @@ import javafx.scene.shape.Rectangle;
  */
 public class CreateNewDrumController {
     
+    //TODO Make stage modal
+    
       @FXML
     Rectangle rect1;
     

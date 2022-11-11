@@ -139,7 +139,7 @@ public class Tester {
             for(int i = 0; i < MESH_WIDTH; i++) {
                 
                 //sets up points every 2 units (not sure if its pixels or not)
-                points[i][j].setup(i*2*RADIUS,j*2*RADIUS);
+                points[i][j].setup(setX(i), setY(j));
             }
             
         }
