@@ -73,7 +73,9 @@ public class Tester {
     */
     private final double CAMERA_LINE_DIST = 0.02;
     
-    
+    /**
+    * Width of drum.
+    */
     private double WIDTH;
     private double HEIGHT;
     private double RADIUS;
