@@ -30,8 +30,10 @@ import javafx.stage.WindowEvent;
  */
 public class Tester {
 
+    /**
+    * Binds a Physics object to this Tester object.
+    */
     private final Physics physics = new Physics(this);
-    
     /**
     * When defining the spring constant, we can make it a multiple of this constant.
     * For example, if the animation only looks good when k is in the 1000s, then we can make this constant = 1000.
@@ -44,17 +46,36 @@ public class Tester {
     * Or, if the animation only looks good when m is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
     */
     private final double NATURAL_MASS = 1;
-    
+    /**
+    * When defining the decay, we can make it a multiple of this constant.
+    * For example, if the animation only looks good when decay is in the 1000s, then we can make this constant = 1000.
+    * Or, if the animation only looks good when decay is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
+    */
     private final double NATURAL_DECAY = 0.1;
-    
+    /**
+    * Root node of scene.
+    */
     private Pane root;
+    /**
+    * Line that makes orientation of the drum when displayed clearer.
+    */
     private Line cameraLine = new Line();
+    /**
+    * Length of the camera line.
+    */
+    private final double CAMERA_LINE_LENGTH = 15;
+    /**
+    * Maximum length of the camera line.
+    */
+    private final double CAMERA_LINE_LIMIT = 30;
+    /**
+    * Constant involved in calculating length of camera line when displayed on screen.
+    */
+    private final double CAMERA_LINE_DIST = 0.02;
     
-    private double CAMERA_LINE_LENGTH = 15;
-    private double CAMERA_LINE_LIMIT = 30;
-    private double CAMERA_LINE_DIST = 0.02;
-    
-    
+    /**
+    * Width of drum.
+    */
     private double WIDTH;
     private double HEIGHT;
     private double RADIUS;
