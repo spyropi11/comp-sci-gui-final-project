@@ -6,9 +6,15 @@
 package edu.vanier.template.controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -18,12 +24,10 @@ import javafx.scene.shape.Rectangle;
  *
  * @author keethen
  */
-public class CreateNewDrumController {
+public class CreateNewDrumController implements Initializable {
     
-    //TODO Make stage modal
-    
-      @FXML
-    Rectangle rect1;
+    @FXML
+    Label numLabel;
     
     @FXML
     TextField textF1;
@@ -39,84 +43,80 @@ public class CreateNewDrumController {
     
     @FXML
     Button btnConfirm;
-    
-    
-    
     MenuItem square;
     
     @FXML
     MenuItem rectangle;
-
     Button btnLoadDrum;
-
     Button btnCreateNewDrum;
-
     
+    //Slider Number Value
+    int numSlider;
     
-     public void initialize() {
+     public void initialize() {  
+     System.out.println("Initialising the process");
 
-        
-        
-        System.out.println("Initialising the process");
-        
-
-    /*   btnConfirm.setOnAction((e) -> {
+    /*   
+    btnConfirm.setOnAction((e) -> {
          
-           double arcWidth = 0;
+     double arcWidth = 0;
      double arcHeight = 0;
      
     
      arcWidth = Double.parseDouble(textF1.getText());
-       arcHeight = Double.parseDouble(textF2.getText());
+     arcHeight = Double.parseDouble(textF2.getText());
         
             
        
         
-        System.out.println(arcWidth);
-       System.out.println(arcHeight);
+     System.out.println(arcWidth);
+     System.out.println(arcHeight);
          
          
-        });
+     });
 
-*/       
-
+      */       
     }
      
      
      
      public void handleBtnConfirm(ActionEvent event) throws IOException, Exception {
+     
+     int power = 0;
          
-         
-          double arcWidth = 0;
+     double arcWidth = 0;
      double arcHeight = 0;
      
-    
+     power = (int)slider.getValue();
+     
      arcWidth = Double.parseDouble(textF1.getText());
-       arcHeight = Double.parseDouble(textF2.getText());
-        
+     arcHeight = Double.parseDouble(textF2.getText());
+       
             
        
-        
-        System.out.println(arcWidth);
-       System.out.println(arcHeight);
-         
+       System.out.println("Power: " + power);
+       
+       System.out.println("Width: " + arcWidth);
+       System.out.println("Height: "+ arcHeight);
+       System.out.println(); //space
          
          
      }
-    
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
+    numSlider = (int)slider.getValue();
+    numLabel.setText(Integer.toString(numSlider) + " N"); 
+        
+        slider.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                numSlider = (int)slider.getValue();
+                numLabel.setText(Integer.toString(numSlider) + " N"); 
+            }
+             
+        });
+    }
+       
 }

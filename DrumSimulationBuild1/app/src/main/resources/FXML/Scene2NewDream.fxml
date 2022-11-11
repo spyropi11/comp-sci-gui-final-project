@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
@@ -20,7 +21,7 @@
                <children>
                   <Label prefHeight="19.0" prefWidth="141.0" text="Desigining the drum : ">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Calibri" size="15.0" />
                      </font>
                      <VBox.margin>
                         <Insets top="-60.0" />
@@ -28,8 +29,14 @@
                   </Label>
                   <MenuButton mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
                     <items>
-                      <MenuItem fx:id="rectangle" mnemonicParsing="false" text="Rectangle" />
-                      <MenuItem fx:id="square" mnemonicParsing="false" text="Square" />
+                      <MenuItem fx:id="rectangle" mnemonicParsing="false" text="Rectangle">
+                           <graphic>
+                              <Rectangle arcHeight="4.0" arcWidth="8.0" fill="#40a813" height="20.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                           </graphic></MenuItem>
+                      <MenuItem fx:id="square" mnemonicParsing="false" text="Square">
+                           <graphic>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                           </graphic></MenuItem>
                     </items>
                      <VBox.margin>
                         <Insets top="30.0" />
@@ -43,11 +50,12 @@
                   <TextField fx:id="textF1" prefHeight="8.0" prefWidth="101.0" />
                   <Label text="Select Lenght : " />
                   <TextField fx:id="textF2" />
-                  <Label prefHeight="17.0" prefWidth="47.0" text="Power">
+                  <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Label>
+                  <Label fx:id="numLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="137.0" text="Label" />
                   <Slider fx:id="slider" showTickLabels="true" showTickMarks="true" />
                   <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
                      <VBox.margin>
