@@ -188,7 +188,7 @@ public class Point extends Sphere {
     }
     
     public void updateColour() {
-        int temperature = (int)(255*Math.tanh(COLOUR_NORMALIZATION*position));
+        int temperature = (int)(255*Math.atan(COLOUR_NORMALIZATION*position)/(Math.PI/2));
         if(temperature > 0) {
             material.setDiffuseColor(Color.rgb(0, 0, temperature));
             material.setSpecularColor(Color.rgb(0, 0, temperature));
