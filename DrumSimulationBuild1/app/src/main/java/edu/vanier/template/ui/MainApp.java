@@ -1,7 +1,8 @@
 package edu.vanier.template.ui;
 
+import drumshapes.RectangleDrum;
 import edu.vanier.template.controller.MainAppController;
-import edu.vanier.template.tests.Tester;
+import edu.vanier.template.simulation.Simulation;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +48,7 @@ public class MainApp extends Application {
         
 
         
-     //   Tester tester = new Tester(stage);
+        // Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum());
         
     }
     

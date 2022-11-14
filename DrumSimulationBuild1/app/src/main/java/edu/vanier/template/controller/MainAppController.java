@@ -1,7 +1,7 @@
 package edu.vanier.template.controller;
 
 import edu.vanier.template.elements.Point;
-import edu.vanier.template.tests.Tester;
+import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

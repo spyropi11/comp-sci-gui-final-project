@@ -1,7 +1,7 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.linear.Matrix;
-import edu.vanier.template.tests.Tester;
+import edu.vanier.template.simulation.Simulation;
 import javafx.animation.AnimationTimer;
 
 public class Physics {
@@ -17,7 +17,7 @@ public class Physics {
     private double cX;
     private double cY;
     
-    final Tester tester;
+    final Simulation tester;
     
     public Point[][] points;
     
@@ -26,7 +26,7 @@ public class Physics {
     //PhongMaterial mRed = new PhongMaterial(Color.LIGHTPINK);
     //PhongMaterial mBlack = new PhongMaterial(Color.BLACK);
     
-    public Physics(Tester tester) {
+    public Physics(Simulation tester) {
         this.tester = tester;
         drummer = new DrumCreator();
     }

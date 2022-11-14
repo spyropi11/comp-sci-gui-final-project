@@ -1,5 +1,6 @@
-package edu.vanier.template.tests;
+package edu.vanier.template.simulation;
 
+import drumshapes.Formable;
 import edu.vanier.template.elements.*;
 import edu.vanier.template.linear.Matrix;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -28,10 +28,10 @@ import javafx.stage.WindowEvent;
  * @see: Build Scripts/build.gradle
  * @author Sleiman Rabah.
  */
-public class Tester {
+public class Simulation {
 
     /**
-    * Binds a Physics object to this Tester object.
+    * Binds a Physics object to this Simulation object.
     */
     private final Physics physics = new Physics(this);
     /**
@@ -39,19 +39,19 @@ public class Tester {
     * For example, if the animation only looks good when k is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when k is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
     */
-    private final double NATURAL_SPRING_CONSTANT = 1;
+    public final static double NATURAL_SPRING_CONSTANT = 1;
     /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when m is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
     */
-    private final double NATURAL_MASS = 1;
+    public final static double NATURAL_MASS = 1;
     /**
     * When defining the decay, we can make it a multiple of this constant.
     * For example, if the animation only looks good when decay is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when decay is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
     */
-    private final double NATURAL_DECAY = 0.1;
+    public final static double NATURAL_DECAY = 0.1;
     /**
     * Root node of scene.
     */
@@ -78,7 +78,7 @@ public class Tester {
     */
     private double WIDTH;
     private double HEIGHT;
-    private double RADIUS;
+    public final static double RADIUS = 2;
     
     
     //These are number of points, not pixels.
@@ -93,16 +93,16 @@ public class Tester {
         return points;
     }
     
-    
     /**
-     * @param stage
+     * @param stage The stage of the simulation
+     * @param formable 
      * 
      */
-    public Tester(Stage stage) throws Exception {
+    public Simulation(Stage stage, Formable formable) {
+        // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
         
         WIDTH = 700;
         HEIGHT = 700;
-        RADIUS = 2;
         
         
         
@@ -149,10 +149,17 @@ public class Tester {
             
         }
         
-        
         //Add points to mesh
         physics.setPoints(points);
+        
+        // TODO:
+        // physics.setPoints(formable.formMesh());
+        // physics.getDrummer().addSprings(formable.formDrum());
+        // Because these methods return arrays (and irregular shapes wouldn't work well with 2d arrays anyways, we should modify the gaussian pulse so that
+        // it doesn't refer to coordinates (i,j), but just connections to points.
+        
         physics.getDrummer().addToMesh(points);
+        
         
         //Set x coordinates
         for(int j = 0; j < MESH_HEIGHT; j++){
