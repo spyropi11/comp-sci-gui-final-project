@@ -48,18 +48,6 @@ public class Simulation {
     */
     private final CameraLine cameraLine;
     /**
-    * Length of the camera line.
-    */
-    public final static double CAMERA_LINE_LENGTH = 15;
-    /**
-    * Maximum length of the camera line.
-    */
-    public final static double CAMERA_LINE_LIMIT = 30;
-    /**
-    * Constant involved in calculating length of camera line when displayed on screen.
-    */
-    public final static double CAMERA_LINE_DIST = 0.02;
-    /**
      * Boolean denoting when the camera line is displayed.
      */
     private boolean display = true;

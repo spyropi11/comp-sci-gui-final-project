@@ -2,9 +2,6 @@ package edu.vanier.template.linear;
 
 import edu.vanier.template.elements.Physics;
 import edu.vanier.template.elements.Point;
-import static edu.vanier.template.simulation.Simulation.CAMERA_LINE_DIST;
-import static edu.vanier.template.simulation.Simulation.CAMERA_LINE_LENGTH;
-import static edu.vanier.template.simulation.Simulation.CAMERA_LINE_LIMIT;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -32,46 +29,60 @@ public class CameraLine extends Line {
         
         double[] projN = matrix.act(physics.getN());
         
-        double[] end = {CAMERA_LINE_LENGTH*projN[0], CAMERA_LINE_LENGTH*projN[1]};
-        
-        double[] nend = new double[2];
-        
-        nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
-        nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
+        double[] end = {projN[0], projN[1]};
         
         if(Point.crossProduct(physics.getAlpha(), physics.getBeta())[2]>=0) {
-            base.setEndX(nend[0] + oX);
-            base.setEndY(nend[1] + oY);
+            base.setEndX(end[0] + oX);
+            base.setEndY(end[1] + oY);
         }
         else {
-            base.setEndX(-nend[0] + oX);
-            base.setEndY(-nend[1] + oY);
+            base.setEndX(-end[0] + oX);
+            base.setEndY(-end[1] + oY);
         }
-        
-        boolean onVerticalWall = true;
         
         if(base.getEndX() == oX && base.getEndY() == oY) {
             return;
         }
         
-        try {
-            if(Math.abs((base.getEndY() - base.getStartY())/(base.getEndX() - base.getStartX())) > 1) {
-                onVerticalWall = false;
-            }
-        } catch(ArithmeticException e) {
-            onVerticalWall = false;
+        int wall; // 0: right wall, 1: top wall, 2: left wall, 3: bottom wall.
+        double dx = base.getEndX() - base.getStartX();
+        double dy = base.getEndY() - base.getStartY();
+        
+        if(dx > 0 && dy > 0) {
+            wall = dx > dy ? 0 : 1;
+        } else if(dx <= 0 && dy > 0) {
+            wall = -dx > dy ? 2 : 1;
+        } else if(dx <= 0 && dy <= 0) {
+            wall = -dx > -dy ? 2 : 3;
+        } else {
+            wall = dx > -dy ? 0 : 3;
         }
         
-        if(onVerticalWall) {
-            setStartX(0);
-            setEndX(2*oX);
-            setStartY(getLineBoundX(base, 0));
-            setEndY(getLineBoundX(base, 2*oX));
-        } else {
-            setStartY(0);
-            setEndY(2*oX);
-            setStartX(getLineBoundY(base, 0));
-            setEndX(getLineBoundY(base, 2*oY));
+        switch(wall) {
+            case 0 -> {
+                setStartX(0);
+                setEndX(2*oX);
+                setStartY(getLineBoundX(base, 2*oX));
+                setEndY(getLineBoundX(base, 0));
+            }
+            case 1 -> {
+                setStartY(2*oY);
+                setEndY(0);
+                setStartX(getLineBoundY(base, 0));
+                setEndX(getLineBoundY(base, 2*oY));
+            }
+            case 2 -> {
+                setStartX(2*oX);
+                setEndX(0);
+                setStartY(getLineBoundX(base, 0));
+                setEndY(getLineBoundX(base, 2*oX));
+            }
+            case 3 -> {
+                setStartY(0);
+                setEndY(2*oY);
+                setStartX(getLineBoundY(base, 2*oY));
+                setEndX(getLineBoundY(base, 0));
+            }
         }
         
         Stop[] stops = new Stop[] {
