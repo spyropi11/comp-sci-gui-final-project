@@ -116,7 +116,7 @@ public class Point extends Sphere {
         this.mass = mass;
     }
     
-    public boolean getOnEdge() {
+    public boolean isOnEdge() {
         return onEdge;
     }
     

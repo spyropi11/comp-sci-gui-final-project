@@ -60,23 +60,6 @@ public class Physics {
             point.updatePosition();
             point.updateColour();
             point.projection(p, alpha, beta, cX, cY);
-            /*
-            * Coloring is done in Point class
-            if(point.getPosition() < 0){
-                point.setMaterial(mRed);
-                
-            }
-            else if(point.getPosition() > 0){
-                
-                point.setMaterial(mBlue);
-                
-            }
-            else{
-                
-                point.setMaterial(mBlack);
-                
-            }
-            */
         }
     }
     
@@ -95,8 +78,6 @@ public class Physics {
                 double shiftX = point.getX()/4;
                 double shiftZ = point.getY()/4;
 
-                int counter = 0;
-
                 /*amplitude and spread per click will be variables that can be changed 
                 by the user after further implementation*/
                 /*TODO This doesn't work. I think it would be better if points
@@ -105,13 +86,11 @@ public class Physics {
                 for (int j = 0; j < simulation.MESH_HEIGHT; j++){
                     for(int i = 0; i < simulation.MESH_WIDTH; i++) {
 
-                        if(points[i][j].getOnEdge() ==  false){
+                        if(!points[i][j].isOnEdge()){
 
                             points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftZ, 2)))/spread));
 
                         }
-
-                        counter++;
                     }
 
 

@@ -107,114 +107,19 @@ public class Simulation {
         root.setPrefHeight(700);
         physics = new Physics(this);
         
-        //Create points
+        points = formable.formMesh();
+        ArrayList<Spring> drum = formable.formDrum();
         
-        
-        
-        for (int j = 0; j < MESH_HEIGHT; j++){
-            
-            for(int i = 0; i < MESH_WIDTH; i++) {
-                
-                if(j == 0 || j == MESH_HEIGHT - 1) {
-                    //This puts two points on the edges and sets their onEdge value to true
-                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
-                    points[i][j].setOnEdge(true);
-                    
-                }
-                
-                else if(i == 0 || i == MESH_WIDTH-1) {
-                    //This puts two points on the edges and sets their onEdge value to true
-                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
-                    points[i][j].setOnEdge(true);
-                    
-                }
-                
-                
-
-                //2d Gausian initial condition (bell curve type shape) 
-                //u(x,y,t=0)= Amplitude*exp(-((x+shift)^2+(y+ shift)^2)/(spread)
-                else{
-                    
-                    
-                    //points[counter] = new Point(2,1,(amplitude*Math.exp(-((Math.pow(i - shift, 2))+(Math.pow(j - shift, 2)))/spread)),NATURAL_MASS, false);
-                    points[i][j] = new Point(RADIUS, 1, 0,NATURAL_MASS);
-                    points[i][j].setOnEdge(false);
-                }
-                
-                
-                
-                //points[i].setMass(NATURAL_MASS*(1+i/50));
-                
-            }
-            
-        }
-        
-        //Add points to mesh
         physics.setPoints(points);
-        
-        // TODO:
-        // physics.setPoints(formable.formMesh());
-        // physics.getDrummer().addSprings(formable.formDrum());
-        
         physics.getDrummer().addToMesh(points);
-        
-        
-        //Set x coordinates
-        for(int j = 0; j < MESH_HEIGHT; j++){
-            
-            for(int i = 0; i < MESH_WIDTH; i++) {
-                
-                //sets up points every 2 units (not sure if its pixels or not)
-                points[i][j].setup(setX(i), setY(j));
-            }
-            
-        }
-        
-        
-        //Create springs
-        ArrayList<Spring> springs = new ArrayList<>();
-        
-        for(int i = 0; i < MESH_WIDTH; i++){
-            
-            for(int j = 0; j < MESH_HEIGHT-1; j++){
-                
-                try {
-                    springs.add(new Spring(points[i][j], points[i][j+1],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {
-                    
-                }
-                try {
-                    springs.add(new Spring(points[i][j], points[i][j-1],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {
-                    
-                }
-                try {
-                    springs.add(new Spring(points[i][j], points[i+1][j],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {
-                    
-                }
-                try {
-                    springs.add(new Spring(points[i][j], points[i-1][j],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {
-                    
-                }
-                
-            }
-            
-        }
-        
-        
-        /*for(int i = 1; i < points.length; i++) {
-            springs[i] = new Spring(points[i], points[i-1], 2*NATURAL_SPRING_CONSTANT);
-        }*/
-        
-        //Add springs to drum
-        for(Spring spring : springs) {
+        for(Spring spring : drum) {
             physics.getDrummer().addSprings(spring);
         }
-        
         for(Point[] pointList : points) {
             root.getChildren().addAll(Arrays.asList(pointList));
+            for(Point point : pointList) {
+                point.setup(point.getX() + WIDTH/2, point.getY() + HEIGHT/2);
+            }
         }
         
         cameraLine = new CameraLine(physics);
