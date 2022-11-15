@@ -4,11 +4,11 @@ import edu.vanier.template.linear.Matrix;
 import edu.vanier.template.simulation.Simulation;
 import javafx.animation.AnimationTimer;
 
-public class Physics {
+public final class Physics {
     
     DrumCreator drummer;
     
-    private double[] p = {0, 0, 0};
+    private final double[] p = {0, 0, 0};
     private double[] alpha = {1, 0, 0};
     private double[] beta = {0, 1, 0};
     private double[] n = {0, 0, 1};
@@ -26,8 +26,8 @@ public class Physics {
     //PhongMaterial mRed = new PhongMaterial(Color.LIGHTPINK);
     //PhongMaterial mBlack = new PhongMaterial(Color.BLACK);
     
-    public Physics(Simulation tester) {
-        this.simulation = tester;
+    public Physics(Simulation simulation) {
+        this.simulation = simulation;
         drummer = new DrumCreator();
         cX = simulation.getRoot().getPrefWidth()/2;
         cY = simulation.getRoot().getPrefHeight()/2;
@@ -47,12 +47,7 @@ public class Physics {
     
     public void update() {
         simulation.getCameraLine().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
-        /*
-        * This shows springs
-        for(Spring spring : drummer.drum) {
-            spring.updateLine();
-        }
-        */
+        
         for(Point point : drummer.mesh) {
             point.updateVelocity();
         }

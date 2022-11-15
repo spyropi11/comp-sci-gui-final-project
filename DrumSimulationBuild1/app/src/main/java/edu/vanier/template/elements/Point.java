@@ -42,9 +42,9 @@ public class Point extends Sphere {
     }
     
     /**
-     * Positions the point in 1D
-     * @param x 
-     * @param y
+     * Positions the point in 3D.
+     * @param x The X-coordinate.
+     * @param y The Y-coordinate.
      */
     public void setup(double x, double y) {
         this.x = x;

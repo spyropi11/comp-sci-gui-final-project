@@ -15,13 +15,6 @@ import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-/**
- * This is a JavaFX project template to be used for creating GUI applications.
- * JavaFX 18 is already linked to this project in the build.gradle file.
- * @link: https://openjfx.io/javadoc/18/
- * @see: Build Scripts/build.gradle
- * @author Sleiman Rabah.
- */
 public class Simulation {
 
     /**
@@ -83,14 +76,6 @@ public class Simulation {
     public int MESH_WIDTH = 50;
     public int MESH_HEIGHT = 20;
     
-    
-    private int nOfPoints = MESH_WIDTH*MESH_HEIGHT;
-    private Point[][] points = new Point[MESH_WIDTH][MESH_HEIGHT];
-
-    public Point[][] getPoints() {
-        return points;
-    }
-    
     /**
      * @param stage The stage of the simulation
      * @param formable 
@@ -107,7 +92,7 @@ public class Simulation {
         root.setPrefHeight(700);
         physics = new Physics(this);
         
-        points = formable.formMesh();
+        Point[][] points = formable.formMesh();
         ArrayList<Spring> drum = formable.formDrum();
         
         physics.setPoints(points);
@@ -125,7 +110,6 @@ public class Simulation {
         cameraLine = new CameraLine(physics);
         
         Scene scene = new Scene(root, WIDTH,HEIGHT);
-        root.getChildren().addAll(physics.getDrummer().getDrum());
         cameraLine.setStrokeWidth(1);
         root.getChildren().add(cameraLine);
         scene.setFill(Color.AZURE);
