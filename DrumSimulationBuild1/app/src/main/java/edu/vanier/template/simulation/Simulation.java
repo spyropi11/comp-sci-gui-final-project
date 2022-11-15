@@ -2,21 +2,15 @@ package edu.vanier.template.simulation;
 
 import drumshapes.Formable;
 import edu.vanier.template.elements.*;
-import edu.vanier.template.linear.Matrix;
+import edu.vanier.template.linear.CameraLine;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.application.Platform;
-import javafx.scene.Camera;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -33,7 +27,7 @@ public class Simulation {
     /**
     * Binds a Physics object to this Simulation object.
     */
-    private final Physics physics = new Physics(this);
+    private final Physics physics;
     /**
     * When defining the spring constant, we can make it a multiple of this constant.
     * For example, if the animation only looks good when k is in the 1000s, then we can make this constant = 1000.
@@ -55,23 +49,23 @@ public class Simulation {
     /**
     * Root node of scene.
     */
-    private Pane root;
+    private final Pane root;
     /**
     * Line that makes orientation of the drum when displayed clearer.
     */
-    private Line cameraLine = new Line();
+    private final CameraLine cameraLine;
     /**
     * Length of the camera line.
     */
-    private final double CAMERA_LINE_LENGTH = 15;
+    public final static double CAMERA_LINE_LENGTH = 15;
     /**
     * Maximum length of the camera line.
     */
-    private final double CAMERA_LINE_LIMIT = 30;
+    public final static double CAMERA_LINE_LIMIT = 30;
     /**
     * Constant involved in calculating length of camera line when displayed on screen.
     */
-    private final double CAMERA_LINE_DIST = 0.02;
+    public final static double CAMERA_LINE_DIST = 0.02;
     
     /**
     * Width of drum.
@@ -104,8 +98,10 @@ public class Simulation {
         WIDTH = 700;
         HEIGHT = 700;
         
-        
-        
+        root = new Pane();
+        root.setPrefWidth(700);
+        root.setPrefHeight(700);
+        physics = new Physics(this);
         
         //Create points
         
@@ -213,14 +209,11 @@ public class Simulation {
             physics.getDrummer().addSprings(spring);
         }
         
-        
-        root = new Pane();
-        
         for(Point[] pointList : points) {
-            for(Point point : pointList) {
-                root.getChildren().add(point);
-            }
+            root.getChildren().addAll(Arrays.asList(pointList));
         }
+        
+        cameraLine = new CameraLine(physics);
         
         Scene scene = new Scene(root, WIDTH,HEIGHT);
         root.getChildren().addAll(physics.getDrummer().getDrum());
@@ -229,8 +222,8 @@ public class Simulation {
         scene.setFill(Color.AZURE);
         
         //Set camera and camera origin.
-        double oX = (setX(0)+setX(MESH_WIDTH))/2;
-        double oY = (setY(0)+setY(MESH_HEIGHT))/2;
+        double oX = root.getPrefWidth()/2;
+        double oY = root.getPrefHeight()/2;
         physics.setOrigin(oX, oY, 0);
         physics.setCameraCentre(oX, oY);
         Sphere cameraCentre = new Sphere(4, 4);
@@ -293,145 +286,16 @@ public class Simulation {
         return root;
     }
     
-    public void displayCameraLine(Pane root, double oX, double oY, boolean display) {
-        if(!display){return;}
-        
-        cameraLine.setStartX(oX);
-        cameraLine.setStartY(oY);
-        
-        double a0 = physics.getAlpha()[0]/Point.norm(physics.getAlpha());
-        double a1 = physics.getAlpha()[1]/Point.norm(physics.getAlpha());
-        double a2 = physics.getAlpha()[2]/Point.norm(physics.getAlpha());
-        double b0 = physics.getBeta()[0]/Point.norm(physics.getBeta());
-        double b1 = physics.getBeta()[1]/Point.norm(physics.getBeta());
-        double b2 = physics.getBeta()[2]/Point.norm(physics.getBeta());
-        
-        double[][] m = new double[2][3];
-        
-        if(a0 != 0) {
-            if(b0 != 0) {
-                if(b1 != ((a1*b0)/a0)) {
-                    double f = b1/b0 - a1/a0;
-                    m[0][0] = 1/a0 - (a1/a0)*(-1/(f*a0));
-                    m[0][1] = -1/(f*a0);
-                    m[0][2] = 0;
-                    m[1][0] = -a1/(f*a0*b0);
-                    m[1][1] = 1/(f*b0);
-                    m[1][2] = 0;
-                }
-                else {
-                    double c = b2/b0 - a2/a0;
-                    m[0][0] = 1/a0 + (a2/a0)*(1/a0*c);
-                    m[0][1] = 0;
-                    m[0][2] = -1/(a0*c);
-                    m[1][0] = -a2/(a0*b0*c);
-                    m[1][1] = 0;
-                    m[1][2] = 1/(b0*c);
-                }
-            }
-            else {
-                if(b1 != 0) {
-                    m[0][0] = 1/a0;
-                    m[0][1] = 0;
-                    m[0][2] = 0;
-                    m[1][0] = -a1/(a0*b1);
-                    m[1][1] = 1/b1;
-                    m[1][2] = 0;
-                }
-                else {
-                    m[0][0] = 1/a0;
-                    m[0][1] = 0;
-                    m[0][2] = 0;
-                    m[1][0] = -a2/(a0*b2);
-                    m[1][1] = 0;
-                    m[1][2] = 1/b2;
-                }
-            }
-        }
-        else {
-            if(b0 != 0) {
-                if(a1 != 0) {
-                    m[0][0] = -(b1/a1*b0);
-                    m[0][1] = 1/a1;
-                    m[0][2] = 0;
-                    m[1][0] = 1/b0;
-                    m[1][1] = 0;
-                    m[1][2] = 0;
-                }
-                else {
-                    m[0][0] = -b2/(a2*b0);
-                    m[0][1] = 0;
-                    m[0][2] = 1/a2;
-                    m[1][0] = 1/b1;
-                    m[1][1] = 0;
-                    m[1][2] = 0;
-                }
-            }
-            else {
-                if(a1 != 0) {
-                    if(b1 != 0) {
-                        m[0][0] = 0;
-                        m[0][1] = (a2*b2 - a1*b2 - a2*b1)/(a1*(a2*b2 - a1*b2));
-                        m[0][2] = b1/(a2*b2 - a1*b2);
-                        m[1][0] = 0;
-                        m[1][1] = -a2/(a1*b2 - a2*b1);
-                        m[1][2] = a1/(a1*b2 - a2*b1);
-                    }
-                    else {
-                        m[0][0] = 0;
-                        m[0][1] = 1/a1;
-                        m[0][2] = 0;
-                        m[1][0] = 0;
-                        m[1][1] = -a2/(a1*b2);
-                        m[1][2] = 1/b2;
-                    }
-                }
-                else {
-                    m[0][0] = 0;
-                    m[0][1] = -b2/(b1*a1);
-                    m[0][2] = 1/a2;
-                    m[1][0] = 0;
-                    m[1][1] = 1/b1;
-                    m[1][2] = 0;
-                }
-            }
-        }
-        
-        Matrix matrix = new Matrix(m);
-        double[] projN = matrix.act(physics.getN());
-        
-        double[] end = {CAMERA_LINE_LENGTH*projN[0], CAMERA_LINE_LENGTH*projN[1]};
-        
-        double[] nend = new double[2];
-        
-        nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
-        nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
-        
-        if(Point.crossProduct(physics.getAlpha(), physics.getBeta())[2]>=0) {
-            cameraLine.setEndX(nend[0] + oX);
-            cameraLine.setEndY(nend[1] + oY);
-        }
-        else {
-            cameraLine.setEndX(-nend[0] + oX);
-            cameraLine.setEndY(-nend[1] + oY);
-        }
-        
-        Stop[] stops = new Stop[] {
-            new Stop(0, Color.YELLOW),
-            new Stop(1, Color.GREEN)
-        };
-        LinearGradient gradient = new LinearGradient(cameraLine.getStartX(), cameraLine.getStartY(), cameraLine.getEndX(), cameraLine.getEndY(), false, CycleMethod.NO_CYCLE, stops);
-        cameraLine.setStroke(gradient);
-    }
-    
-    
-    
     public double setX(int i) {
         return (WIDTH/2)-RADIUS*MESH_WIDTH+2*RADIUS*i;
     }
     
     public double setY(int j) {
         return (HEIGHT/2)-RADIUS*MESH_HEIGHT+2*RADIUS*j;
+    }
+    
+    public CameraLine getCameraLine() {
+        return cameraLine;
     }
     
 }

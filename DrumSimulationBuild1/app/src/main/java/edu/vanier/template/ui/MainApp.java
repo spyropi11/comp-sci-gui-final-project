@@ -22,7 +22,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-    
+    /*
         // Load FXML file on Netbeans
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainWindowDrumSim.fxml"));
 
@@ -46,9 +46,9 @@ public class MainApp extends Application {
         //--> Step 4) Show the window.
         stage.show();
         
-
+*/
         
-        // Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum());
+         Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(50, 50));
         
     }
     

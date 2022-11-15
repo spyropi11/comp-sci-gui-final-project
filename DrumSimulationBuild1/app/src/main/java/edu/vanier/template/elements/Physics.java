@@ -17,7 +17,7 @@ public class Physics {
     private double cX;
     private double cY;
     
-    final Simulation tester;
+    final Simulation simulation;
     
     public Point[][] points;
     
@@ -27,8 +27,10 @@ public class Physics {
     //PhongMaterial mBlack = new PhongMaterial(Color.BLACK);
     
     public Physics(Simulation tester) {
-        this.tester = tester;
+        this.simulation = tester;
         drummer = new DrumCreator();
+        cX = simulation.getRoot().getPrefWidth()/2;
+        cY = simulation.getRoot().getPrefHeight()/2;
     }
     
     public void setPoints(Point[][] points) {
@@ -43,7 +45,7 @@ public class Physics {
     };
     
     public void update() {
-        tester.displayCameraLine(tester.getRoot(), cX, cY, true);
+        simulation.getCameraLine().display(simulation.getRoot(), cX, cY, true);
         /*
         * This shows springs
         for(Spring spring : drummer.drum) {
@@ -95,8 +97,8 @@ public class Physics {
                 /*TODO This doesn't work. I think it would be better if points
                 was a two-dimensional array instead of a one-dimensional array. That way, it's easier to retrieve a specific point,
                 or points next to the point clicked on.*/
-                for (int j = 0; j < tester.MESH_HEIGHT; j++){
-                    for(int i = 0; i < tester.MESH_WIDTH; i++) {
+                for (int j = 0; j < simulation.MESH_HEIGHT; j++){
+                    for(int i = 0; i < simulation.MESH_WIDTH; i++) {
                         
                         if(points[i][j].getOnEdge() ==  false){
                             
