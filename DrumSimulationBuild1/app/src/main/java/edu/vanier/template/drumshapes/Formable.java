@@ -1,4 +1,4 @@
-package drumshapes;
+package edu.vanier.template.drumshapes;
 
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.elements.Spring;

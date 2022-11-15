@@ -1,4 +1,4 @@
-package drumshapes;
+package edu.vanier.template.drumshapes;
 
 public class Distribution {
     

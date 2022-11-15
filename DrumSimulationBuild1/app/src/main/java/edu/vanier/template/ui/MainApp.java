@@ -1,6 +1,6 @@
 package edu.vanier.template.ui;
 
-import drumshapes.RectangleDrum;
+import edu.vanier.template.drumshapes.RectangleDrum;
 import edu.vanier.template.controller.MainAppController;
 import edu.vanier.template.simulation.Simulation;
 import javafx.application.Application;
