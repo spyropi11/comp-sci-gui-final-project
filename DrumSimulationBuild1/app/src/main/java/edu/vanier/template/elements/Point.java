@@ -27,18 +27,6 @@ public class Point extends Sphere {
     public Point() {
         super();
     }
-
-    /**
-     * 
-     * @param d Radius
-     * @param position Starting point of the node
-     * @param mass Mass of node
-     */
-    public Point(double d, double position, double mass) {
-        super(d);
-        this.position = position;
-        this.mass = mass;
-    }
     
     /**
      * 

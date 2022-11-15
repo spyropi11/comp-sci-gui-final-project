@@ -66,6 +66,10 @@ public class Simulation {
     * Constant involved in calculating length of camera line when displayed on screen.
     */
     public final static double CAMERA_LINE_DIST = 0.02;
+    /**
+     * Boolean denoting when the camera line is displayed.
+     */
+    private boolean display = true;
     
     /**
     * Width of drum.
@@ -296,6 +300,14 @@ public class Simulation {
     
     public CameraLine getCameraLine() {
         return cameraLine;
+    }
+    
+    public boolean getDisplay() {
+        return display;
+    }
+    
+    public void setDisplay(boolean display) {
+        this.display = display;
     }
     
 }
