@@ -23,9 +23,74 @@ public class CameraLine extends Line {
     public void display(Pane root, double oX, double oY, boolean display) {
         if(!display){return;}
         
-        setStartX(oX);
-        setStartY(oY);
+        Line base = new Line();
         
+        base.setStartX(oX);
+        base.setStartY(oY);
+        
+        Matrix matrix = getProjectionMatrix();
+        
+        double[] projN = matrix.act(physics.getN());
+        
+        double[] end = {CAMERA_LINE_LENGTH*projN[0], CAMERA_LINE_LENGTH*projN[1]};
+        
+        double[] nend = new double[2];
+        
+        nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
+        nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
+        
+        if(Point.crossProduct(physics.getAlpha(), physics.getBeta())[2]>=0) {
+            base.setEndX(nend[0] + oX);
+            base.setEndY(nend[1] + oY);
+        }
+        else {
+            base.setEndX(-nend[0] + oX);
+            base.setEndY(-nend[1] + oY);
+        }
+        
+        boolean onVerticalWall = true;
+        
+        if(base.getEndX() == oX && base.getEndY() == oY) {
+            return;
+        }
+        
+        try {
+            if(Math.abs((base.getEndY() - base.getStartY())/(base.getEndX() - base.getStartX())) > 1) {
+                onVerticalWall = false;
+            }
+        } catch(ArithmeticException e) {
+            onVerticalWall = false;
+        }
+        
+        if(onVerticalWall) {
+            setStartX(0);
+            setEndX(2*oX);
+            setStartY(getLineBoundX(base, 0));
+            setEndY(getLineBoundX(base, 2*oX));
+        } else {
+            setStartY(0);
+            setEndY(2*oX);
+            setStartX(getLineBoundY(base, 0));
+            setEndX(getLineBoundY(base, 2*oY));
+        }
+        
+        Stop[] stops = new Stop[] {
+            new Stop(0, Color.BLUE),
+            new Stop(1, Color.RED)
+        };
+        LinearGradient gradient = new LinearGradient(getStartX(), getStartY(), getEndX(), getEndY(), false, CycleMethod.NO_CYCLE, stops);
+        setStroke(gradient);
+    }
+    
+    private double getLineBoundX(Line base, double x) {
+        return base.getStartY() + (x - base.getStartX())*(base.getEndY() - base.getStartY())/(base.getEndX() - base.getStartX());
+    }
+    
+    private double getLineBoundY(Line base, double y) {
+        return base.getStartX() + (y - base.getStartY())*(base.getEndX() - base.getStartX())/(base.getEndY() - base.getStartY());
+    }
+    
+    private Matrix getProjectionMatrix() {
         double a0 = physics.getAlpha()[0]/Point.norm(physics.getAlpha());
         double a1 = physics.getAlpha()[1]/Point.norm(physics.getAlpha());
         double a2 = physics.getAlpha()[2]/Point.norm(physics.getAlpha());
@@ -124,31 +189,7 @@ public class CameraLine extends Line {
             }
         }
         
-        Matrix matrix = new Matrix(m);
-        double[] projN = matrix.act(physics.getN());
-        
-        double[] end = {CAMERA_LINE_LENGTH*projN[0], CAMERA_LINE_LENGTH*projN[1]};
-        
-        double[] nend = new double[2];
-        
-        nend[0] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[0]);
-        nend[1] = CAMERA_LINE_LIMIT*Math.tanh(CAMERA_LINE_DIST*end[1]);
-        
-        if(Point.crossProduct(physics.getAlpha(), physics.getBeta())[2]>=0) {
-            setEndX(nend[0] + oX);
-            setEndY(nend[1] + oY);
-        }
-        else {
-            setEndX(-nend[0] + oX);
-            setEndY(-nend[1] + oY);
-        }
-        
-        Stop[] stops = new Stop[] {
-            new Stop(0, Color.YELLOW),
-            new Stop(1, Color.GREEN)
-        };
-        LinearGradient gradient = new LinearGradient(getStartX(), getStartY(), getEndX(), getEndY(), false, CycleMethod.NO_CYCLE, stops);
-        setStroke(gradient);
+        return new Matrix(m);
     }
     
 }
