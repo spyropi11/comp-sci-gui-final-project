@@ -31,10 +31,10 @@ public abstract class Formable {
      */
     public enum Arrangement {
         CARTESIAN,
-        CROSSED,
-        CROSSED_INDEPENDENT,
-        HORIZONTAL_INDEPENDENT,
-        VERTICAL_INDEPENDENT
+        PARALLEL,
+        TRIANGULAR,
+        CROSSED_THIN,
+        CROSSED_THICK
     }
     /**
      * Creates a mesh of points in the selected shape.

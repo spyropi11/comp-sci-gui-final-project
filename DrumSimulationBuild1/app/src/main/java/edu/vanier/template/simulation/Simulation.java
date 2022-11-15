@@ -53,20 +53,30 @@ public class Simulation {
     private boolean display = true;
     
     /**
-    * Width of drum.
+    * Width of root pane.
     */
-    private double WIDTH;
-    private double HEIGHT;
+    private final double WIDTH;
+    /**
+     * Height of root pane.
+     */
+    private final double HEIGHT;
+    /**
+     * Initial radius of each point.
+     */
     public final static double RADIUS = 2;
-    
-    
-    //These are number of points, not pixels.
-    public int MESH_WIDTH = 50;
-    public int MESH_HEIGHT = 20;
+    /**
+     * Number of points horizontally.
+     */
+    public static int MESH_WIDTH;
+    /**
+     * Number of points vertically.
+     */
+    public static int MESH_HEIGHT;
     
     /**
-     * @param stage The stage of the simulation
-     * @param formable 
+     * Initiates a wave simulation.
+     * @param stage The stage of the simulation.
+     * @param formable The shape of the drum. 
      * 
      */
     public Simulation(Stage stage, Formable formable) {
@@ -81,6 +91,8 @@ public class Simulation {
         physics = new Physics(this);
         
         Point[][] points = formable.formMesh();
+        MESH_WIDTH = points.length;
+        MESH_HEIGHT = points[0].length;
         ArrayList<Spring> drum = formable.formDrum();
         
         physics.setPoints(points);
@@ -165,14 +177,6 @@ public class Simulation {
     
     public Pane getRoot() {
         return root;
-    }
-    
-    public double setX(int i) {
-        return (WIDTH/2)-RADIUS*MESH_WIDTH+2*RADIUS*i;
-    }
-    
-    public double setY(int j) {
-        return (HEIGHT/2)-RADIUS*MESH_HEIGHT+2*RADIUS*j;
     }
     
     public CameraLine getCameraLine() {
