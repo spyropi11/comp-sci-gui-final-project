@@ -155,8 +155,6 @@ public class Simulation {
         // TODO:
         // physics.setPoints(formable.formMesh());
         // physics.getDrummer().addSprings(formable.formDrum());
-        // Because these methods return arrays (and irregular shapes wouldn't work well with 2d arrays anyways, we should modify the gaussian pulse so that
-        // it doesn't refer to coordinates (i,j), but just connections to points.
         
         physics.getDrummer().addToMesh(points);
         
