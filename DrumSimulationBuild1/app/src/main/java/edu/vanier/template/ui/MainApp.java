@@ -40,7 +40,7 @@ public class MainApp extends Application {
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
 
-        stage.setTitle("Drum Simulation");
+        stage.setTitle("Drum S");
         // Resize the stage so the size matches the scene
         stage.sizeToScene();
         //--> Step 4) Show the window.
