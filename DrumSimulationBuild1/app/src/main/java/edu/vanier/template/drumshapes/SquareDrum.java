@@ -22,7 +22,7 @@ public class SquareDrum extends Formable {
      * {@inheritDoc}
      */
     @Override
-    public Point[][] formMesh() {
+    public void generateMesh() {
         Point[][] points = new Point[getMeshSide()][getMeshSide()];
         for (int j = 0; j < getMeshSide(); j++){
             for(int i = 0; i < getMeshSide(); i++) {
@@ -43,32 +43,23 @@ public class SquareDrum extends Formable {
             }
         }
         this.mesh = points;
-        return points;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public ArrayList<Spring> formDrum() {
+    public void generateDrum() {
         ArrayList<Spring> springs = new ArrayList<>();
         for(int i = 0; i < getMeshSide(); i++){
-            for(int j = 0; j < getMeshSide()-1; j++){
-                try {
-                    springs.add(new Spring(mesh[i][j], mesh[i][j+1],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {}
-                try {
-                    springs.add(new Spring(mesh[i][j], mesh[i][j-1],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {}
-                try {
-                    springs.add(new Spring(mesh[i][j], mesh[i+1][j],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {}
-                try {
-                    springs.add(new Spring(mesh[i][j], mesh[i-1][j],2*NATURAL_SPRING_CONSTANT));
-                } catch(ArrayIndexOutOfBoundsException e) {}
+            for(int j = 0; j < getMeshSide(); j++){
+                for(int[] pair : bindSpring(i, j)) {
+                    try {
+                        springs.add(new Spring(mesh[i][j], mesh[pair[0]][pair[1]], 2*NATURAL_SPRING_CONSTANT));
+                    } catch(ArrayIndexOutOfBoundsException e) {}
+                }
             }
         }
         this.drum = springs;
-        return springs;
     }
     /**
      * {@inheritDoc}
@@ -112,7 +103,7 @@ public class SquareDrum extends Formable {
      * {@inheritDoc}
      */
     @Override
-    public void formMass(Distribution mass) {
+    public void generateMass() {
         for(int i = 0; i < getMeshSide(); i++) {
             for(int j = 0; j < getMeshSide(); j++) {
                 mesh[i][j].setMass(distributeIndex(mass, i, j));
@@ -123,7 +114,7 @@ public class SquareDrum extends Formable {
      * {@inheritDoc}
      */
     @Override
-    public void formDecay(Distribution decay) {
+    public void generateDecay() {
         for(int i = 0; i < getMeshSide(); i++) {
             for(int j = 0; j < getMeshSide(); j++) {
                 mesh[i][j].setMass(distributeIndex(decay, i, j));

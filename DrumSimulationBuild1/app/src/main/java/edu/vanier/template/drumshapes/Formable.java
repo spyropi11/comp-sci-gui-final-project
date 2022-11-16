@@ -2,6 +2,7 @@ package edu.vanier.template.drumshapes;
 
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.elements.Spring;
+import edu.vanier.template.simulation.Simulation;
 import java.util.ArrayList;
 
 public abstract class Formable {
@@ -17,7 +18,7 @@ public abstract class Formable {
     /**
      * The arrangement of springs in the drum.
      */
-    protected Arrangement texture;
+    protected Arrangement texture = Arrangement.CARTESIAN;
     /**
      * The mesh created by this formable.
      */
@@ -26,6 +27,14 @@ public abstract class Formable {
      * The drum created by this formable.
      */
     protected ArrayList<Spring> drum;
+    /**
+     * The mass distribution of this mesh.
+     */
+    protected Distribution mass;
+    /**
+     * The decay distribution of this mesh.
+     */
+    protected Distribution decay;
     /**
      * Possibilities for the arrangement of springs in a drum.
      */
@@ -37,15 +46,35 @@ public abstract class Formable {
         CROSSED_THICK
     }
     /**
-     * Creates a mesh of points in the selected shape.
-     * @return An array of points in the mesh.
+     * Forms a shape for the drum with mass and decay distributions.
      */
-    public abstract Point[][] formMesh();
+    public Formable() {
+        double[] defaultMass = {Simulation.NATURAL_MASS};
+        double[] defaultDecay = {Simulation.NATURAL_DECAY};
+        mass = new Distribution(Distribution.Surface.UNIFORM, defaultMass);
+        decay = new Distribution(Distribution.Surface.UNIFORM, defaultDecay);
+    }
+    
+    public Point[][] formMesh() {
+        generateMesh();
+        generateMass();
+        generateDecay();
+        return mesh;
+    }
+    
+    public ArrayList<Spring> formDrum() {
+        generateDrum();
+        return drum;
+    }
+    /**
+     * Creates a mesh of points in the selected shape.
+     */
+    protected abstract void generateMesh();
     /**
      * Creates a drum of springs in the selected shape.
-     * @return An array of springs in the drum.
+     * 
      */
-    public abstract ArrayList<Spring> formDrum();
+    protected abstract void generateDrum();
     /**
      * Determines the total number of points in a mesh of given density.
      * @param density The density of the mesh.
@@ -64,18 +93,103 @@ public abstract class Formable {
         this.density = density;
     }
     /**
-     * Sets the masses of the points in the mesh.
-     * @param mass The particular distribution of masses.
+     * Sets the distribution of mass among the points in the mesh.
+     * @param mass 
      */
-    public abstract void formMass(Distribution mass);
+    public void setMassDistribution(Distribution mass) {
+        this.mass = mass;
+    }
+    /**
+     * Sets the distribution of decay constants among the points in the mesh.
+     * @param decay 
+     */
+    public void setDecayDistribution(Distribution decay) {
+        this.decay = decay;
+    }
+    /**
+     * Sets the arrangement of springs in the drum.
+     * @param texture 
+     */
+    public void setArrangement(Arrangement texture) {
+        this.texture = texture;
+    }
+    /**
+     * Sets the masses of the points in the mesh.
+     */
+    protected abstract void generateMass();
     /**
      * Sets the decay constants of the points in the mesh.
-     * @param decay The particular distribution of decays decay constants.
      */
-    public abstract void formDecay(Distribution decay);
+    protected abstract void generateDecay();
     /**
      * Sets the spring constants of the springs in the drum.
      * @param strength The particular distribution of spring constants.
      */
     public abstract void formStrength(Distribution strength);
+    
+    
+    
+    /**
+     * Returns indices of points to be bound by springs in the arrangement of this drum's texture.
+     * @param i Horizontal index of point.
+     * @param j Vertical index of point.
+     */
+    protected int[][] bindSpring(int i, int j) {
+        switch(texture) {
+            case CARTESIAN -> {
+                int[][] indices = {
+                    {i, j + 1},
+                    {i, j - 1},
+                    {i + 1, j},
+                    {i - 1, j}
+                };
+                return indices;
+            }
+            case PARALLEL -> {
+                int[][] indices = {
+                    {i + 1, j},
+                    {i - 1, j},
+                    {i + 1, j + 1},
+                    {i - 1, j - 1}
+                };
+                return indices;
+            }
+            case TRIANGULAR -> {
+                int[][] indices = {
+                    {i, j + 1},
+                    {i, j - 1},
+                    {i + 1, j},
+                    {i - 1, j},
+                    {i + 1, j + 1},
+                    {i - 1, j - 1}
+                };
+                return indices;
+            }
+            case CROSSED_THIN -> {
+                int[][] indices = {
+                    {i, j + 1},
+                    {i, j - 1},
+                    {i + 1, j + 1},
+                    {i + 1, j - 1},
+                    {i - 1, j + 1},
+                    {i - 1, j - 1},
+                };
+                return indices;
+            }
+            case CROSSED_THICK -> {
+                int[][] indices = {
+                    {i, j + 1},
+                    {i, j - 1},
+                    {i + 1, j},
+                    {i - 1, j},
+                    {i + 1, j + 1},
+                    {i + 1, j - 1},
+                    {i - 1, j + 1},
+                    {i - 1, j - 1},
+                };
+                return indices;
+            }
+            default -> {return null;}
+        }
+    }
 }
