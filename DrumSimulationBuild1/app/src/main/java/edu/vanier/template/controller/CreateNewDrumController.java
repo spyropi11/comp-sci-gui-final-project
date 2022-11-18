@@ -80,9 +80,12 @@ public class CreateNewDrumController implements Initializable {
      
      
      
-     public void handleBtnConfirm(ActionEvent event) throws IOException, Exception {
+     public void handleBtnConfirm(ActionEvent event)  {
      
-     int power = 0;
+         try {
+             
+             
+             int power = 0;
          
      double arcWidth = 0;
      double arcHeight = 0;
@@ -100,6 +103,14 @@ public class CreateNewDrumController implements Initializable {
        System.out.println("Height: "+ arcHeight);
        System.out.println(); //space
          
+             
+         }  catch( Exception x) {
+                 
+                 System.out.println("You havent entered a proper value please try again!");
+                 
+                 } 
+         
+     
          
      }
 
