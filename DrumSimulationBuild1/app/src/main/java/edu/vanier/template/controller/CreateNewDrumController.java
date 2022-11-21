@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -36,6 +37,19 @@ public class CreateNewDrumController implements Initializable {
     TextField textF2;
     
     @FXML
+    TextField textF3;
+    
+    @FXML
+    TextField textF4;
+      
+    @FXML
+    TextField textF5;
+       
+    @FXML
+    TextField textF6;
+    
+    
+    @FXML
     Slider slider;
     
     @FXML
@@ -46,6 +60,12 @@ public class CreateNewDrumController implements Initializable {
     MenuItem square;
     
     @FXML
+    MenuItem parallelogram;
+    
+    @FXML 
+    MenuItem trapezoid;
+    
+    @FXML
     MenuItem rectangle;
     Button btnLoadDrum;
     Button btnCreateNewDrum;
@@ -53,9 +73,30 @@ public class CreateNewDrumController implements Initializable {
     //Slider Number Value
     int numSlider;
     
+    
+    double arcWidth = 0;
+     double arcHeight = 0;
+    
      public void initialize() {  
-     System.out.println("Initialising the process");
-
+    // System.out.println("Initialising the process");
+/*
+     rectangle.setOnAction((e) -> {
+     
+         textF3.setEditable(false);
+         textF4.setEditable(false);
+         textF5.setEditable(false);
+         textF6.setEditable(false);
+         
+         
+         
+      arcWidth = Double.parseDouble(textF1.getText());
+     arcHeight = Double.parseDouble(textF2.getText());
+     
+     
+   
+     });
+     /*
+     
     /*   
     btnConfirm.setOnAction((e) -> {
          
@@ -77,8 +118,34 @@ public class CreateNewDrumController implements Initializable {
 
       */       
     }
+     public void rectangleChosen(ActionEvent event)  {
+         
+         
+         textF3.setEditable(false);
+         textF4.setEditable(false);
+         textF5.setEditable(false);
+         textF6.setEditable(false);
+         
+      
+         
+      /*   if (empty == true && empty2 == true) {
+             
+             arcWidth = Double.parseDouble(textF1.getText());
+     arcHeight = Double.parseDouble(textF2.getText());
+         }
+         
+         */
+     
+         
+     }
      
      
+     
+     /**
+      * Whenever the user clicks on the confirm button this method gets the width and lenght
+      * 
+      * @param event 
+      */
      
      public void handleBtnConfirm(ActionEvent event)  {
      
@@ -87,8 +154,9 @@ public class CreateNewDrumController implements Initializable {
              
              int power = 0;
          
-     double arcWidth = 0;
-     double arcHeight = 0;
+    
+     
+            
      
      power = (int)slider.getValue();
      
@@ -99,8 +167,10 @@ public class CreateNewDrumController implements Initializable {
        
        System.out.println("Power: " + power);
        
+            
+       
        System.out.println("Width: " + arcWidth);
-       System.out.println("Height: "+ arcHeight);
+      System.out.println("Height: "+ arcHeight);
        System.out.println(); //space
          
              
@@ -114,6 +184,10 @@ public class CreateNewDrumController implements Initializable {
          
      }
 
+     
+     
+     
+     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         

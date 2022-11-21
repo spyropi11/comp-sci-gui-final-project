@@ -16,6 +16,7 @@ public class MainApp extends Application {
     public double time = 0;
 
     /**
+     * This is where the main stage gets executed 
      * @param stage
      * 
      */
@@ -48,7 +49,8 @@ public class MainApp extends Application {
         
 
         
-         //Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(50, 50));
+    
+       //  Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(50, 50));
         
     }
     

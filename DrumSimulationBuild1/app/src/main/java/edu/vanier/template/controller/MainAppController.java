@@ -38,14 +38,10 @@ public class MainAppController  {
         
 
         
-       //  btnLoadFile.setOnAction((event) ->{System.out.println("loading the file")};) ;
-      //   btnCreateNewDrum.setOnAction((e) -> {
-         
-          
-         
-     //});
+      
     }
 
+   
     public void handleLoadDrum(ActionEvent event) throws IOException {
     
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoadSavedDrum.fxml"));
@@ -85,7 +81,7 @@ public class MainAppController  {
         //load the FXML
         Pane root = loader.load();
         
-         Scene scene = new Scene(root, 500, 500);
+         Scene scene = new Scene(root, 700, 700);
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
 
