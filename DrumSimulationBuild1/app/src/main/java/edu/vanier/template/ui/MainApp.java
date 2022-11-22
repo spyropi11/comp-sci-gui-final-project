@@ -49,8 +49,11 @@ public class MainApp extends Application {
         
 
         
+
     
-       //  Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(50, 50));
+     
+
+    //    Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(50, 50));
         
     }
     

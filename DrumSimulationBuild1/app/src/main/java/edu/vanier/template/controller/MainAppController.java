@@ -81,7 +81,11 @@ public class MainAppController  {
         //load the FXML
         Pane root = loader.load();
         
+
          Scene scene = new Scene(root, 700, 700);
+
+        
+
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
 
