@@ -13,16 +13,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
 
-      <BorderPane layoutY="2.0" prefHeight="636.0" prefWidth="623.0">
+      <BorderPane prefHeight="710.0" prefWidth="658.0">
          <left>
-            <VBox prefHeight="553.0" prefWidth="166.0" BorderPane.alignment="CENTER">
-
-      <BorderPane prefHeight="432.0" prefWidth="623.0">
-         <left>
-            <VBox prefHeight="479.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-border-color: blue;" BorderPane.alignment="CENTER">
 
                <children>
                   <Label prefHeight="19.0" prefWidth="141.0" text="Desigining the drum : ">
@@ -33,26 +29,17 @@
                         <Insets top="-70.0" />
                      </VBox.margin>
                   </Label>
-                  <MenuButton mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
+                  <MenuButton fx:id="menuButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
                     <items>
 
-                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
-
-                        <MenuItem mnemonicParsing="false" text="Parallelogram" />
-                      <MenuItem fx:id="rectangle" mnemonicParsing="false" text="Rectangle">
-
-                           <graphic>
-                              <Rectangle arcHeight="4.0" arcWidth="8.0" fill="#40a813" height="20.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                           </graphic></MenuItem>
-                      <MenuItem fx:id="square" mnemonicParsing="false" text="Square">
+                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle" />
+                      <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
                            <graphic>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
                            </graphic></MenuItem>
 
-                        <MenuItem fx:id="parallelogram" mnemonicParsing="false" text="Parallelogram" />
-                        <MenuItem fx:id="trapezoid" mnemonicParsing="false" text="Trapezoid" />
-
-                        <MenuItem mnemonicParsing="false" text="Trapezoid" />
+                        <MenuItem fx:id="parallelogram" mnemonicParsing="false" onAction="#paraChosen" text="Parallelogram" />
+                        <MenuItem fx:id="trapezoid" mnemonicParsing="false" onAction="#trapChosen" text="Trapezoid" />
 
                     </items>
                      <VBox.margin>
@@ -116,9 +103,24 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </TextField>
+                  <Label text="Spread : ">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="numLabel2" text="Label">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Slider fx:id="slider2" showTickLabels="true" showTickMarks="true">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Slider>
                   <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
                      <VBox.margin>
-                        <Insets top="85.0" />
+                        <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
                   <Label fx:id="numLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="137.0" text="Label">
@@ -132,39 +134,22 @@
                   <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
                      <VBox.margin>
                         <Insets top="22.0" />
-
-                  <TextField fx:id="textF2" />
-                  <Label text="Select Lenght : " />
-                  <TextField fx:id="textF1" prefHeight="8.0" prefWidth="101.0" />
-                  <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
-                     <VBox.margin>
-                        <Insets top="45.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="numLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="137.0" text="Label" />
-                  <Slider fx:id="slider" showTickLabels="true" showTickMarks="true">
-                     <VBox.margin>
-                        <Insets top="25.0" />
-                     </VBox.margin></Slider>
-                  <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
-                     <VBox.margin>
-                        <Insets top="55.0" />
-
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" text="Confirm">
+		     </VBox.margin>
+		  </Button>
+                  <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" prefHeight="26.0" prefWidth="81.0" text="Confirm">
                      <VBox.margin>
 
-                        <Insets bottom="20.0" left="100.0" top="-26.0" />
-
-                        <Insets top="20.0" />
+                        <Insets top="15.0" />
 
                      </VBox.margin>
                   </Button>
                </children>
                <padding>
-                  <Insets top="75.0" />
+                  <Insets left="7.0" right="7.0" top="75.0" />
                </padding>
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
             </VBox>
          </left>
       </BorderPane>

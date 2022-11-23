@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -28,7 +29,14 @@ import javafx.scene.shape.Rectangle;
 public class CreateNewDrumController implements Initializable {
     
     @FXML
+    MenuButton menuButton1;
+    
+    
+    @FXML
     Label numLabel;
+    
+    @FXML
+    Label numLabel2;
     
     @FXML
     TextField textF1;
@@ -52,6 +60,9 @@ public class CreateNewDrumController implements Initializable {
     @FXML
     Slider slider;
     
+    @FXML 
+    Slider slider2;
+    
     @FXML
     Button btnSaveButton;
     
@@ -73,71 +84,72 @@ public class CreateNewDrumController implements Initializable {
     //Slider Number Value
     int numSlider;
     
+    //Slider number value 2
+    int numSlider2;
+    
     
     double arcWidth = 0;
      double arcHeight = 0;
     
      public void initialize() {  
-    // System.out.println("Initialising the process");
-/*
-     rectangle.setOnAction((e) -> {
-     
+          textF1.setEditable(false);
+          textF2.setEditable(false);
          textF3.setEditable(false);
+        
          textF4.setEditable(false);
          textF5.setEditable(false);
          textF6.setEditable(false);
-         
-         
-         
-      arcWidth = Double.parseDouble(textF1.getText());
-     arcHeight = Double.parseDouble(textF2.getText());
-     
-     
-   
-     });
-     /*
-     
-    /*   
-    btnConfirm.setOnAction((e) -> {
-         
-     double arcWidth = 0;
-     double arcHeight = 0;
      
     
-     arcWidth = Double.parseDouble(textF1.getText());
-     arcHeight = Double.parseDouble(textF2.getText());
-        
-            
-       
-        
-     System.out.println(arcWidth);
-     System.out.println(arcHeight);
-         
-         
-     });
-
-      */       
     }
      public void rectangleChosen(ActionEvent event)  {
          
          
+         
          textF3.setEditable(false);
          textF4.setEditable(false);
          textF5.setEditable(false);
          textF6.setEditable(false);
-         
       
-         
-      /*   if (empty == true && empty2 == true) {
-             
-             arcWidth = Double.parseDouble(textF1.getText());
-     arcHeight = Double.parseDouble(textF2.getText());
-         }
-         
-         */
-     
+         System.out.println("hello from shyamP");
          
      }
+     
+     
+      public void squareChosen(ActionEvent event)  {
+         
+         
+         
+         textF1.setEditable(false);
+         textF3.setEditable(false);
+         textF4.setEditable(false);
+         textF5.setEditable(false);
+         textF6.setEditable(false);
+      
+         
+     }
+      
+       public void paraChosen(ActionEvent event)  {
+         
+         
+         textF2.setEditable(false);
+       
+         textF5.setEditable(false);
+         textF6.setEditable(false);
+      
+         
+     }
+       
+       public void trapChosen(ActionEvent event)  {
+         
+         textF1.setEditable(false);
+         textF2.setEditable(false);
+        
+      
+         
+     } 
+     
+     
      
      
      
@@ -187,21 +199,48 @@ public class CreateNewDrumController implements Initializable {
      
      
      
-     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
     numSlider = (int)slider.getValue();
     numLabel.setText(Integer.toString(numSlider) + " N"); 
-        
+   
+    
+    numSlider2 = (int)slider2.getValue();
+    numLabel2.setText(Integer.toString(numSlider2) + " M"); 
+       
+    
+    
         slider.valueProperty().addListener( new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider = (int)slider.getValue();
                 numLabel.setText(Integer.toString(numSlider) + " N"); 
+                
+                
+                
             }
              
         });
+        
+        slider2.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                numSlider2 = (int)slider2.getValue();
+                numLabel2.setText(Integer.toString(numSlider2) + " M"); 
+                
+                
+                
+            }
+             
+        });
+
+
+        
+        
     }
+    
+    
+    
        
 }
