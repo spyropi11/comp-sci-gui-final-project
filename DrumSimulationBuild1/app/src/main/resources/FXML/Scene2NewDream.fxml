@@ -16,10 +16,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
 
-      <BorderPane layoutY="2.0" prefHeight="636.0" prefWidth="623.0">
-         <left>
-            <VBox prefHeight="553.0" prefWidth="166.0" BorderPane.alignment="CENTER">
-
       <BorderPane prefHeight="432.0" prefWidth="623.0">
          <left>
             <VBox prefHeight="479.0" prefWidth="147.0" BorderPane.alignment="CENTER">
@@ -36,7 +32,7 @@
                   <MenuButton mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
                     <items>
 
-                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
+                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle"/>
 
                         <MenuItem mnemonicParsing="false" text="Parallelogram" />
                       <MenuItem fx:id="rectangle" mnemonicParsing="false" text="Rectangle">
@@ -132,7 +128,8 @@
                   <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
                      <VBox.margin>
                         <Insets top="22.0" />
-
+		     </VBox.margin>
+		  </Button>
                   <TextField fx:id="textF2" />
                   <Label text="Select Lenght : " />
                   <TextField fx:id="textF1" prefHeight="8.0" prefWidth="101.0" />
