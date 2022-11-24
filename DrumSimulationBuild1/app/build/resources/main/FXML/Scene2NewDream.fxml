@@ -16,9 +16,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
 
-      <BorderPane prefHeight="710.0" prefWidth="658.0">
+      <BorderPane layoutX="-3.0" layoutY="-6.0" prefHeight="710.0" prefWidth="658.0">
          <left>
-            <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-border-color: blue;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
 
                <children>
                   <Label prefHeight="19.0" prefWidth="141.0" text="Desigining the drum : ">
@@ -32,7 +32,10 @@
                   <MenuButton fx:id="menuButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
                     <items>
 
-                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle" />
+                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
+                           <graphic>
+                              <Rectangle arcHeight="5.0" arcWidth="10.0" fill="DODGERBLUE" height="20.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+                           </graphic></MenuItem>
                       <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
                            <graphic>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
