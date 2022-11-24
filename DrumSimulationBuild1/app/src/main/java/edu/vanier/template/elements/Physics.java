@@ -116,6 +116,10 @@ public final class Physics {
             alpha[i] *= s;
             beta[i] *= s;
         }
+        for(Point point : drummer.mesh) {
+            point.setScaleX(s*point.getScaleX());
+            point.setScaleY(s*point.getScaleY());
+        }
     }
     
     public void zoom(double a, double b) throws ArithmeticException {
