@@ -19,6 +19,8 @@ public class Point extends Sphere {
     double x;
     double y;
     
+    double currentScale = 1;
+    
     PhongMaterial material = new PhongMaterial();
     
     static final double COLOUR_NORMALIZATION = 0.2;
@@ -51,7 +53,7 @@ public class Point extends Sphere {
         this.y = y;
     }
     
-    public void projection(double[] p, double[] alpha, double[] beta, double cameraChangeX, double cameraChangeY) {
+    public void projection(double[] p, double[] alpha, double[] beta, double[] n, double cameraChangeX, double cameraChangeY) {
         double v0 = x-p[0];
         double v1 = y-p[1];
         double v2 = position-p[2];
@@ -59,11 +61,15 @@ public class Point extends Sphere {
         double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
         double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
         
+        double sumN = v0*n[0]+v1*n[1]+v2*n[2];
+        double height = sumN/Math.pow(norm(n), 2);
+        heightScale(height);
+        
         this.setTranslateX(sumX + cameraChangeX);
         this.setTranslateY(sumY + cameraChangeY);
     }
     
-    public static double norm(double[] vector) {
+    public static double norm(double... vector) {
         double sum = 0;
         for(double v : vector) {
             sum += Math.pow(v, 2);
@@ -188,8 +194,10 @@ public class Point extends Sphere {
         setMaterial(material);
     }
     
-    public int normal(double[] p, double[] n) {
-        return (int)((x-p[0])*n[0] + (y-p[1])*n[1] + (position-p[2])*n[2]);
-    }
+    private void heightScale(double height) {
+        //FIXME curve scale factor
+        //setScaleX(currentScale * (Math.atan(height/20 + Math.PI/2) + 0.5));
+        //setScaleY(currentScale * (Math.atan(height/20 + Math.PI/2) + 0.5));
+    } 
     
 }

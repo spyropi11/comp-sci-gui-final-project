@@ -54,7 +54,7 @@ public final class Physics {
         for(Point point : drummer.mesh) {
             point.updatePosition();
             point.updateColour();
-            point.projection(p, alpha, beta, cX, cY);
+            point.projection(p, alpha, beta, n, cX, cY);
         }
     }
     
@@ -119,16 +119,7 @@ public final class Physics {
         for(Point point : drummer.mesh) {
             point.setScaleX(s*point.getScaleX());
             point.setScaleY(s*point.getScaleY());
-        }
-    }
-    
-    public void zoom(double a, double b) throws ArithmeticException {
-        if((a <= 0) || (b <= 0)) {
-            throw new ArithmeticException();
-        }
-        for(int i = 0; i < 3; i++) {
-            alpha[i] *= a;
-            beta[i] *= b;
+            point.currentScale *= s;
         }
     }
     
