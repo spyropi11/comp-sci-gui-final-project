@@ -3,7 +3,6 @@ package edu.vanier.template.drumshapes;
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.elements.Spring;
 import static edu.vanier.template.simulation.Simulation.NATURAL_MASS;
-import static edu.vanier.template.simulation.Simulation.NATURAL_SPRING_CONSTANT;
 import static edu.vanier.template.simulation.Simulation.RADIUS;
 import java.util.ArrayList;
 
@@ -54,7 +53,7 @@ public class SquareDrum extends Formable {
             for(int j = 0; j < getMeshSide(); j++){
                 for(int[] pair : bindSpring(i, j)) {
                     try {
-                        springs.add(new Spring(mesh[i][j], mesh[pair[0]][pair[1]], 2*NATURAL_SPRING_CONSTANT));
+                        springs.add(new Spring(mesh[i][j], mesh[pair[0]][pair[1]]));
                     } catch(ArrayIndexOutOfBoundsException e) {}
                 }
             }

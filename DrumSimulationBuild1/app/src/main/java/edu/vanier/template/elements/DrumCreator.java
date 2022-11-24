@@ -18,14 +18,13 @@ public class DrumCreator {
      * Adds spring to drum
      * @param a Point a
      * @param b Point b
-     * @param k Spring constant
      * @return true if successful and false if there already exists a spring with Point a and Point b, or a both points are the same.
      */
-    public boolean addSpring(Point a, Point b, double k) {
+    public boolean addSpring(Point a, Point b) {
         if(a==b) {
             return false;
         }
-        Spring toBeAdded = new Spring(a,b,k);
+        Spring toBeAdded = new Spring(a, b);
         for(Spring otherSpring : drum) {
             if(toBeAdded.isCopyOf(otherSpring)) {
                 return false;

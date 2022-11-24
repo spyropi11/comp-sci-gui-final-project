@@ -158,7 +158,7 @@ public class Point extends Sphere {
             for(Spring spring : connectors) {
                 
                 Point otherPoint = spring.otherPoint(this);
-                force += spring.springConstant*(otherPoint.position - position);
+                force += otherPoint.position - position;
                 
             }
             force -= decay*vPrevious;

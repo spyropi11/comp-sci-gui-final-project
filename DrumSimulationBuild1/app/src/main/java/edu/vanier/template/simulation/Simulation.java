@@ -22,12 +22,6 @@ public class Simulation {
     */
     private final Physics physics;
     /**
-    * When defining the spring constant, we can make it a multiple of this constant.
-    * For example, if the animation only looks good when k is in the 1000s, then we can make this constant = 1000.
-    * Or, if the animation only looks good when k is 0.0001, 0.00005, 0.0002, etc., we can make this constant = 0.00001.
-    */
-    public final static double NATURAL_SPRING_CONSTANT = 1;
-    /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when m is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
