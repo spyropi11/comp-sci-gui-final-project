@@ -10,7 +10,7 @@ public class Point extends Sphere {
     double position;
     double vPrevious = 0;
     double velocity = 0;
-    static final double DELTATIME = 0.1;
+    static final double DELTATIME = 0.06;
     double mass;
     double decay;
     boolean onEdge;
@@ -18,6 +18,9 @@ public class Point extends Sphere {
     
     double x;
     double y;
+    
+    int i;
+    int j;
     
     double currentScale = 1;
     

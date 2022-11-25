@@ -2,6 +2,8 @@ package edu.vanier.template.ui;
 
 import edu.vanier.template.drumshapes.RectangleDrum;
 import edu.vanier.template.controller.MainAppController;
+import edu.vanier.template.drumshapes.ParallelogramDrum;
+import edu.vanier.template.drumshapes.TrapezoidDrum;
 import edu.vanier.template.simulation.Simulation;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -53,7 +55,7 @@ public class MainApp extends Application {
     
      
 
-        Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(50, 50));
+        Simulation testSimulationRectangle = new Simulation(stage, new TrapezoidDrum(80, 30,30,45));
         
     }
     

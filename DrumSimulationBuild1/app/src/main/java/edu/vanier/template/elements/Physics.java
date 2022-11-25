@@ -58,6 +58,43 @@ public final class Physics {
     }
     
     public void setMouseClicked() {
+        
+        for(int clickedJ = 0; clickedJ < simulation.MESH_HEIGHT; clickedJ++){
+            for(int clickedI = 0; clickedI < simulation.MESH_WIDTH; clickedI++){
+                
+                int iclicked = clickedI;
+                int jclicked = clickedJ;
+                
+                points[clickedI][clickedJ].setOnMouseClicked(event -> {
+                    
+                    //System.out.println(clickedI);
+                    System.out.println("point clicked");
+                    double amplitude = 30;
+                    double spread = 10;
+                    //double shiftX = clickedI;
+                    //double shiftZ = clickedJ;
+
+                
+                    for (int j = 0; j < simulation.MESH_HEIGHT; j++){
+                        for(int i = 0; i < simulation.MESH_WIDTH; i++) {
+
+                            if(!points[i][j].isOnEdge()){
+
+                                points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
+
+                            }
+                        }
+
+
+                    }
+                
+                });
+                
+            }
+            
+        }
+        
+        /*
         for(Point point : drummer.mesh) {
             point.setOnMouseDragOver(event -> {
 
@@ -73,11 +110,7 @@ public final class Physics {
                 double shiftX = point.getX()/4;
                 double shiftZ = point.getY()/4;
 
-                /*amplitude and spread per click will be variables that can be changed 
-                by the user after further implementation*/
-                /*TODO This doesn't work. I think it would be better if points
-                was a two-dimensional array instead of a one-dimensional array. That way, it's easier to retrieve a specific point,
-                or points next to the point clicked on.*/
+                
                 for (int j = 0; j < simulation.MESH_HEIGHT; j++){
                     for(int i = 0; i < simulation.MESH_WIDTH; i++) {
 
@@ -92,6 +125,7 @@ public final class Physics {
                 }
             });
         }
+        */
     }
     
     public void startTimer() {
