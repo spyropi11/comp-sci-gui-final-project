@@ -31,6 +31,7 @@ public final class Physics {
         drummer = new DrumCreator();
         cX = simulation.getRoot().getPrefWidth()/2;
         cY = simulation.getRoot().getPrefHeight()/2;
+        setMouseClicked();
     }
     
     public void setPoints(Point[][] points) {
@@ -103,8 +104,7 @@ public final class Physics {
             });
 
             point.setOnMouseClicked(event -> {
-                
-                System.out.println("point clicked");
+
                 double amplitude = 30;
                 double spread = 10;
                 double shiftX = point.getX()/4;

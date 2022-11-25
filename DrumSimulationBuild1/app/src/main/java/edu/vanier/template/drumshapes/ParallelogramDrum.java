@@ -35,15 +35,15 @@ public class ParallelogramDrum extends Formable {
             for(int i = 0; i < getMeshWidth(); i++) {
                 if(j == 0 || j == getMeshHeight() - 1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
                 } else if(i == 0 || i == getMeshWidth()-1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
                     
                 } else{
-                    points[i][j] = new Point(RADIUS, 1, 0,NATURAL_MASS);
+                    points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(false);
                 }
                 double offset = 2*RADIUS*j/Math.tan(angle);

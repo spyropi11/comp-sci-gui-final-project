@@ -27,15 +27,15 @@ public class SquareDrum extends Formable {
             for(int i = 0; i < getMeshSide(); i++) {
                 if(j == 0 || j == getMeshSide() - 1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
                 } else if(i == 0 || i == getMeshSide()-1) {
                     //This puts two points on the edges and sets their onEdge value to true
-                    points[i][j] = new Point(RADIUS, 1, 0, NATURAL_MASS);
+                    points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
                     
                 } else{
-                    points[i][j] = new Point(RADIUS, 1, 0,NATURAL_MASS);
+                    points[i][j] = new Point(RADIUS, 0,NATURAL_MASS);
                     points[i][j].setOnEdge(false);
                 }
                 points[i][j].setup(2*RADIUS*i, 2*RADIUS*j);
