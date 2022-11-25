@@ -161,6 +161,7 @@ public class Simulation {
         stage.show();
         
         physics.startTimer();
+        physics.setMouseClicked();
         
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
             physics.stopTimer();

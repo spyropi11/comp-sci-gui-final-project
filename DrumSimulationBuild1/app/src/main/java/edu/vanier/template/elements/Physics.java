@@ -31,7 +31,6 @@ public final class Physics {
         drummer = new DrumCreator();
         cX = simulation.getRoot().getPrefWidth()/2;
         cY = simulation.getRoot().getPrefHeight()/2;
-        setMouseClicked();
     }
     
     public void setPoints(Point[][] points) {
