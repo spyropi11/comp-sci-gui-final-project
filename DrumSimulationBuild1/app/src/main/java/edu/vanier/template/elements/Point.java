@@ -33,12 +33,12 @@ public class Point extends Sphere {
     /**
      * 
      * @param d Radius
-     * @param i Number of divisions (Resolution of sphere aka how choppy it looks)
      * @param position Starting point of the node
      * @param mass Mass of node
      */
-    public Point(double d, int i, double position, double mass) {
-        super(d, i);
+    public Point(double d, double position, double mass) {
+        super(d, 20);
+        setOpacity(0.5);
         this.position = position;
         this.mass = mass;
     }
@@ -196,6 +196,7 @@ public class Point extends Sphere {
     
     private void heightScale(double height) {
         //FIXME curve scale factor
+        setOpacity(getOpacity() + Math.pow(1.01, height));
         //setScaleX(currentScale * (Math.atan(height/20 + Math.PI/2) + 0.5));
         //setScaleY(currentScale * (Math.atan(height/20 + Math.PI/2) + 0.5));
     } 
