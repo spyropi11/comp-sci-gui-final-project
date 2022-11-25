@@ -168,6 +168,10 @@ public class Simulation {
             Platform.exit();
         });
         
+        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
+        physics.zoom(1.03);
+        physics.rotate(0.5, Physics.Axis.ALPHA);
+        
     }
     
     public Pane getRoot() {
