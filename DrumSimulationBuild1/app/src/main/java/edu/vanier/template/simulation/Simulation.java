@@ -104,7 +104,6 @@ public class Simulation {
             root.getChildren().addAll(Arrays.asList(pointList));
             for(Point point : pointList) {
 
-                System.out.println(point.getX());
                 point.setup(point.getX() + WIDTH/2, point.getY() + HEIGHT/2);
             }
         }
@@ -193,5 +192,15 @@ public class Simulation {
     public void setDisplay(boolean display) {
         this.display = display;
     }
+
+    public double getWIDTH() {
+        return WIDTH;
+    }
+
+    public double getHEIGHT() {
+        return HEIGHT;
+    }
+    
+    
     
 }

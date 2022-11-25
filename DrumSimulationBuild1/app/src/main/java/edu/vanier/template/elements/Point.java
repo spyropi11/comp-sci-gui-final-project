@@ -10,7 +10,14 @@ public class Point extends Sphere {
     double position;
     double vPrevious = 0;
     double velocity = 0;
-    static final double DELTATIME = 0.1;
+    /**
+     * Allowing the user to change deltatime within certain constraints will allow them
+     * to change the speed of the simulation
+     * 
+     * DELTATIME should range between 0.1 and 0.005 with 0.1 being extremely fast and 0.005 
+     * being very slow
+     */ 
+    static final double DELTATIME = 0.01;
     double mass;
     double decay;
     boolean onEdge;
@@ -21,7 +28,7 @@ public class Point extends Sphere {
     
     PhongMaterial material = new PhongMaterial();
     
-    static final double COLOUR_NORMALIZATION = 0.2;
+    static final double COLOUR_NORMALIZATION = 1;
     
     //Constructors
     public Point() {

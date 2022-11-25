@@ -31,7 +31,6 @@ public final class Physics {
         drummer = new DrumCreator();
         cX = simulation.getRoot().getPrefWidth()/2;
         cY = simulation.getRoot().getPrefHeight()/2;
-        System.out.println("Physics constructed");
     }
     
     public void setPoints(Point[][] points) {
@@ -77,15 +76,17 @@ public final class Physics {
                 System.out.println("point has been clicked");
                 double amplitude = 20;
                 double spread = 10;
-                double shiftX = simulation.MESH_WIDTH/2;
-                double shiftY = simulation.MESH_HEIGHT/2;
+                
+                
+                //shift x, and y are essentially the i and j values of the clicked point
+                double shiftX = (point.getX()-(simulation.getWIDTH()/2))/4;
+                double shiftY = (point.getY()-(simulation.getHEIGHT()/2))/4;
 
                 
                 for (int j = 0; j < simulation.MESH_HEIGHT; j++){
                     for(int i = 0; i < simulation.MESH_WIDTH; i++) {
                         
 
-                        //System.out.println(points[i][j].position);
                         if(!points[i][j].isOnEdge()){
 
                             points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftY, 2)))/spread));

@@ -54,7 +54,7 @@ public class MainApp extends Application {
     
      
 
-        Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(20, 20));
+        Simulation testSimulationRectangle = new Simulation(stage, new RectangleDrum(35, 35));
         
     }
     
