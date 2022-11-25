@@ -5,6 +5,10 @@
  */
 package edu.vanier.template.controller;
 
+import edu.vanier.template.drumshapes.Distribution;
+import edu.vanier.template.drumshapes.Formable;
+import edu.vanier.template.drumshapes.RectangleDrum;
+import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,13 +24,35 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 /**
  *
  * @author keethen
  */
 public class CreateNewDrumController implements Initializable {
+  
+  /**
+   *  paneSim is the fx id of the pane in the sceneBuilder thats going to be used to display the simulation
+   * 
+   */
+ @FXML
+ public Pane paneSim;
+    
+    public Stage stage;
+    
+    Boolean rectangleB = false;
+    
+    
+ public   CreateNewDrumController(Stage stage){
+     
+     this.stage = stage;
+     
+     
+     
+ }
     
     @FXML
     MenuButton menuButton1;
@@ -90,7 +116,8 @@ public class CreateNewDrumController implements Initializable {
     
     double arcWidth = 0;
      double arcHeight = 0;
-    
+     
+   
      public void initialize() {  
           textF1.setEditable(false);
           textF2.setEditable(false);
@@ -105,13 +132,27 @@ public class CreateNewDrumController implements Initializable {
      public void rectangleChosen(ActionEvent event)  {
          
          
+         textF1.setEditable(true);
+         textF2.setEditable(true);
+         
+             
+              this.rectangleB = true;
          
          textF3.setEditable(false);
          textF4.setEditable(false);
          textF5.setEditable(false);
          textF6.setEditable(false);
       
-         System.out.println("hello from shyamP");
+         
+         
+             
+       
+         
+        
+         
+         
+         
+      
          
      }
      
@@ -162,6 +203,19 @@ public class CreateNewDrumController implements Initializable {
      public void handleBtnConfirm(ActionEvent event)  {
      
          try {
+             
+             if (rectangleB == true) {
+                 System.out.println("hello");
+                 Formable rectangle = new RectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
+                 
+                 rectangle.setArrangement(Formable.Arrangement.CARTESIAN);
+          //       rectangle.setDecayDistribution(new Distribution(Distribution.Surface.UNIFORM,));
+                         
+                 
+                 
+                 Simulation testSimulationRectangle = new Simulation(this, rectangle);
+                 
+             }
              
              
              int power = 0;

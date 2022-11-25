@@ -1,5 +1,6 @@
 package edu.vanier.template.simulation;
 
+import edu.vanier.template.controller.CreateNewDrumController;
 import edu.vanier.template.drumshapes.Formable;
 import edu.vanier.template.elements.*;
 import edu.vanier.template.linear.CameraLine;
@@ -17,6 +18,7 @@ import javafx.stage.WindowEvent;
 
 public class Simulation {
 
+   
     /**
     * Binds a Physics object to this Simulation object.
     */
@@ -70,16 +72,17 @@ public class Simulation {
     /**
      * Initiates a wave simulation.
      * @param stage The stage of the simulation.
-     * @param formable The shape of the drum. 
-     * 
+     * @param formable The shape of the drum.
+     *
      */
-    public Simulation(Stage stage, Formable formable) {
+    public Simulation(CreateNewDrumController drumC, Formable formable) {
         // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
+        
         
         WIDTH = 700;
         HEIGHT = 700;
         
-        root = new Pane();
+        root = drumC.paneSim;
         root.setPrefWidth(700);
         root.setPrefHeight(700);
         physics = new Physics(this);
@@ -122,7 +125,7 @@ public class Simulation {
         cameraCentre.setMaterial(cameraMaterial);
         root.getChildren().add(cameraCentre);
         
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+        drumC.stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             
             switch(event.getCode()){
                 
@@ -155,15 +158,14 @@ public class Simulation {
         });
         
         
-        stage.setTitle("Drum Sim 2D");
-        stage.setScene(scene);
-        stage.sizeToScene();
-        stage.show();
+        drumC.stage.setTitle("Drum Sim 2D");
+        drumC.stage.setScene(scene);
+        drumC.stage.sizeToScene();
+        drumC.stage.show();
         
         physics.startTimer();
-        physics.setMouseClicked();
         
-        stage.setOnCloseRequest((WindowEvent windowEvent) -> {
+        drumC.stage.setOnCloseRequest((WindowEvent windowEvent) -> {
             physics.stopTimer();
             Platform.exit();
         });
@@ -185,5 +187,6 @@ public class Simulation {
     public void setDisplay(boolean display) {
         this.display = display;
     }
+
     
 }
