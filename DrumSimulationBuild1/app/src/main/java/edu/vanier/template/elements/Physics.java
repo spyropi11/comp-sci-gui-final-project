@@ -31,7 +31,7 @@ public final class Physics {
         drummer = new DrumCreator();
         cX = simulation.getRoot().getPrefWidth()/2;
         cY = simulation.getRoot().getPrefHeight()/2;
-        setMouseClicked();
+        System.out.println("Physics constructed");
     }
     
     public void setPoints(Point[][] points) {
@@ -48,10 +48,12 @@ public final class Physics {
     public void update() {
         simulation.getCameraLine().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
         
+        
         for(Point point : drummer.mesh) {
             point.updateVelocity();
         }
         for(Point point : drummer.mesh) {
+            
             point.updatePosition();
             point.updateColour();
             point.projection(p, alpha, beta, cX, cY);
@@ -59,7 +61,10 @@ public final class Physics {
     }
     
     public void setMouseClicked() {
+        
+        System.out.println(drummer.mesh.size());
         for(Point point : drummer.mesh) {
+            
             point.setOnMouseDragOver(event -> {
 
             System.out.println("point has been hovered!");
@@ -68,28 +73,31 @@ public final class Physics {
 
             point.setOnMouseClicked(event -> {
 
-                double amplitude = 30;
+                
+                System.out.println("point has been clicked");
+                double amplitude = 20;
                 double spread = 10;
-                double shiftX = point.getX()/4;
-                double shiftZ = point.getY()/4;
+                double shiftX = simulation.MESH_WIDTH/2;
+                double shiftY = simulation.MESH_HEIGHT/2;
 
-                /*amplitude and spread per click will be variables that can be changed 
-                by the user after further implementation*/
-                /*TODO This doesn't work. I think it would be better if points
-                was a two-dimensional array instead of a one-dimensional array. That way, it's easier to retrieve a specific point,
-                or points next to the point clicked on.*/
+                
                 for (int j = 0; j < simulation.MESH_HEIGHT; j++){
                     for(int i = 0; i < simulation.MESH_WIDTH; i++) {
+                        
 
+                        //System.out.println(points[i][j].position);
                         if(!points[i][j].isOnEdge()){
 
-                            points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftZ, 2)))/spread));
+                            points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftY, 2)))/spread));
+                            
 
                         }
                     }
 
 
                 }
+                
+                
             });
         }
     }

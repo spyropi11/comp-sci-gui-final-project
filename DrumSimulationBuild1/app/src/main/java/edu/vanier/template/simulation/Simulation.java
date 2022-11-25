@@ -103,6 +103,8 @@ public class Simulation {
         for(Point[] pointList : points) {
             root.getChildren().addAll(Arrays.asList(pointList));
             for(Point point : pointList) {
+
+                System.out.println(point.getX());
                 point.setup(point.getX() + WIDTH/2, point.getY() + HEIGHT/2);
             }
         }
@@ -166,6 +168,7 @@ public class Simulation {
         stage.sizeToScene();
         stage.show();
         
+        physics.setMouseClicked();
         physics.startTimer();
         
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
