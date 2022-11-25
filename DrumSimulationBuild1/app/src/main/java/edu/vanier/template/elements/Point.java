@@ -64,10 +64,6 @@ public class Point extends Sphere {
         double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
         double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
         
-        double sumN = v0*n[0]+v1*n[1]+v2*n[2];
-        double height = sumN/Math.pow(norm(n), 2);
-        heightScale(height);
-        
         this.setTranslateX(sumX + cameraChangeX);
         this.setTranslateY(sumY + cameraChangeY);
     }
@@ -196,12 +192,5 @@ public class Point extends Sphere {
         }
         setMaterial(material);
     }
-    
-    private void heightScale(double height) {
-        //FIXME curve scale factor
-        setOpacity(getOpacity() + Math.pow(1.01, height));
-        //setScaleX(currentScale * (Math.atan(height/20 + Math.PI/2) + 0.5));
-        //setScaleY(currentScale * (Math.atan(height/20 + Math.PI/2) + 0.5));
-    } 
     
 }
