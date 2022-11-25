@@ -133,6 +133,7 @@ public abstract class Formable {
      * Returns indices of points to be bound by springs in the arrangement of this drum's texture.
      * @param i Horizontal index of point.
      * @param j Vertical index of point.
+     * @return The indices of the points to be connected.
      */
     protected int[][] bindSpring(int i, int j) {
         switch(texture) {
