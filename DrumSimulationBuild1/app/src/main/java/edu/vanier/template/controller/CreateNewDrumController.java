@@ -43,16 +43,18 @@ public class CreateNewDrumController implements Initializable {
 
     public Stage stage;
 
-    Boolean rectangleB = false;
+    Boolean rectangleChosen = false;
+    Boolean squareChosen = false;
+    Boolean parallelogramChosen = false;
+    Boolean trapezoidChosen = false;
+    
+    MainAppController MAC = new MainAppController();
 
+    public CreateNewDrumController(Stage stage){
 
- public   CreateNewDrumController(Stage stage){
+        this.stage = stage;
 
-     this.stage = stage;
-
-
-
- }
+    }
 
     @FXML
     MenuButton menuButton1;
@@ -94,6 +96,8 @@ public class CreateNewDrumController implements Initializable {
 
     @FXML
     Button btnConfirm;
+    
+    @FXML
     MenuItem square;
 
     @FXML
@@ -115,44 +119,34 @@ public class CreateNewDrumController implements Initializable {
 
 
     double arcWidth = 0;
-     double arcHeight = 0;
+    double arcHeight = 0;
 
 
      public void initialize() {
-          textF1.setEditable(false);
-          textF2.setEditable(false);
-         textF3.setEditable(false);
+        textF1.setEditable(false);
+        textF2.setEditable(false);
+        textF3.setEditable(false);
 
-         textF4.setEditable(false);
-         textF5.setEditable(false);
-         textF6.setEditable(false);
+        textF4.setEditable(false);
+        textF5.setEditable(false);
+        textF6.setEditable(false);
 
 
     }
      public void rectangleChosen(ActionEvent event)  {
 
 
-         textF1.setEditable(true);
-         textF2.setEditable(true);
+        textF1.setEditable(true);
+        textF2.setEditable(true);
+        textF3.setEditable(false);
+        textF4.setEditable(false);
+        textF5.setEditable(false);
+        textF6.setEditable(false);
 
-
-              this.rectangleB = true;
-
-         textF3.setEditable(false);
-         textF4.setEditable(false);
-         textF5.setEditable(false);
-         textF6.setEditable(false);
-
-
-
-
-
-
-
-
-
-
-
+        this.rectangleChosen = true;
+        this.parallelogramChosen = false;
+        this.squareChosen = false;
+        this.trapezoidChosen = false;
 
      }
 
@@ -161,31 +155,50 @@ public class CreateNewDrumController implements Initializable {
 
 
 
-         textF1.setEditable(false);
-         textF3.setEditable(false);
-         textF4.setEditable(false);
-         textF5.setEditable(false);
-         textF6.setEditable(false);
-
+        textF1.setEditable(false);
+        textF2.setEditable(true);
+        textF3.setEditable(false);
+        textF4.setEditable(false);
+        textF5.setEditable(false);
+        textF6.setEditable(false);
+         
+        this.rectangleChosen = false;
+        this.parallelogramChosen = false;
+        this.squareChosen = true;
+        this.trapezoidChosen = false;
 
      }
 
        public void paraChosen(ActionEvent event)  {
 
 
-         textF2.setEditable(false);
+        textF1.setEditable(true);
+        textF2.setEditable(false);
+        textF3.setEditable(true);
+        textF4.setEditable(true);
+        textF5.setEditable(false);
+        textF6.setEditable(false);
 
-         textF5.setEditable(false);
-         textF6.setEditable(false);
-
+        this.rectangleChosen = false;
+        this.parallelogramChosen = true;
+        this.squareChosen = false;
+        this.trapezoidChosen = false;
 
      }
 
        public void trapChosen(ActionEvent event)  {
 
-         textF1.setEditable(false);
-         textF2.setEditable(false);
+        textF1.setEditable(false);
+        textF2.setEditable(false);
+        textF3.setEditable(true);
+        textF4.setEditable(true);
+        textF5.setEditable(true);
+        textF6.setEditable(true);
 
+        this.rectangleChosen = false;
+        this.parallelogramChosen = false;
+        this.squareChosen = false;
+        this.trapezoidChosen = true;
 
 
      }
@@ -200,48 +213,25 @@ public class CreateNewDrumController implements Initializable {
       * @param event
       */
 
-     public void handleBtnConfirm(ActionEvent event)  {
+     public void handleBtnConfirm(ActionEvent event) throws IOException  {
 
-         /*
-         try {
-
-             if (rectangleB == true) {
-                 System.out.println("hello");
-                 Formable rectangle = new RectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
-
-                 rectangle.setArrangement(Formable.Arrangement.CARTESIAN);
-          //       rectangle.setDecayDistribution(new Distribution(Distribution.Surface.UNIFORM,));
-
-
-
-                 Simulation testSimulationRectangle = new Simulation(this, rectangle);
-
-             }
-
-
-             int power = 0;
-
-
-        try {
-
-
-            int power = 0;
-            power = (int)slider.getValue();
-            arcWidth = Double.parseDouble(textF1.getText());
-            arcHeight = Double.parseDouble(textF2.getText());
-            System.out.println("Power: " + power);
-            System.out.println("Width: " + arcWidth);
-            System.out.println("Height: "+ arcHeight);
-            System.out.println(); //space
-
-
-         }  catch( Exception x) {
-
-                 System.out.println("You havent entered a proper value please try again!");
-
-                 }
-
-                 */
+         if (squareChosen){
+             
+             MAC.createSquareDrum(Integer.parseInt(textF2.getText()));
+             
+         }else if(rectangleChosen){
+             
+             MAC.createRectangleDrum(Integer.parseInt(textF1.getText()),Integer.parseInt(textF2.getText()));
+             
+         }else if(parallelogramChosen){
+             
+             MAC.createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble(textF3.getText()));
+             
+         }else if(trapezoidChosen){
+             
+             MAC.createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt(textF3.getText()));
+         }
+         
 
      }
 
