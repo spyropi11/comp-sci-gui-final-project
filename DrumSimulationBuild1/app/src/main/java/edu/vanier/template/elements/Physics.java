@@ -163,7 +163,11 @@ public final class Physics {
         N
     }
     
-    //theta is in radians
+    /**
+     * Rotates the screen along the axis.
+     * @param theta Angle in radians.
+     * @param axis Axis of rotation.
+     */
     public void rotate(double theta, Axis axis) {
         
         double[][] arr = new double[3][3];

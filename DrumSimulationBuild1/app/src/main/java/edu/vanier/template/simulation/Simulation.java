@@ -1,5 +1,6 @@
 package edu.vanier.template.simulation;
 
+import edu.vanier.template.controller.CreateNewDrumController;
 import edu.vanier.template.drumshapes.Formable;
 import edu.vanier.template.elements.*;
 import edu.vanier.template.linear.CameraLine;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class Simulation {
+
 
     /**
     * Binds a Physics object to this Simulation object.
@@ -46,7 +48,7 @@ public class Simulation {
      * Boolean denoting when the camera line is displayed.
      */
     private boolean display = true;
-    
+
     /**
     * Width of root pane.
     */
@@ -67,29 +69,30 @@ public class Simulation {
      * Number of points vertically.
      */
     public static int MESH_HEIGHT;
-    
+
     /**
      * Initiates a wave simulation.
      * @param stage The stage of the simulation.
-     * @param formable The shape of the drum. 
-     * 
+     * @param formable The shape of the drum.
+     *
      */
-    public Simulation(Stage stage, Formable formable) {
+    public Simulation(CreateNewDrumController drumC, Formable formable) {
         // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
-        
+
+
         WIDTH = 700;
         HEIGHT = 700;
-        
-        root = new Pane();
+
+        root = drumC.paneSim;
         root.setPrefWidth(700);
         root.setPrefHeight(700);
         physics = new Physics(this);
-        
+
         Point[][] points = formable.formMesh();
         MESH_WIDTH = points.length;
         MESH_HEIGHT = points[0].length;
         ArrayList<Spring> drum = formable.formDrum();
-        
+
         physics.setPoints(points);
         physics.getDrummer().addToMesh(points);
         for(Spring spring : drum) {
@@ -101,14 +104,14 @@ public class Simulation {
                 point.setup(point.getX() + WIDTH/2, point.getY() + HEIGHT/2);
             }
         }
-        
+
         cameraLine = new CameraLine(physics);
-        
+
         //Scene scene = new Scene(root, WIDTH,HEIGHT);
         cameraLine.setStrokeWidth(1);
         root.getChildren().add(cameraLine);
         //scene.setFill(Color.AZURE);
-        
+
         //Set camera and camera origin.
         double oX = root.getPrefWidth()/2;
         double oY = root.getPrefHeight()/2;
@@ -122,78 +125,83 @@ public class Simulation {
         cameraMaterial.setDiffuseColor(Color.YELLOW);
         cameraCentre.setMaterial(cameraMaterial);
         root.getChildren().add(cameraCentre);
-        
-        
-        
-        
+
+
+
+
         //stage.setTitle("Drum Sim 2D");
         //stage.setScene(scene);
         //stage.sizeToScene();
         //stage.show();
-        
+
         physics.startTimer();
         physics.setMouseClicked();
-        
-        
+
+
     }
-    
+
     public void translate(KeyCode keyCode){
-        
+
         switch(keyCode){
-                
+
                 case W -> physics.translate(0, 3);
-                    
+
                 case S -> physics.translate(0, -3);
-                    
+
                 case D -> physics.translate(-3, 0);
-                    
+
                 case A -> physics.translate(3, 0);
-                    
+
                 case J -> physics.zoom(1.01);
-                    
+
                 case K -> physics.zoom(0.99);
-                    
+
                 case M -> physics.rotate(-0.01, Physics.Axis.N);
-                    
+
                 case N -> physics.rotate(0.01, Physics.Axis.N);
-                    
+
                 case B -> physics.rotate(0.02, Physics.Axis.BETA);
-                    
+
                 case V -> physics.rotate(-0.02, Physics.Axis.BETA);
-                    
+
                 case C -> physics.rotate(0.02, Physics.Axis.ALPHA);
-                    
+
                 case X -> physics.rotate(-0.02, Physics.Axis.ALPHA);
-                    
+
             }
-        
+
     }
-    
+
     public void setCloseSim(Stage stage){
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
             System.out.println("Simulation ended");
             physics.stopTimer();
             Platform.exit();
         });
-        
+
+        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
+        physics.zoom(1.03);
+        physics.rotate(0.5, Physics.Axis.ALPHA);
+
     }
-    
+
     public Pane getRoot() {
         return root;
     }
-    
+
     public CameraLine getCameraLine() {
         return cameraLine;
     }
-    
+
     public boolean getDisplay() {
         return display;
     }
-    
+
     public void setDisplay(boolean display) {
         this.display = display;
     }
-    
-    
-    
+
+
+
+
 }

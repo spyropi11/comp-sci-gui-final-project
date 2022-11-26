@@ -90,7 +90,7 @@ public class MainAppController  {
         
      
         //Instantiate the controller   (Controller is where we do our event handling)
-        CreateNewDrumController mainController = new CreateNewDrumController();
+        CreateNewDrumController mainController = new CreateNewDrumController(stage);
 
         //Set the controller to the loader
         loader.setController(mainController);

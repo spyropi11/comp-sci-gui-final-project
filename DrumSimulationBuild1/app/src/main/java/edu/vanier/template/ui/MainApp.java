@@ -22,14 +22,14 @@ public class MainApp extends Application {
     public double time = 0;
 
     /**
-     * This is where the main stage gets executed 
+     * This is where the main stage gets executed
      * @param stage
-     * 
+     *
      */
     @Override
     public void start(Stage stage) throws Exception {
-        
-        
+
+
         // Load FXML file on Netbeans
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainWindowDrumSim.fxml"));
 
@@ -41,8 +41,8 @@ public class MainApp extends Application {
 
         //load the FXML
         Pane root = loader.load();
-        
-        
+
+
         Scene scene = new Scene(root, 500, 500);
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
@@ -52,18 +52,18 @@ public class MainApp extends Application {
         stage.sizeToScene();
         //--> Step 4) Show the window.
         stage.show();
-        
-       
-        
-        
+
+
+
+
     }
-    
+
     public static void main(String[] args) {
-        
+
         launch(args);
-        
+
     }
-    
-    
-    
+
+
+
 }
