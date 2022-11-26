@@ -230,6 +230,10 @@ public class CreateNewDrumController implements Initializable {
          }else if(trapezoidChosen){
              
              MAC.createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt(textF3.getText()));
+         }else{
+             
+             System.out.println("Please select a shape before confirming");
+             
          }
          
 
