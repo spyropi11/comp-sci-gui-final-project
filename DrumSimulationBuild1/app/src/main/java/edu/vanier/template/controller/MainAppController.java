@@ -76,7 +76,7 @@ public class MainAppController  {
      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
 
         //add an event handler to the confirm button that then calls this
-        Simulation simulation = new Simulation(stage, new SquareDrum(20));
+        Simulation simulation = new Simulation(new SquareDrum(20));
         
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event2) -> {

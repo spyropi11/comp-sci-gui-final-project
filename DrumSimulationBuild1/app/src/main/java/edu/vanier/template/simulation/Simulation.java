@@ -76,14 +76,14 @@ public class Simulation {
      * @param formable The shape of the drum.
      *
      */
-    public Simulation(CreateNewDrumController drumC, Formable formable) {
+    public Simulation(Formable formable) {
         // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
 
 
         WIDTH = 700;
         HEIGHT = 700;
 
-        root = drumC.paneSim;
+        root = new Pane();
         root.setPrefWidth(700);
         root.setPrefHeight(700);
         physics = new Physics(this);
@@ -137,6 +137,10 @@ public class Simulation {
         physics.startTimer();
         physics.setMouseClicked();
 
+        
+        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
+        physics.zoom(1.03);
+        physics.rotate(0.5, Physics.Axis.ALPHA);
 
     }
 
@@ -179,9 +183,6 @@ public class Simulation {
             Platform.exit();
         });
 
-        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
-        physics.zoom(1.03);
-        physics.rotate(0.5, Physics.Axis.ALPHA);
 
     }
 

@@ -202,6 +202,7 @@ public class CreateNewDrumController implements Initializable {
 
      public void handleBtnConfirm(ActionEvent event)  {
 
+         /*
          try {
 
              if (rectangleB == true) {
@@ -240,22 +241,22 @@ public class CreateNewDrumController implements Initializable {
 
                  }
 
-
+                 */
 
      }
 
-
+     
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    numSlider = (int)slider.getValue();
-    numLabel.setText(Integer.toString(numSlider) + " N");
+        numSlider = (int)slider.getValue();
+        numLabel.setText(Integer.toString(numSlider) + " N");
 
 
-    numSlider2 = (int)slider2.getValue();
-    numLabel2.setText(Integer.toString(numSlider2) + " M");
+        numSlider2 = (int)slider2.getValue();
+        numLabel2.setText(Integer.toString(numSlider2) + " M");
 
 
 
