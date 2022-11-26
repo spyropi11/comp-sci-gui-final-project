@@ -3,12 +3,16 @@ package edu.vanier.template.ui;
 import edu.vanier.template.drumshapes.RectangleDrum;
 import edu.vanier.template.controller.MainAppController;
 import edu.vanier.template.drumshapes.ParallelogramDrum;
+import edu.vanier.template.drumshapes.SquareDrum;
 import edu.vanier.template.drumshapes.TrapezoidDrum;
+import edu.vanier.template.elements.Physics;
 import edu.vanier.template.simulation.Simulation;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -25,7 +29,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-    /*
+        
         // Load FXML file on Netbeans
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainWindowDrumSim.fxml"));
 
@@ -49,13 +53,8 @@ public class MainApp extends Application {
         //--> Step 4) Show the window.
         stage.show();
         
-*/
+       
         
-
-    
-     
-
-        Simulation testSimulationRectangle = new Simulation(stage, new TrapezoidDrum(80, 30,30,45));
         
     }
     

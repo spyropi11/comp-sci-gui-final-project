@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -103,10 +104,10 @@ public class Simulation {
         
         cameraLine = new CameraLine(physics);
         
-        Scene scene = new Scene(root, WIDTH,HEIGHT);
+        //Scene scene = new Scene(root, WIDTH,HEIGHT);
         cameraLine.setStrokeWidth(1);
         root.getChildren().add(cameraLine);
-        scene.setFill(Color.AZURE);
+        //scene.setFill(Color.AZURE);
         
         //Set camera and camera origin.
         double oX = root.getPrefWidth()/2;
@@ -122,9 +123,23 @@ public class Simulation {
         cameraCentre.setMaterial(cameraMaterial);
         root.getChildren().add(cameraCentre);
         
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            
-            switch(event.getCode()){
+        
+        
+        
+        //stage.setTitle("Drum Sim 2D");
+        //stage.setScene(scene);
+        //stage.sizeToScene();
+        //stage.show();
+        
+        physics.startTimer();
+        physics.setMouseClicked();
+        
+        
+    }
+    
+    public void translate(KeyCode keyCode){
+        
+        switch(keyCode){
                 
                 case W -> physics.translate(0, 3);
                     
@@ -151,19 +166,12 @@ public class Simulation {
                 case X -> physics.rotate(-0.02, Physics.Axis.ALPHA);
                     
             }
-            
-        });
         
-        
-        stage.setTitle("Drum Sim 2D");
-        stage.setScene(scene);
-        stage.sizeToScene();
-        stage.show();
-        
-        physics.startTimer();
-        physics.setMouseClicked();
-        
+    }
+    
+    public void setCloseSim(Stage stage){
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
+            System.out.println("Simulation ended");
             physics.stopTimer();
             Platform.exit();
         });
@@ -185,5 +193,7 @@ public class Simulation {
     public void setDisplay(boolean display) {
         this.display = display;
     }
+    
+    
     
 }

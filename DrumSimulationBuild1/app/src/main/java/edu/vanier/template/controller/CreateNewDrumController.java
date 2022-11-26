@@ -89,16 +89,16 @@ public class CreateNewDrumController implements Initializable {
     
     
     double arcWidth = 0;
-     double arcHeight = 0;
+    double arcHeight = 0;
     
-     public void initialize() {  
-          textF1.setEditable(false);
-          textF2.setEditable(false);
-         textF3.setEditable(false);
-        
-         textF4.setEditable(false);
-         textF5.setEditable(false);
-         textF6.setEditable(false);
+    public void initialize() {  
+        textF1.setEditable(false);
+        textF2.setEditable(false);
+        textF3.setEditable(false);
+
+        textF4.setEditable(false);
+        textF5.setEditable(false);
+        textF6.setEditable(false);
      
     
     }
@@ -111,7 +111,6 @@ public class CreateNewDrumController implements Initializable {
          textF5.setEditable(false);
          textF6.setEditable(false);
       
-         System.out.println("hello from shyamP");
          
      }
      
@@ -154,36 +153,25 @@ public class CreateNewDrumController implements Initializable {
      
      
      /**
-      * Whenever the user clicks on the confirm button this method gets the width and lenght
+      * Whenever the user clicks on the confirm button this method gets the width and length
       * 
       * @param event 
       */
      
      public void handleBtnConfirm(ActionEvent event)  {
-     
-         try {
-             
-             
-             int power = 0;
          
-    
      
-            
-     
-     power = (int)slider.getValue();
-     
-     arcWidth = Double.parseDouble(textF1.getText());
-     arcHeight = Double.parseDouble(textF2.getText());
-       
-            
-       
-       System.out.println("Power: " + power);
-       
-            
-       
-       System.out.println("Width: " + arcWidth);
-      System.out.println("Height: "+ arcHeight);
-       System.out.println(); //space
+        try {
+
+
+            int power = 0;
+            power = (int)slider.getValue();
+            arcWidth = Double.parseDouble(textF1.getText());
+            arcHeight = Double.parseDouble(textF2.getText());
+            System.out.println("Power: " + power);
+            System.out.println("Width: " + arcWidth);
+            System.out.println("Height: "+ arcHeight);
+            System.out.println(); //space
          
              
          }  catch( Exception x) {

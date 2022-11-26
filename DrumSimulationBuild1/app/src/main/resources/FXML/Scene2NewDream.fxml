@@ -7,161 +7,158 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-
-      <BorderPane layoutX="-3.0" layoutY="-6.0" prefHeight="710.0" prefWidth="658.0">
-         <left>
-            <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-
-               <children>
-                  <Label prefHeight="19.0" prefWidth="141.0" text="Desigining the drum : ">
-                     <font>
-                        <Font name="Calibri" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="-70.0" />
-                     </VBox.margin>
-                  </Label>
-                  <MenuButton fx:id="menuButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
-                    <items>
-
-                      <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
-                           <graphic>
-                              <Rectangle arcHeight="5.0" arcWidth="10.0" fill="DODGERBLUE" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="40.0" />
-                           </graphic></MenuItem>
-                      <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
-                           <graphic>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="25.0" />
-                           </graphic></MenuItem>
-
-                        <MenuItem fx:id="parallelogram" mnemonicParsing="false" onAction="#paraChosen" text="Parallelogram">
-                           <graphic>
-                              <Polyline fill="CHARTREUSE" points="3.6663382053375244, 36.66679000854492, 54.999671936035156, 36.66656494140625, 36.33296585083008, 51.66558837890625, -17.333721160888672, 51.66556930541992" stroke="TRANSPARENT" strokeType="INSIDE" />
-                           </graphic></MenuItem>
-                        <MenuItem fx:id="trapezoid" mnemonicParsing="false" onAction="#trapChosen" text="Trapezoid">
-                           <graphic>
-                              <Polyline fill="#9544a3" points="-3.6656601428985596, -30.333200454711914, 11.001047134399414, -30.333057403564453, 27.001026153564453, -9.666728019714355, -18.665639877319336, -9.66673755645752" stroke="TRANSPARENT" strokeType="INSIDE" />
-                           </graphic></MenuItem>
-
-                    </items>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </MenuButton>
-                  <Label prefHeight="17.0" prefWidth="99.0" text="Enter Width :">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-
-                  <TextField fx:id="textF1" prefHeight="8.0" prefWidth="101.0">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin></TextField>
-                  <Label text="Enter Lenght : ">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin></Label>
-                  <TextField fx:id="textF2">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin></TextField>
-                  <Label text="Enter angle value : ">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="textF3">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin></TextField>
-                  <Label prefHeight="17.0" prefWidth="110.0" text="Enter height value:">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="textF4">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label text="Enter lower base value : ">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="textF5">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label text="Enter long base value :">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="textF6">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label text="Spread : ">
-                     <VBox.margin>
-                        <Insets top="25.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="numLabel2" text="Label">
-                     <VBox.margin>
-                        <Insets left="50.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Slider fx:id="slider2" showTickLabels="true" showTickMarks="true">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Slider>
-                  <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="numLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="137.0" text="Label">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin></Label>
-                  <Slider fx:id="slider" showTickLabels="true" showTickMarks="true">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin></Slider>
-                  <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
-                     <VBox.margin>
-                        <Insets top="22.0" />
-		     </VBox.margin>
-		  </Button>
-                  <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" prefHeight="26.0" prefWidth="81.0" text="Confirm">
-                     <VBox.margin>
-
-                        <Insets top="15.0" />
-
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets left="7.0" right="7.0" top="75.0" />
-               </padding>
-               <BorderPane.margin>
-                  <Insets left="10.0" />
-               </BorderPane.margin>
-            </VBox>
-         </left>
-      </BorderPane>
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="710.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="19.0" prefWidth="141.0" text="Desigining the drum : ">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="-70.0" />
+               </VBox.margin>
+            </Label>
+            <MenuButton fx:id="menuButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
+               <items>
+                  <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" fill="DODGERBLUE" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="40.0" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="25.0" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="parallelogram" mnemonicParsing="false" onAction="#paraChosen" text="Parallelogram">
+                     <graphic>
+                        <Polyline fill="CHARTREUSE" points="3.6663382053375244, 36.66679000854492, 54.999671936035156, 36.66656494140625, 36.33296585083008, 51.66558837890625, -17.333721160888672, 51.66556930541992" stroke="TRANSPARENT" strokeType="INSIDE" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="trapezoid" mnemonicParsing="false" onAction="#trapChosen" text="Trapezoid">
+                     <graphic>
+                        <Polyline fill="#9544a3" points="-3.6656601428985596, -30.333200454711914, 11.001047134399414, -30.333057403564453, 27.001026153564453, -9.666728019714355, -18.665639877319336, -9.66673755645752" stroke="TRANSPARENT" strokeType="INSIDE" />
+                     </graphic>
+                  </MenuItem>
+               </items>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </MenuButton>
+            <Label prefHeight="17.0" prefWidth="99.0" text="Enter Width :">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textF1" prefHeight="8.0" prefWidth="101.0">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Enter Lenght : ">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textF2">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Enter angle value : ">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textF3">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label prefHeight="17.0" prefWidth="110.0" text="Enter height value:">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textF4">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Enter lower base value : ">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textF5">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Enter long base value :">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textF6">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Spread : ">
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="numLabel2" text="Label">
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="slider2" showTickLabels="true" showTickMarks="true">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Slider>
+            <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="numLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="137.0" text="Label">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="slider" showTickLabels="true" showTickMarks="true">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Slider>
+            <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" prefHeight="26.0" prefWidth="81.0" text="Confirm">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="7.0" right="7.0" top="75.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets left="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+</BorderPane>

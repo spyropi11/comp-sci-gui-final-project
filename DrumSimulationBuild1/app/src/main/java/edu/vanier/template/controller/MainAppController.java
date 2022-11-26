@@ -1,5 +1,6 @@
 package edu.vanier.template.controller;
 
+import edu.vanier.template.drumshapes.SquareDrum;
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -55,7 +58,7 @@ public class MainAppController  {
         //load the FXML
         Pane root = loader.load();
         
-         Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 500, 500);
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
 
@@ -72,6 +75,20 @@ public class MainAppController  {
 
      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
 
+        //add an event handler to the confirm button that then calls this
+        Simulation simulation = new Simulation(stage, new SquareDrum(20));
+        
+        
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event2) -> {
+            
+            simulation.translate(event2.getCode());
+            
+        });
+        
+        simulation.setCloseSim(stage);
+        
+        
+     
         //Instantiate the controller   (Controller is where we do our event handling)
         CreateNewDrumController mainController = new CreateNewDrumController();
 
@@ -79,10 +96,12 @@ public class MainAppController  {
         loader.setController(mainController);
 
         //load the FXML
-        Pane root = loader.load();
+        BorderPane root = loader.load();
         
+        root.setCenter(simulation.getRoot());
+        //root.getChildren().add(simulation.getRoot());
 
-         Scene scene = new Scene(root, 700, 700);
+        Scene scene = new Scene(root, 700, 700);
 
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
