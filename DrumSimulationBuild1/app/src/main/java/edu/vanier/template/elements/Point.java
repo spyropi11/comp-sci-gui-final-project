@@ -11,8 +11,14 @@ public class Point extends Sphere {
     double vPrevious = 0;
     double velocity = 0;
     static final double DELTATIME = 0.06;
+    double springConstant = 1;
     double mass;
-    double decay;
+    double maximumDampening;
+    /**
+     * dampeningEditor value must be between 0.0 and 1.0
+     */
+    double dampeningEditor = 1.0;
+    double dampeningConstant;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
     
@@ -44,6 +50,9 @@ public class Point extends Sphere {
         setOpacity(0.5);
         this.position = position;
         this.mass = mass;
+        this.maximumDampening = (2*Math.sqrt(mass*springConstant));
+        this.dampeningConstant = this.maximumDampening - ((this.dampeningEditor)*this.maximumDampening);
+
     }
     
     /**
@@ -137,12 +146,12 @@ public class Point extends Sphere {
         return y;
     }
     
-    public double getDecay() {
-        return decay;
+    public double getDampeningConstant() {
+        return dampeningConstant;
     }
     
-    public void setDecay(double decay) {
-        this.decay = decay;
+    public void setDampeningConstant(double dampeningConstant) {
+        this.dampeningConstant = dampeningConstant;
     }
     
     
@@ -163,10 +172,10 @@ public class Point extends Sphere {
             for(Spring spring : connectors) {
                 
                 Point otherPoint = spring.otherPoint(this);
-                force += otherPoint.position - position;
+                force += springConstant*(otherPoint.position - position);
                 
             }
-            force -= decay*vPrevious;
+            force -= dampeningConstant*vPrevious;
             //divide by the mass (F=ma --> a=F/m).
             double acc = force / mass;
             //get new velocity.

@@ -45,6 +45,7 @@ public final class Physics {
     };
     
     public void update() {
+        
         simulation.getCameraLine().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
         
         for(Point point : drummer.mesh) {
@@ -94,37 +95,7 @@ public final class Physics {
             
         }
         
-        /*
-        for(Point point : drummer.mesh) {
-            point.setOnMouseDragOver(event -> {
-
-            System.out.println("point has been hovered!");
-
-            });
-
-            point.setOnMouseClicked(event -> {
-
-                double amplitude = 30;
-                double spread = 10;
-                double shiftX = point.getX()/4;
-                double shiftZ = point.getY()/4;
-
-                
-                for (int j = 0; j < simulation.MESH_HEIGHT; j++){
-                    for(int i = 0; i < simulation.MESH_WIDTH; i++) {
-
-                        if(!points[i][j].isOnEdge()){
-
-                            points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - shiftX, 2))+(Math.pow(j - shiftZ, 2)))/spread));
-
-                        }
-                    }
-
-
-                }
-            });
-        }
-        */
+        
     }
     
     public void startTimer() {
