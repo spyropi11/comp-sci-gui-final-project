@@ -73,6 +73,10 @@ public class Point extends Sphere {
         double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
         double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
         
+        double sumN = v0*n[0] + v1*n[1] + v2*n[2];
+        double height = sumN / Math.pow(norm(n), 2);
+        opacityChange(height);
+        
         this.setTranslateX(sumX + cameraChangeX);
         this.setTranslateY(sumY + cameraChangeY);
     }
@@ -200,6 +204,10 @@ public class Point extends Sphere {
             material.setSpecularColor(Color.rgb(-temperature, 0, 0));
         }
         setMaterial(material);
+    }
+    
+    private void opacityChange(double height) {
+        setOpacity(Math.pow(1.01, height)/2);
     }
     
 }
