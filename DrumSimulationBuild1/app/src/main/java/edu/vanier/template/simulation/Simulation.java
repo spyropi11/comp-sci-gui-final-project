@@ -24,18 +24,16 @@ public class Simulation {
     * Binds a Physics object to this Simulation object.
     */
     private final Physics physics;
+    
+    
     /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
     * Or, if the animation only looks good when m is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
     */
+    
     public final static double NATURAL_MASS = 1;
-    /**
-    * When defining the decay, we can make it a multiple of this constant.
-    * For example, if the animation only looks good when decay is in the 1000s, then we can make this constant = 1000.
-    * Or, if the animation only looks good when decay is 0.0001, 0.0005, 0.0002, etc., we can make this constant = 0.0001.
-    */
-    public final static double NATURAL_DECAY = 0.1;
+    
     /**
     * Root node of scene.
     */
@@ -69,7 +67,12 @@ public class Simulation {
      * Number of points vertically.
      */
     public static int MESH_HEIGHT;
-
+    /**
+     * constant dictates how sensitive camera zoom and movement is
+     */
+    public static double cameraSensitivity = 3.5;
+    
+    
     /**
      * Initiates a wave simulation.
      * @param stage The stage of the simulation.
@@ -148,29 +151,29 @@ public class Simulation {
 
         switch(keyCode){
 
-                case W -> physics.translate(0, 3);
+                case W -> physics.translate(0, (cameraSensitivity)*(-3));
 
-                case S -> physics.translate(0, -3);
+                case S -> physics.translate(0, (cameraSensitivity)*(3));
 
-                case D -> physics.translate(-3, 0);
+                case D -> physics.translate((cameraSensitivity)*(3), 0);
 
-                case A -> physics.translate(3, 0);
+                case A -> physics.translate((cameraSensitivity)*(-3), 0);
 
-                case J -> physics.zoom(1.01);
+                case J -> physics.zoom(1.01 + (cameraSensitivity)*(0.01));
 
-                case K -> physics.zoom(0.99);
+                case K -> physics.zoom(0.99 - (cameraSensitivity)*(0.01));
 
-                case M -> physics.rotate(-0.01, Physics.Axis.N);
+                case M -> physics.rotate((cameraSensitivity)*-0.01, Physics.Axis.N);
 
-                case N -> physics.rotate(0.01, Physics.Axis.N);
+                case N -> physics.rotate((cameraSensitivity)*0.01, Physics.Axis.N);
 
-                case B -> physics.rotate(0.02, Physics.Axis.BETA);
+                case B -> physics.rotate((cameraSensitivity)*(-0.02), Physics.Axis.BETA);
 
-                case V -> physics.rotate(-0.02, Physics.Axis.BETA);
+                case V -> physics.rotate((cameraSensitivity)*0.02, Physics.Axis.BETA);
 
-                case C -> physics.rotate(0.02, Physics.Axis.ALPHA);
+                case C -> physics.rotate((cameraSensitivity)*(-0.02), Physics.Axis.ALPHA);
 
-                case X -> physics.rotate(-0.02, Physics.Axis.ALPHA);
+                case X -> physics.rotate((cameraSensitivity)*(0.02), Physics.Axis.ALPHA);
 
             }
 

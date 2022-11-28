@@ -31,10 +31,7 @@ public abstract class Formable {
      * The mass distribution of this mesh.
      */
     protected Distribution mass;
-    /**
-     * The decay distribution of this mesh.
-     */
-    protected Distribution decay;
+
     /**
      * Possibilities for the arrangement of springs in a drum.
      */
@@ -46,19 +43,16 @@ public abstract class Formable {
         CROSSED_THICK
     }
     /**
-     * Forms a shape for the drum with mass and decay distributions.
+     * Forms a shape for the drum with mass distribution.
      */
     public Formable() {
         double[] defaultMass = {Simulation.NATURAL_MASS};
-        double[] defaultDecay = {Simulation.NATURAL_DECAY};
         mass = new Distribution(Distribution.Surface.UNIFORM, defaultMass);
-        decay = new Distribution(Distribution.Surface.UNIFORM, defaultDecay);
     }
     
     public Point[][] formMesh() {
         generateMesh();
         generateMass();
-        generateDecay();
         return mesh;
     }
     
@@ -99,13 +93,7 @@ public abstract class Formable {
     public void setMassDistribution(Distribution mass) {
         this.mass = mass;
     }
-    /**
-     * Sets the distribution of decay constants among the points in the mesh.
-     * @param decay 
-     */
-    public void setDecayDistribution(Distribution decay) {
-        this.decay = decay;
-    }
+
     /**
      * Sets the arrangement of springs in the drum.
      * @param texture 
@@ -117,10 +105,7 @@ public abstract class Formable {
      * Sets the masses of the points in the mesh.
      */
     protected abstract void generateMass();
-    /**
-     * Sets the decay constants of the points in the mesh.
-     */
-    protected abstract void generateDecay();
+    
     /**
      * Sets the spring constants of the springs in the drum.
      * @param strength The particular distribution of spring constants.

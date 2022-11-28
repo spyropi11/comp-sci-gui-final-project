@@ -109,17 +109,8 @@ public class SquareDrum extends Formable {
             }
         }
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void generateDecay() {
-        for(int i = 0; i < getMeshSide(); i++) {
-            for(int j = 0; j < getMeshSide(); j++) {
-                mesh[i][j].setMass(distributeIndex(decay, i, j));
-            }
-        }
-    }
+
+    
     /**
      * {@inheritDoc}
      */

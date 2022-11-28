@@ -15,9 +15,9 @@ public class Point extends Sphere {
     double mass;
     double maximumDampening;
     /**
-     * dampeningEditor value must be between 0.0 and 1.0
+     * dampeningEditor value must be between 0.0 and 1.0, 1.0 is no dampening and 0.0 is maximum dampening
      */
-    double dampeningEditor = 1.0;
+    double dampeningEditor = 0.965;
     double dampeningConstant;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
@@ -185,6 +185,7 @@ public class Point extends Sphere {
     
     public void updatePosition() {
         if(!onEdge) {
+            //adds new DELTATIME*velocity to previous position to get new position
             position += DELTATIME*velocity;
         }
     }
