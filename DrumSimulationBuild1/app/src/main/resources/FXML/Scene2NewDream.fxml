@@ -5,12 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
@@ -20,41 +20,14 @@
    <left>
       <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="19.0" prefWidth="141.0" text="Desigining the drum : ">
+            <Label prefHeight="19.0" prefWidth="141.0" text="Drum Customization:">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
                <VBox.margin>
-                  <Insets top="-70.0" />
+                  <Insets top="-65.0" />
                </VBox.margin>
             </Label>
-            <MenuButton fx:id="menuButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" text="Select Shape">
-               <items>
-                  <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
-                     <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="10.0" fill="DODGERBLUE" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="40.0" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
-                     <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="25.0" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem fx:id="parallelogram" mnemonicParsing="false" onAction="#paraChosen" text="Parallelogram">
-                     <graphic>
-                        <Polyline fill="CHARTREUSE" points="3.6663382053375244, 36.66679000854492, 54.999671936035156, 36.66656494140625, 36.33296585083008, 51.66558837890625, -17.333721160888672, 51.66556930541992" stroke="TRANSPARENT" strokeType="INSIDE" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem fx:id="trapezoid" mnemonicParsing="false" onAction="#trapChosen" text="Trapezoid">
-                     <graphic>
-                        <Polyline fill="#9544a3" points="-3.6656601428985596, -30.333200454711914, 11.001047134399414, -30.333057403564453, 27.001026153564453, -9.666728019714355, -18.665639877319336, -9.66673755645752" stroke="TRANSPARENT" strokeType="INSIDE" />
-                     </graphic>
-                  </MenuItem>
-               </items>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </MenuButton>
             <Label prefHeight="17.0" prefWidth="99.0" text="Enter Width :">
                <VBox.margin>
                   <Insets top="10.0" />
@@ -117,7 +90,7 @@
             </TextField>
             <Label text="Spread : ">
                <VBox.margin>
-                  <Insets top="25.0" />
+                  <Insets top="15.0" />
                </VBox.margin>
             </Label>
             <Label fx:id="numLabel2" text="Label">
@@ -127,7 +100,7 @@
             </Label>
             <Slider fx:id="slider2" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets />
                </VBox.margin>
             </Slider>
             <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
@@ -142,26 +115,128 @@
             </Label>
             <Slider fx:id="slider" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
             </Slider>
+            <Label text="Density:">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="numLabel3" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="158.0" text="Label" />
+            <Slider fx:id="slider3" showTickLabels="true" showTickMarks="true" />
             <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
                <VBox.margin>
-                  <Insets top="22.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" prefHeight="26.0" prefWidth="81.0" text="Confirm">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </Button>
          </children>
          <padding>
-            <Insets left="7.0" right="7.0" top="75.0" />
+            <Insets left="7.0" right="7.0" top="65.0" />
          </padding>
          <BorderPane.margin>
             <Insets left="10.0" />
          </BorderPane.margin>
       </VBox>
    </left>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="loadSavedDrum" mnemonicParsing="false" text="Load Saved Drum" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Shapes">
+               <items>
+                  <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c70707" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="25.0" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#rectangleChosen" text="Rectangle">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" fill="DODGERBLUE" height="25.0" stroke="TRANSPARENT" strokeType="INSIDE" width="40.0" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="parallelogram" mnemonicParsing="false" onAction="#paraChosen" text="Parallelogram">
+                     <graphic>
+                        <Polyline fill="CHARTREUSE" points="3.6663382053375244, 36.66679000854492, 54.999671936035156, 36.66656494140625, 36.33296585083008, 51.66558837890625, -17.333721160888672, 51.66556930541992" stroke="TRANSPARENT" strokeType="INSIDE" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="trapezoid" mnemonicParsing="false" onAction="#trapChosen" text="Trapezoid">
+                     <graphic>
+                        <Polyline fill="#9544a3" points="-3.6656601428985596, -30.333200454711914, 11.001047134399414, -30.333057403564453, 27.001026153564453, -9.666728019714355, -18.665639877319336, -9.66673755645752" stroke="TRANSPARENT" strokeType="INSIDE" />
+                     </graphic>
+                  </MenuItem>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Mass Distribution">
+               <items>
+                  <MenuItem fx:id="uniformMass" mnemonicParsing="false" text="Uniform" />
+                  <MenuItem fx:id="horizontalMass" mnemonicParsing="false" text="Horizontal Gradient" />
+                  <MenuItem fx:id="verticalMass" mnemonicParsing="false" text="Vertical Gradient" />
+                  <MenuItem fx:id="radialMass" mnemonicParsing="false" text="Radial Gradient" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Decay Distribution">
+               <items>
+                  <MenuItem fx:id="uniformDecay" mnemonicParsing="false" text="Uniform" />
+                  <MenuItem fx:id="horizontalDecay" mnemonicParsing="false" text="Horizontal Gradient" />
+                  <MenuItem fx:id="verticalDecay" mnemonicParsing="false" text="Vertical Gradient" />
+                  <MenuItem fx:id="radialDecay" mnemonicParsing="false" text="Radial Gradient" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Texture">
+               <items>
+                  <MenuItem fx:id="cartesian" mnemonicParsing="false" text="Cartesian">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Cartesian_Texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="parallel" mnemonicParsing="false" text="Parallel">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Parallel_Texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="triangular" mnemonicParsing="false" text="Triangular">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Triangular_Texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="thin" mnemonicParsing="false" text="Crossed Thin">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Crossed_Thin_Texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="thick" mnemonicParsing="false" text="Crossed Thick">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Crossed_Thick_Texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
 </BorderPane>

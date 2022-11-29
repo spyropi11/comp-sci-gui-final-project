@@ -55,17 +55,22 @@ public class CreateNewDrumController implements Initializable {
         this.stage = stage;
 
     }
-
+    
+    //Button menu
     @FXML
     MenuButton menuButton1;
 
-
+    //Labels
     @FXML
     Label numLabel;
 
     @FXML
     Label numLabel2;
+    
+    @FXML
+    Label numLabel3;
 
+    //Text
     @FXML
     TextField textF1;
 
@@ -84,39 +89,76 @@ public class CreateNewDrumController implements Initializable {
     @FXML
     TextField textF6;
 
-
+    //Sliders
     @FXML
     Slider slider;
 
     @FXML
     Slider slider2;
-
+    
+    @FXML
+    Slider slider3;
+    
+    //Bottom button
     @FXML
     Button btnSaveButton;
 
     @FXML
     Button btnConfirm;
     
+    //Shapes + MenuBar
     @FXML
     MenuItem square;
 
+    @FXML
+    MenuItem rectangle;
+    
     @FXML
     MenuItem parallelogram;
 
     @FXML
     MenuItem trapezoid;
-
+ 
+    
+    //Start Screen
     @FXML
-    MenuItem rectangle;
     Button btnLoadDrum;
+    
+    @FXML
     Button btnCreateNewDrum;
-
-    //Slider Number Value
+    
+    //MenuBar + file
+    @FXML
+    MenuItem loadSavedDrum;
+    
+    //MenuBar + Mass
+    @FXML
+    MenuItem uniformMass;
+    MenuItem horizontalMass;
+    MenuItem verticalMass;
+    MenuItem radialMass;
+    
+    //MenuBar + decay
+    MenuItem uniformDecay;
+    MenuItem horizontalDecay;
+    MenuItem verticalDecay;
+    MenuItem radialDecay;
+    
+    //MenuBar + Texture
+    MenuItem cartesian;
+    MenuItem parallel;
+    MenuItem triangular;
+    MenuItem thin;
+    MenuItem thick;
+       
+    //Slider Number value 1
     int numSlider;
 
     //Slider number value 2
     int numSlider2;
-
+    
+    //Slider number value 3
+     int numSlider3;
 
     double arcWidth = 0;
     double arcHeight = 0;
@@ -251,6 +293,9 @@ public class CreateNewDrumController implements Initializable {
 
         numSlider2 = (int)slider2.getValue();
         numLabel2.setText(Integer.toString(numSlider2) + " M");
+        
+        numSlider3 = (int)slider3.getValue();
+        numLabel3.setText(Integer.toString(numSlider3) + " P");
 
 
 
@@ -277,6 +322,19 @@ public class CreateNewDrumController implements Initializable {
             }
 
         });
+        
+        slider3.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                numSlider3 = (int)slider3.getValue();
+                numLabel3.setText(Integer.toString(numSlider3) + " P"); 
+                
+                
+                
+            }
+             
+        });
+
 
 
 
