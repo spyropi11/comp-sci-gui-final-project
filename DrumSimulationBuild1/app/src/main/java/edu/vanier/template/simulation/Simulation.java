@@ -69,6 +69,12 @@ public class Simulation {
      * Number of points vertically.
      */
     public static int MESH_HEIGHT;
+    
+    /**
+     * This number dictates how much less or more the camera 
+     * will, zoom, move, or rotate
+     */
+    public static double magnificationConstant = 3;
 
     /**
      * Initiates a wave simulation.
@@ -148,29 +154,29 @@ public class Simulation {
 
         switch(keyCode){
 
-                case W -> physics.translate(0, 3);
+                case W -> physics.translate(0, -3*magnificationConstant);
 
-                case S -> physics.translate(0, -3);
+                case S -> physics.translate(0, 3*magnificationConstant);
 
-                case D -> physics.translate(-3, 0);
+                case D -> physics.translate(3*magnificationConstant, 0);
 
-                case A -> physics.translate(3, 0);
+                case A -> physics.translate(-3*magnificationConstant, 0);
 
-                case J -> physics.zoom(1.01);
+                case J -> physics.zoom(1.01 + magnificationConstant*(0.01));
 
-                case K -> physics.zoom(0.99);
+                case K -> physics.zoom(0.99 - magnificationConstant*(0.01));
 
-                case M -> physics.rotate(-0.01, Physics.Axis.N);
+                case M -> physics.rotate(-0.01*magnificationConstant, Physics.Axis.N);
 
-                case N -> physics.rotate(0.01, Physics.Axis.N);
+                case N -> physics.rotate(0.01*magnificationConstant, Physics.Axis.N);
 
-                case B -> physics.rotate(0.02, Physics.Axis.BETA);
+                case B -> physics.rotate(-0.02*magnificationConstant, Physics.Axis.BETA);
 
-                case V -> physics.rotate(-0.02, Physics.Axis.BETA);
+                case V -> physics.rotate(0.02*magnificationConstant, Physics.Axis.BETA);
 
-                case C -> physics.rotate(0.02, Physics.Axis.ALPHA);
+                case C -> physics.rotate(-0.02*magnificationConstant, Physics.Axis.ALPHA);
 
-                case X -> physics.rotate(-0.02, Physics.Axis.ALPHA);
+                case X -> physics.rotate(0.02*magnificationConstant, Physics.Axis.ALPHA);
 
             }
 

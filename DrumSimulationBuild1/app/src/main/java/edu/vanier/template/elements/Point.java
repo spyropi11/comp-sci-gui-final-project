@@ -11,13 +11,13 @@ public class Point extends Sphere {
     double vPrevious = 0;
     double velocity = 0;
     static final double DELTATIME = 0.06;
-    double springConstant = 1;
+    double springConstant = 3;
     double mass;
     double maximumDampening;
     /**
      * dampeningEditor value must be between 0.0 and 1.0
      */
-    double dampeningEditor = 1.0;
+    double dampeningEditor = 0.99;
     double dampeningConstant;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
