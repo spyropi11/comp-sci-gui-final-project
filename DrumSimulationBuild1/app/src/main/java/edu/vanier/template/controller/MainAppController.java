@@ -26,13 +26,15 @@ public class MainAppController  {
     
     
     
-  final private Stage stage = new Stage();
+  private final Stage stage;
   private Scene scene;
   private BorderPane currentRoot;
 
    
     
-    
+    public MainAppController(Stage stage) {
+        this.stage = stage;
+    }
     
 
     
@@ -72,7 +74,7 @@ public class MainAppController  {
 
     public void handleCreateNewDrum(ActionEvent event) throws IOException, Exception {
 
-        //stage.close();
+        stage.close();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
 
@@ -102,133 +104,5 @@ public class MainAppController  {
      
      
     }
-    
-    public void createSquareDrum(int length) throws IOException{
-        
-        //stage.close();
-        
-        Simulation simulation = new Simulation(new SquareDrum(length));
-        
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            
-            simulation.translate(event.getCode());
-            
-        });
-        
-        simulation.setCloseSim(stage);
-        
-        //stage.getScene().getRoot().
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-        
-        BorderPane root = loader.load();
-        root.setCenter(simulation.getRoot());
-        
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-        
-    }
-    
-    public void createRectangleDrum(int width, int length) throws IOException{
-        
-        //stage.close();
-        
-        Simulation simulation = new Simulation(new RectangleDrum(width,length));
-        
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            
-            simulation.translate(event.getCode());
-            
-        });
-        
-        simulation.setCloseSim(stage);
-        
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-        
-        BorderPane root = loader.load();
-        root.setCenter(simulation.getRoot());
-        
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-        
-    }
-    
-    public void createParallelogramDrum(int width, int height, double angle) throws IOException{
-        
-        //stage.close();
-        
-        Simulation simulation = new Simulation(new ParallelogramDrum(width, height, angle));
-        
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            
-            simulation.translate(event.getCode());
-            
-        });
-        
-        simulation.setCloseSim(stage);
-        
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-        
-        BorderPane root = loader.load();
-        root.setCenter(simulation.getRoot());
-        
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-        
-    }
-    
-    public void createTrapazoidDrum(int longBase, int shortBase, int height, double angle) throws IOException{
-        
-        //stage.show();
-        
-        
-        Simulation simulation = new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle));
-        
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            
-            simulation.translate(event.getCode());
-            
-        });
-        
-        simulation.setCloseSim(stage);
-        
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-        
-        BorderPane root = loader.load();
-        root.setCenter(simulation.getRoot());
-        
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-        
-    }
-    
-    
      
 }

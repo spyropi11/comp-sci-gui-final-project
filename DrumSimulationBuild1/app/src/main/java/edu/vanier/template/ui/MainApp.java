@@ -34,7 +34,7 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainWindowDrumSim.fxml"));
 
         //Instantiate the controller   (Controller is where we do our event handling)
-        MainAppController mainController = new MainAppController();
+        MainAppController mainController = new MainAppController(stage);
 
         //Set the controller to the loader
         loader.setController(mainController);
