@@ -76,6 +76,8 @@ public class Simulation {
      */
     public static double magnificationConstant = 3;
 
+    public final Formable formable;
+    
     /**
      * Initiates a wave simulation.
      * @param formable The shape of the drum.
@@ -84,7 +86,8 @@ public class Simulation {
     public Simulation(Formable formable) {
         // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
 
-
+        this.formable = formable;
+        
         WIDTH = 700;
         HEIGHT = 700;
 
