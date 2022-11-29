@@ -10,7 +10,7 @@ public class Point extends Sphere {
     double position;
     double vPrevious = 0;
     double velocity = 0;
-    static final double DELTATIME = 0.06;
+    static double DELTATIME = 0.06;
     double springConstant = 3;
     double mass;
     double maximumDampening;
@@ -207,7 +207,7 @@ public class Point extends Sphere {
     }
     
     private void opacityChange(double height) {
-        setOpacity(Math.pow(1.01, height)/2);
+        setOpacity(Math.pow(1.1, height)/2);
     }
     
 }
