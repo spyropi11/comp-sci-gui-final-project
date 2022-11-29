@@ -124,17 +124,7 @@ public class RectangleDrum extends Formable {
             }
         }
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void generateDecay() {
-        for(int i = 0; i < getMeshWidth(); i++) {
-            for(int j = 0; j < getMeshHeight(); j++) {
-                mesh[i][j].setMass(distributeIndex(decay, i, j));
-            }
-        }
-    }
+
     /**
      * {@inheritDoc}
      */

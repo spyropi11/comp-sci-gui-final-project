@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.vanier.template.controller;
 
 import edu.vanier.template.drumshapes.Distribution;
@@ -28,10 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-/**
- *
- * @author keethen
- */
+
 public class CreateNewDrumController implements Initializable {
 
   /**
