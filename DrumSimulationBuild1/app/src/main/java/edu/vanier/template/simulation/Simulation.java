@@ -64,11 +64,11 @@ public class Simulation {
     /**
      * Number of points horizontally.
      */
-    public static int MESH_WIDTH;
+    public int MESH_WIDTH;
     /**
      * Number of points vertically.
      */
-    public static int MESH_HEIGHT;
+    public int MESH_HEIGHT;
     
     /**
      * This number dictates how much less or more the camera 
@@ -78,7 +78,6 @@ public class Simulation {
 
     /**
      * Initiates a wave simulation.
-     * @param stage The stage of the simulation.
      * @param formable The shape of the drum.
      *
      */
