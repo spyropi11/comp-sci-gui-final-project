@@ -32,7 +32,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
-public class CreateNewDrumController implements Initializable {
+public class CreateNewDrumController {
 
   /**
    *  paneSim is the fx id of the pane in the sceneBuilder thats going to be used to display the simulation
@@ -161,7 +161,7 @@ public class CreateNewDrumController implements Initializable {
     double arcWidth = 0;
     double arcHeight = 0;
 
-
+    
      public void initialize() {
         textF1.setEditable(false);
         textF2.setEditable(false);
@@ -170,6 +170,56 @@ public class CreateNewDrumController implements Initializable {
         textF4.setEditable(false);
         textF5.setEditable(false);
         textF6.setEditable(false);
+
+        numSlider = (int)slider.getValue();
+        numLabel.setText(Integer.toString(numSlider) + " N");
+
+
+        numSlider2 = (int)slider2.getValue();
+        numLabel2.setText(Integer.toString(numSlider2) + " M");
+        
+        numSlider3 = (int)slider3.getValue();
+        numLabel3.setText(Integer.toString(numSlider3) + " P");
+
+
+
+        slider.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                numSlider = (int)slider.getValue();
+                numLabel.setText(Integer.toString(numSlider) + " N");
+
+
+
+            }
+
+        });
+
+        slider2.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                numSlider2 = (int)slider2.getValue();
+                numLabel2.setText(Integer.toString(numSlider2) + " M");
+
+
+
+            }
+
+        });
+        
+        slider3.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                numSlider3 = (int)slider3.getValue();
+                numLabel3.setText(Integer.toString(numSlider3) + " P"); 
+                
+                
+                
+            }
+             
+        });
+
+
 
         
 
@@ -377,64 +427,6 @@ public void rectangleChosen(ActionEvent event) {
      }
 
      
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        numSlider = (int)slider.getValue();
-        numLabel.setText(Integer.toString(numSlider) + " N");
-
-
-        numSlider2 = (int)slider2.getValue();
-        numLabel2.setText(Integer.toString(numSlider2) + " M");
-        
-        numSlider3 = (int)slider3.getValue();
-        numLabel3.setText(Integer.toString(numSlider3) + " P");
-
-
-
-        slider.valueProperty().addListener( new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider = (int)slider.getValue();
-                numLabel.setText(Integer.toString(numSlider) + " N");
-
-
-
-            }
-
-        });
-
-        slider2.valueProperty().addListener( new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider2 = (int)slider2.getValue();
-                numLabel2.setText(Integer.toString(numSlider2) + " M");
-
-
-
-            }
-
-        });
-        
-        slider3.valueProperty().addListener( new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider3 = (int)slider3.getValue();
-                numLabel3.setText(Integer.toString(numSlider3) + " P"); 
-                
-                
-                
-            }
-             
-        });
-
-
-
-
-
-    }
     
     
     public void createSquareDrum(int length) throws IOException{
