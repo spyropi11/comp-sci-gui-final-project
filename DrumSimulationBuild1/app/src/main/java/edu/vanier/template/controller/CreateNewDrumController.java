@@ -166,78 +166,175 @@ public class CreateNewDrumController implements Initializable {
         textF5.setEditable(false);
         textF6.setEditable(false);
 
+        
 
     }
-     public void rectangleChosen(ActionEvent event)  {
-
+     
+public void rectangleChosen(ActionEvent event) {
 
         textF1.setEditable(true);
         textF2.setEditable(true);
+
         textF3.setEditable(false);
+        if (!textF3.getText().isEmpty()) {
+
+            textF3.setText("");
+        }
+
         textF4.setEditable(false);
+        if (!textF4.getText().isEmpty()) {
+
+            textF4.setText("");
+        }
+
         textF5.setEditable(false);
+        if (!textF5.getText().isEmpty()) {
+
+            textF5.setText("");
+        }
+
         textF6.setEditable(false);
+        if (!textF6.getText().isEmpty()) {
+
+            textF6.setText("");
+        }
 
         this.rectangleChosen = true;
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = false;
 
-     }
+    }
 
-
-      public void squareChosen(ActionEvent event)  {
-
-
+    public void squareChosen(ActionEvent event) {
 
         textF1.setEditable(false);
+        if (!textF1.getText().isEmpty()) {
+
+            textF1.setText("");
+        }
+
         textF2.setEditable(true);
+        if (!textF2.getText().isEmpty()) {
+
+            textF2.setText("");
+        }
+
         textF3.setEditable(false);
+        if (!textF3.getText().isEmpty()) {
+
+            textF3.setText("");
+        }
+
         textF4.setEditable(false);
+        if (!textF4.getText().isEmpty()) {
+
+            textF4.setText("");
+        }
+
         textF5.setEditable(false);
+        if (!textF5.getText().isEmpty()) {
+
+            textF5.setText("");
+        }
+
         textF6.setEditable(false);
-         
+        if (!textF6.getText().isEmpty()) {
+
+            textF6.setText("");
+        }
+
         this.rectangleChosen = false;
         this.parallelogramChosen = false;
         this.squareChosen = true;
         this.trapezoidChosen = false;
 
-     }
+    }
 
-       public void paraChosen(ActionEvent event)  {
-
+    public void paraChosen(ActionEvent event) {
 
         textF1.setEditable(true);
+        if (!textF1.getText().isEmpty()) {
+
+            textF1.setText("");
+        }
+
         textF2.setEditable(false);
+        if (!textF2.getText().isEmpty()) {
+
+            textF2.setText("");
+        }
+
         textF3.setEditable(true);
+        if (!textF3.getText().isEmpty()) {
+
+            textF3.setText("");
+        }
         textF4.setEditable(true);
+        if (!textF4.getText().isEmpty()) {
+
+            textF4.setText("");
+        }
+
         textF5.setEditable(false);
+        if (!textF5.getText().isEmpty()) {
+
+            textF5.setText("");
+        }
+
         textF6.setEditable(false);
+        if (!textF6.getText().isEmpty()) {
+
+            textF6.setText("");
+        }
 
         this.rectangleChosen = false;
         this.parallelogramChosen = true;
         this.squareChosen = false;
         this.trapezoidChosen = false;
 
-     }
+    }
 
-       public void trapChosen(ActionEvent event)  {
+    public void trapChosen(ActionEvent event) {
 
         textF1.setEditable(false);
+        if (!textF1.getText().isEmpty()) {
+
+            textF1.setText("");
+        }
         textF2.setEditable(false);
+        if (!textF2.getText().isEmpty()) {
+
+            textF2.setText("");
+        }
+
         textF3.setEditable(true);
+        if (!textF3.getText().isEmpty()) {
+
+            textF3.setText("");
+        }
         textF4.setEditable(true);
+        if (!textF4.getText().isEmpty()) {
+
+            textF4.setText("");
+        }
         textF5.setEditable(true);
+        if (!textF5.getText().isEmpty()) {
+
+            textF5.setText("");
+        }
         textF6.setEditable(true);
+        if (!textF6.getText().isEmpty()) {
+
+            textF6.setText("");
+        }
 
         this.rectangleChosen = false;
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = true;
 
-
-     }
-
+    }
 
 
 
