@@ -13,6 +13,8 @@ public final class Physics {
     private double[] beta = {0, 1, 0};
     private double[] n = {0, 0, 1};
     
+    private int counter = 0;
+    
     //Camera centre:
     private double cX;
     private double cY;
@@ -41,6 +43,7 @@ public final class Physics {
         @Override
         public void handle(long now) {
             update();
+            counter++;
         }
     };
     
