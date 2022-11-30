@@ -24,6 +24,9 @@ dependencies {
     compileOnly  "org.openjfx:javafx-controls:18.0.2:javadoc"
     compileOnly  "org.openjfx:javafx-fxml:18.0.2:javadoc"
     compileOnly  "org.openjfx:javafx-graphics:18.0.2:javadoc"
+
+    // https://mvnrepository.com/artifact/com.opencsv/opencsv
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.6'
 }
 //-- Loads the JavaFX modules of the selected JavaFX version.
 javafx {    

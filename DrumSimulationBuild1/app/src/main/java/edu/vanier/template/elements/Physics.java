@@ -13,6 +13,8 @@ public final class Physics {
     private double[] beta = {0, 1, 0};
     private double[] n = {0, 0, 1};
     
+    private int counter = 0;
+    
     //Camera centre:
     private double cX;
     private double cY;
@@ -41,6 +43,7 @@ public final class Physics {
         @Override
         public void handle(long now) {
             update();
+            counter++;
         }
     };
     
@@ -68,12 +71,8 @@ public final class Physics {
                 
                 points[clickedI][clickedJ].setOnMouseClicked(event -> {
                     
-                    //System.out.println(clickedI);
-                    System.out.println("point clicked");
                     double amplitude = 30;
                     double spread = 10;
-                    //double shiftX = clickedI;
-                    //double shiftZ = clickedJ;
 
                 
                     for (int j = 0; j < simulation.MESH_HEIGHT; j++){
@@ -86,8 +85,9 @@ public final class Physics {
                             }
                         }
 
-
                     }
+                    
+                    
                 
                 });
                 
