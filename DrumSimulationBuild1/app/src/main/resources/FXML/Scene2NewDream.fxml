@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,9 +17,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="710.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="759.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <VBox prefHeight="693.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="19.0" prefWidth="141.0" text="Drum Customization:">
                <font>
@@ -30,7 +31,7 @@
             </Label>
             <Label fx:id="label1" prefHeight="17.0" prefWidth="99.0" text="Enter Width :">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="textF1" prefHeight="8.0" prefWidth="101.0">
@@ -40,7 +41,7 @@
             </TextField>
             <Label fx:id="label2" text="Enter Length : ">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="4.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="textF2">
@@ -50,17 +51,13 @@
             </TextField>
             <Label fx:id="label3" text="Enter angle value : ">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="4.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="textF3">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </TextField>
+            <Spinner fx:id="spinner" editable="true" />
             <Label fx:id="label4" prefHeight="17.0" prefWidth="110.0" text="Enter height value:">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="4.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="textF4">
@@ -70,7 +67,7 @@
             </TextField>
             <Label fx:id="label5" text="Enter lower base value : ">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="4.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="textF5">
@@ -80,7 +77,7 @@
             </TextField>
             <Label fx:id="label6" text="Enter long base value :">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets top="4.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="textF6">
@@ -88,9 +85,19 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
+            <Label text="Density:">
+               <VBox.margin>
+                  <Insets top="4.0" />
+               </VBox.margin>
+            </Label>
+            <Spinner fx:id="spinner2" editable="true">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Spinner>
             <Label text="Spread : ">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <Label fx:id="numLabel2" text="Label">
@@ -105,7 +112,7 @@
             </Slider>
             <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <Label fx:id="numLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="137.0" text="Label">
@@ -118,9 +125,9 @@
                   <Insets />
                </VBox.margin>
             </Slider>
-            <Label prefHeight="17.0" prefWidth="51.0" text="Delta Δt">
+            <Label prefHeight="17.0" prefWidth="188.0" text="Δt:">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <Label fx:id="numLabel3" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="158.0" text="Label" />
@@ -132,7 +139,7 @@
             </Button>
             <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" prefHeight="26.0" prefWidth="81.0" text="Confirm">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Button>
          </children>
@@ -235,6 +242,12 @@
                         </ImageView>
                      </graphic></MenuItem>
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Rest">
+              <items>
+                  <MenuItem fx:id="resetWave" mnemonicParsing="false" text="Reset Wave" />
+                <MenuItem fx:id="resetCamera" mnemonicParsing="false" text="Reset Camera" />
+              </items>
             </Menu>
          </menus>
       </MenuBar>
