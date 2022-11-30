@@ -478,7 +478,7 @@ public class CreateNewDrumController {
 
         } else if (parallelogramChosen) {
 
-            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble((String) spinner.getValue()));
+            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt((String) spinner.getValue()));
 
         } else if (trapezoidChosen) {
 
@@ -550,7 +550,7 @@ public class CreateNewDrumController {
 
     }
 
-    public void createParallelogramDrum(int width, int height, double angle) throws IOException {
+    public void createParallelogramDrum(int width, int height, int angle) throws IOException {
 
         //stage.close();
         simulation.startSimulation(new ParallelogramDrum(width, height, angle));
