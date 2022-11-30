@@ -1,10 +1,12 @@
 package edu.vanier.template.save;
 
-import edu.vanier.template.simulation.Simulation;
+import edu.vanier.template.drumshapes.Formable;
 
 public class SaveDrum {
     
-    public SaveDrum(Simulation simulation) {
+    public SaveDrum(Formable formable) {
+        
+        
         
     }
     

@@ -71,12 +71,8 @@ public final class Physics {
                 
                 points[clickedI][clickedJ].setOnMouseClicked(event -> {
                     
-                    //System.out.println(clickedI);
-                    System.out.println("point clicked");
                     double amplitude = 30;
                     double spread = 10;
-                    //double shiftX = clickedI;
-                    //double shiftZ = clickedJ;
 
                 
                     for (int j = 0; j < simulation.MESH_HEIGHT; j++){
@@ -89,8 +85,9 @@ public final class Physics {
                             }
                         }
 
-
                     }
+                    
+                    
                 
                 });
                 
