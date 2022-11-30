@@ -1,4 +1,4 @@
-package Save;
+package edu.vanier.template.save;
 
 import edu.vanier.template.simulation.Simulation;
 
