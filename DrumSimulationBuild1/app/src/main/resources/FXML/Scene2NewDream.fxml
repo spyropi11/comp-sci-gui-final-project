@@ -38,7 +38,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label2" text="Enter Lenght : ">
+            <Label fx:id="label2" text="Enter Length : ">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -118,7 +118,7 @@
                   <Insets />
                </VBox.margin>
             </Slider>
-            <Label text="Density:">
+            <Label prefHeight="17.0" prefWidth="51.0" text="Delta Δt">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
