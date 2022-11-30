@@ -52,7 +52,7 @@ public class TrapezoidDrum extends Formable {
                 }
                 double level = baseTwo + j*(baseOne - baseTwo)/getMeshHeight();
                 double step = i*level/getMeshWidth();
-                double offset = 2*RADIUS*j/Math.tan(angle) + step;
+                double offset = 2*RADIUS*j/Math.tan(Math.toRadians(angle)) + step;
                 points[i][j].setup(2*RADIUS*i + offset, 2*RADIUS*j);
             }
         }
