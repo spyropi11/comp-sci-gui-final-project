@@ -46,7 +46,7 @@ public class ParallelogramDrum extends Formable {
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(false);
                 }
-                double offset = 2*RADIUS*j/Math.tan(angle);
+                double offset = 2*RADIUS*j/Math.tan(Math.toRadians(angle));
                 points[i][j].setup(2*RADIUS*i + offset, 2*RADIUS*j);
             }
         }
