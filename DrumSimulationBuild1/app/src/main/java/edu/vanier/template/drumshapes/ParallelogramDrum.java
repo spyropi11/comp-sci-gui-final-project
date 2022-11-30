@@ -10,9 +10,9 @@ public class ParallelogramDrum extends Formable {
     
     private final int widthSide;
     private final int heightSide;
-    private final double angle;
+    private final int angle;
     
-    public ParallelogramDrum(int widthSide, int heightSide, double angle) {
+    public ParallelogramDrum(int widthSide, int heightSide, int angle) {
         this.widthSide = widthSide;
         this.heightSide = heightSide;
         this.angle = angle;
