@@ -23,7 +23,7 @@ public class Simulation {
     /**
     * Binds a Physics object to this Simulation object.
     */
-    private final Physics physics;
+    private Physics physics;
     /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
@@ -37,13 +37,17 @@ public class Simulation {
     */
     public final static double NATURAL_DECAY = 0.1;
     /**
+     * DELTATIME must be between 0.01 and 0.1
+     */
+    public double DELTATIME = 0.01;
+    /**
     * Root node of scene.
     */
-    private final Pane root;
+    private Pane root;
     /**
     * Line that makes orientation of the drum when displayed clearer.
     */
-    private final CameraLine cameraLine;
+    private CameraLine cameraLine;
     /**
      * Boolean denoting when the camera line is displayed.
      */
@@ -52,15 +56,15 @@ public class Simulation {
     /**
     * Width of root pane.
     */
-    private final double WIDTH;
+    private double WIDTH;
     /**
      * Height of root pane.
      */
-    private final double HEIGHT;
+    private double HEIGHT;
     /**
      * Initial radius of each point.
      */
-    public final static double RADIUS = 2;
+    public static double RADIUS = 2;
     /**
      * Number of points horizontally.
      */
@@ -76,14 +80,19 @@ public class Simulation {
      */
     public static double magnificationConstant = 3;
 
-    public final Formable formable;
+    public Formable formable;
+    
+    public Simulation(){
+        
+        
+    }
     
     /**
      * Initiates a wave simulation.
      * @param formable The shape of the drum.
      *
      */
-    public Simulation(Formable formable) {
+    public void startSimulation(Formable formable) {
         // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
 
         this.formable = formable;
@@ -209,6 +218,16 @@ public class Simulation {
     public void setDisplay(boolean display) {
         this.display = display;
     }
+
+    public double getDELTATIME() {
+        return DELTATIME;
+    }
+
+    public void setDELTATIME(double DELTATIME) {
+        this.DELTATIME = DELTATIME;
+    }
+    
+    
 
 
 

@@ -42,20 +42,20 @@ public final class Physics {
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            update();
+            update(simulation.getDELTATIME());
             counter++;
         }
     };
     
-    public void update() {
+    public void update(double DELTATIME) {
         
         simulation.getCameraLine().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
         
         for(Point point : drummer.mesh) {
-            point.updateVelocity();
+            point.updateVelocity(DELTATIME);
         }
         for(Point point : drummer.mesh) {
-            point.updatePosition();
+            point.updatePosition(DELTATIME);
             point.updateColour();
             point.projection(p, alpha, beta, n, cX, cY);
         }

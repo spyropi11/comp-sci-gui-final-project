@@ -1,5 +1,6 @@
 package edu.vanier.template.elements;
 
+import edu.vanier.template.controller.CreateNewDrumController;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -10,7 +11,7 @@ public class Point extends Sphere {
     double position;
     double vPrevious = 0;
     double velocity = 0;
-    static double DELTATIME = 0.06;
+    //static double DELTATIME = 0.06;
     double springConstant = 3;
     double mass;
     double maximumDampening;
@@ -21,7 +22,7 @@ public class Point extends Sphere {
     double dampeningConstant;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
-    
+
     double x;
     double y;
     
@@ -122,9 +123,6 @@ public class Point extends Sphere {
         this.velocity = velocity;
     }
 
-    public static double getDELTATIME() {
-        return DELTATIME;
-    }
 
     public double getMass() {
         return mass;
@@ -165,7 +163,7 @@ public class Point extends Sphere {
      * Updates the velocity
      */
     
-    public void updateVelocity() {
+    public void updateVelocity(double DELTATIME) {
         //If onEdge boolean is set to false
         if(!onEdge) {
             //set previous velocity to velocity.
@@ -187,7 +185,7 @@ public class Point extends Sphere {
         }
     }
     
-    public void updatePosition() {
+    public void updatePosition(double DELTATIME) {
         if(!onEdge) {
             position += DELTATIME*velocity;
         }

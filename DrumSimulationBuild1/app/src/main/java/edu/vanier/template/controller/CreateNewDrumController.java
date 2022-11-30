@@ -46,6 +46,8 @@ public class CreateNewDrumController {
     Boolean squareChosen = false;
     Boolean parallelogramChosen = false;
     Boolean trapezoidChosen = false;
+    
+    Simulation simulation = new Simulation();
 
     public CreateNewDrumController(Stage stage) {
 
@@ -220,7 +222,8 @@ public class CreateNewDrumController {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider3 = (int) slider3.getValue();
                 numLabel3.setText(Integer.toString(numSlider3) + " P");
-
+                
+                simulation.setDELTATIME((double)newValue);
             }
 
         });
@@ -463,7 +466,7 @@ public class CreateNewDrumController {
     public void createSquareDrum(int length) throws IOException {
 
         //stage.close();
-        Simulation simulation = new Simulation(new SquareDrum(length));
+        simulation.startSimulation(new SquareDrum(length));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
@@ -493,7 +496,7 @@ public class CreateNewDrumController {
     public void createRectangleDrum(int width, int length) throws IOException {
 
         //stage.close();
-        Simulation simulation = new Simulation(new RectangleDrum(width, length));
+        simulation.startSimulation(new RectangleDrum(width, length));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
@@ -522,7 +525,7 @@ public class CreateNewDrumController {
     public void createParallelogramDrum(int width, int height, double angle) throws IOException {
 
         //stage.close();
-        Simulation simulation = new Simulation(new ParallelogramDrum(width, height, angle));
+        simulation.startSimulation(new ParallelogramDrum(width, height, angle));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
@@ -551,7 +554,7 @@ public class CreateNewDrumController {
     public void createTrapazoidDrum(int longBase, int shortBase, int height, double angle) throws IOException {
 
         //stage.show();
-        Simulation simulation = new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle));
+        simulation.startSimulation(new TrapezoidDrum(longBase, shortBase, height, angle));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
