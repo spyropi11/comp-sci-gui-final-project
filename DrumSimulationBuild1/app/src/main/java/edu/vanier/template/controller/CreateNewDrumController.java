@@ -23,6 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -94,8 +96,8 @@ public class CreateNewDrumController {
     @FXML
     TextField textF2;
 
-    @FXML
-    TextField textF3;
+    //@FXML
+    //TextField textF3;  modified 
 
     @FXML
     TextField textF4;
@@ -105,7 +107,14 @@ public class CreateNewDrumController {
 
     @FXML
     TextField textF6;
-
+    
+    //Spinner
+    @FXML
+    Spinner spinner;
+    
+    @FXML
+    Spinner spinner2;
+    
     //Sliders
     @FXML
     Slider slider;
@@ -155,17 +164,24 @@ public class CreateNewDrumController {
     MenuItem radialMass;
 
     //MenuBar + decay
+    @FXML
     MenuItem uniformDecay;
     MenuItem horizontalDecay;
     MenuItem verticalDecay;
     MenuItem radialDecay;
 
     //MenuBar + Texture
+    @FXML
     MenuItem cartesian;
     MenuItem parallel;
     MenuItem triangular;
     MenuItem thin;
     MenuItem thick;
+    
+    //MenuItem + Rest
+    @FXML
+    MenuItem resetWave;
+    MenuItem resetCamera;
 
     //Slider Number value 1
     int numSlider;
@@ -182,7 +198,7 @@ public class CreateNewDrumController {
     public void initialize() {
         textF1.setEditable(false);
         textF2.setEditable(false);
-        textF3.setEditable(false);
+        //textF3.setEditable(false);
 
         textF4.setEditable(false);
         textF5.setEditable(false);
@@ -195,7 +211,7 @@ public class CreateNewDrumController {
         numLabel2.setText(Integer.toString(numSlider2) + " M");
 
         numSlider3 = (int) slider3.getValue();
-        numLabel3.setText(Integer.toString(numSlider3) + " P");
+        numLabel3.setText(Integer.toString(numSlider3) + " s");
 
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -227,6 +243,14 @@ public class CreateNewDrumController {
             }
 
         });
+        
+        spinner.setValueFactory(
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
+        );
+        
+        spinner2.setValueFactory(
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100)
+        );
 
     }
 
@@ -239,12 +263,13 @@ public class CreateNewDrumController {
          label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
-
+        //ToDo
         label3.setVisible(false);
-        textF3.setVisible(false);
-        if (!textF3.getText().isEmpty()) {
+        spinner.setVisible(false);
+        if (spinner.getValue() != null )  {
 
-            textF3.setText("");
+            spinner.getValueFactory().setValue(0);
+            
         }
 
          label4.setVisible(false);
@@ -292,11 +317,12 @@ public class CreateNewDrumController {
             textF2.setText("");
         }
 
-         label3.setVisible(false);
-        textF3.setVisible(false);
-        if (!textF3.getText().isEmpty()) {
+        label3.setVisible(false);
+        spinner.setVisible(false);
+        if (spinner.getValue() != null )  {
 
-            textF3.setText("");
+            spinner.getValueFactory().setValue(0);
+            
         }
 
          label4.setVisible(false);
@@ -344,12 +370,13 @@ public class CreateNewDrumController {
             textF2.setText("");
         }
 
-        textF3.setVisible(true);
+        spinner.setVisible(true);
          label3.setVisible(true);
-        textF3.setEditable(true);
-        if (!textF3.getText().isEmpty()) {
+        spinner.setEditable(true);
+        if (spinner.getValue() != null )  {
 
-            textF3.setText("");
+            spinner.getValueFactory().setValue(0);
+            
         }
         textF4.setVisible(true);
          label4.setVisible(true);
@@ -395,12 +422,13 @@ public class CreateNewDrumController {
             textF2.setText("");
         }
         
-        textF3.setVisible(true);
+        spinner.setVisible(true);
          label3.setVisible(true);
-        textF3.setEditable(true);
-        if (!textF3.getText().isEmpty()) {
+        spinner.setEditable(true);
+         if (spinner.getValue() != null )  {
 
-            textF3.setText("");
+            spinner.getValueFactory().setValue(0);
+            
         }
         
         textF4.setVisible(true);
@@ -450,11 +478,11 @@ public class CreateNewDrumController {
 
         } else if (parallelogramChosen) {
 
-            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble(textF3.getText()));
+            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble((String) spinner.getValue()));
 
         } else if (trapezoidChosen) {
 
-            createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt(textF3.getText()));
+            createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble((String) spinner.getValue()));
         } else {
 
             System.out.println("Please select a shape before confirming");
