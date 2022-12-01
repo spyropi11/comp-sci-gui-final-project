@@ -14,6 +14,9 @@ public final class Physics {
     private double[] beta = {0, 1, 0};
     private double[] n = {0, 0, 1};
     
+    double amplitude;
+    double spread;
+    
     private int counter = 0;
     
     //Camera centre:
@@ -44,20 +47,20 @@ public final class Physics {
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            update(simulation.getDELTATIME());
+            update();
             counter++;
         }
     };
     
-    public void update(double DELTATIME) {
+    public void update() {
         
         simulation.getCameraLine().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
         
         for(Point point : drummer.mesh) {
-            point.updateVelocity(DELTATIME);
+            point.updateVelocity();
         }
         for(Point point : drummer.mesh) {
-            point.updatePosition(DELTATIME);
+            point.updatePosition();
             point.updateColour();
             point.projection(p, alpha, beta, n, cX, cY);
         }
@@ -73,8 +76,8 @@ public final class Physics {
                 
                 points[clickedI][clickedJ].setOnMouseClicked(event -> {
                     
-                    double amplitude = 30;
-                    double spread = CreateNewDrumController.spreadValue;
+                    amplitude = CreateNewDrumController.amplitudeValue;
+                    spread = CreateNewDrumController.spreadValue;
                             
                     if (spread != 0){
 

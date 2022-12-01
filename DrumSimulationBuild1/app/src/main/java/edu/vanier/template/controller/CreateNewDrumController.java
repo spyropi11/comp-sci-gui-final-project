@@ -51,6 +51,8 @@ public class CreateNewDrumController {
     Boolean trapezoidChosen = false;
     
     public static double spreadValue;
+    public static double amplitudeValue;
+    public static double deltaTimeValue;
     
     Simulation simulation = new Simulation();
 
@@ -220,8 +222,10 @@ public class CreateNewDrumController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider = (int) slider.getValue();
-                numLabel.setText(Integer.toString(numSlider) + " N");
+                numLabel.setText(Integer.toString(numSlider) + "m");
 
+                amplitudeValue = (double)newValue;
+                System.out.println("slider was changed" + amplitudeValue);
             }
 
         });
@@ -230,7 +234,7 @@ public class CreateNewDrumController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider2 = (int) slider2.getValue();
-                numLabel2.setText(Integer.toString(numSlider2) + " M");
+                numLabel2.setText(Integer.toString(numSlider2) + "m");
 
                 spreadValue = (double)newValue;
                 System.out.println("slider was changed" + spreadValue);
@@ -244,7 +248,8 @@ public class CreateNewDrumController {
                 numSlider3 = (int) slider3.getValue();
                 numLabel3.setText(Integer.toString(numSlider3) + " P");
 
-                
+                deltaTimeValue = (double)newValue;
+                System.out.println("slider was changed" + deltaTimeValue);
                 
 
             }

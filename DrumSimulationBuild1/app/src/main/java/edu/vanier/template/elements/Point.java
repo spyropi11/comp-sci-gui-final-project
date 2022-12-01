@@ -163,7 +163,7 @@ public class Point extends Sphere {
      * Updates the velocity
      */
     
-    public void updateVelocity(double DELTATIME) {
+    public void updateVelocity() {
         //If onEdge boolean is set to false
         if(!onEdge) {
             //set previous velocity to velocity.
@@ -181,13 +181,13 @@ public class Point extends Sphere {
             //divide by the mass (F=ma --> a=F/m).
             double acc = force / mass;
             //get new velocity.
-            velocity = vPrevious + DELTATIME*acc;
+            velocity = vPrevious + CreateNewDrumController.deltaTimeValue*acc;
         }
     }
     
-    public void updatePosition(double DELTATIME) {
+    public void updatePosition() {
         if(!onEdge) {
-            position += DELTATIME*velocity;
+            position += CreateNewDrumController.deltaTimeValue*velocity;
         }
     }
     
