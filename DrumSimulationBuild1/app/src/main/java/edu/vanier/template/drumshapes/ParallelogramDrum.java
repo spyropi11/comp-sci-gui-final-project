@@ -136,4 +136,16 @@ public class ParallelogramDrum extends Formable {
         // TODO
     }
     
+    public int getWidthSide() {
+        return widthSide;
+    }
+    
+    public int getHeightSide() {
+        return heightSide;
+    }
+    
+    public int getAngle() {
+        return angle;
+    }
+    
 }

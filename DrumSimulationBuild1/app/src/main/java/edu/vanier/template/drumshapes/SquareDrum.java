@@ -118,4 +118,9 @@ public class SquareDrum extends Formable {
         // TODO
     }
     
+    
+    public int getSide() {
+        return side;
+    }
+    
 }

@@ -35,7 +35,7 @@ public abstract class Formable {
     /**
      * Possibilities for the arrangement of springs in a drum.
      */
-    public enum Arrangement {
+    public static enum Arrangement {
         CARTESIAN,
         PARALLEL,
         TRIANGULAR,
@@ -178,4 +178,17 @@ public abstract class Formable {
             default -> {return null;}
         }
     }
+    
+    public double getDensity() {
+        return density;
+    }
+    
+    public Arrangement getTexture() {
+        return texture;
+    }
+    
+    public Distribution getMass() {
+        return mass;
+    }
+    
 }

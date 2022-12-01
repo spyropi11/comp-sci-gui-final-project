@@ -12,9 +12,9 @@ public class TrapezoidDrum extends Formable {
     private final int baseTwo;
     private final int widthSide;
     private final int heightSide;
-    private final double angle;
+    private final int angle;
     
-    public TrapezoidDrum(int baseOne, int baseTwo, int heightSide, double angle) {
+    public TrapezoidDrum(int baseOne, int baseTwo, int heightSide, int angle) {
         this.baseOne = baseOne;
         this.baseTwo = baseTwo;
         this.heightSide = heightSide;
@@ -140,6 +140,23 @@ public class TrapezoidDrum extends Formable {
     @Override
     public void formStrength(Distribution strength) {
         // TODO
+    }
+    
+    
+    public int getBaseOne() {
+        return baseOne;
+    }
+    
+    public int getBaseTwo() {
+        return baseTwo;
+    }
+    
+    public int getHeightSide() {
+        return heightSide;
+    }
+    
+    public int getAngle() {
+        return angle;
     }
     
 }
