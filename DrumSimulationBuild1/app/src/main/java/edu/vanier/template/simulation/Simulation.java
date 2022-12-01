@@ -23,7 +23,7 @@ public class Simulation {
     /**
     * Binds a Physics object to this Simulation object.
     */
-    private Physics physics;
+    public Physics physics;
     /**
     * When defining the mass, we can make it a multiple of this constant.
     * For example, if the animation only looks good when m is in the 1000s, then we can make this constant = 1000.
@@ -81,35 +81,42 @@ public class Simulation {
     public static double magnificationConstant = 3;
 
     public Formable formable;
-    
-    public Simulation(){
+
+    public Simulation() {
         
-        
+        this.root = new Pane();
+        this.root.setPrefWidth(700);
+        this.root.setPrefHeight(700);
+        setDELTATIME(0.01);
+        this.physics = new Physics(this);
     }
+    
+    
     
     /**
      * Initiates a wave simulation.
      * @param formable The shape of the drum.
      *
      */
-    public void startSimulation(Formable formable) {
-        // We'll have to eventually get rid of this stage parameter and instead of displaying the sim on a stage, we attach the pane used onto another stage with all the ui controls.
-
+    public Simulation(Formable formable) {
+        
+        
+        
         this.formable = formable;
+        this.root = new Pane();
         
         WIDTH = 700;
         HEIGHT = 700;
 
-        root = new Pane();
-        root.setPrefWidth(700);
-        root.setPrefHeight(700);
-        physics = new Physics(this);
+        this.root.setPrefWidth(700);
+        this.root.setPrefHeight(700);
 
         Point[][] points = formable.formMesh();
         MESH_WIDTH = points.length;
         MESH_HEIGHT = points[0].length;
         ArrayList<Spring> drum = formable.formDrum();
 
+        this.physics = new Physics(this);
         physics.setPoints(points);
         physics.getDrummer().addToMesh(points);
         for(Spring spring : drum) {
@@ -158,6 +165,7 @@ public class Simulation {
         physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
         physics.zoom(1.03);
         physics.rotate(0.5, Physics.Axis.ALPHA);
+        
 
     }
 
@@ -204,8 +212,13 @@ public class Simulation {
     }
 
     public Pane getRoot() {
-        return root;
+        return this.root;
     }
+
+    public void setRoot(Pane root) {
+        this.root = root;
+    }
+
 
     public CameraLine getCameraLine() {
         return cameraLine;
@@ -226,6 +239,19 @@ public class Simulation {
     public void setDELTATIME(double DELTATIME) {
         this.DELTATIME = DELTATIME;
     }
+
+    public Physics getPhysics() {
+        return this.physics;
+    }
+
+    public void setPhysics(Physics physics) {
+        this.physics = physics;
+    }
+    
+    
+
+    
+    
     
     
 

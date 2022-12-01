@@ -1,5 +1,6 @@
 package edu.vanier.template.elements;
 
+import edu.vanier.template.controller.CreateNewDrumController;
 import edu.vanier.template.linear.Matrix;
 import edu.vanier.template.simulation.Simulation;
 import javafx.animation.AnimationTimer;
@@ -30,6 +31,7 @@ public final class Physics {
     
     public Physics(Simulation simulation) {
         this.simulation = simulation;
+        System.out.println(simulation.getDELTATIME());
         drummer = new DrumCreator();
         cX = simulation.getRoot().getPrefWidth()/2;
         cY = simulation.getRoot().getPrefHeight()/2;
@@ -62,7 +64,7 @@ public final class Physics {
     }
     
     public void setMouseClicked() {
-        
+                
         for(int clickedJ = 0; clickedJ < simulation.MESH_HEIGHT; clickedJ++){
             for(int clickedI = 0; clickedI < simulation.MESH_WIDTH; clickedI++){
                 
@@ -72,21 +74,23 @@ public final class Physics {
                 points[clickedI][clickedJ].setOnMouseClicked(event -> {
                     
                     double amplitude = 30;
-                    double spread = 10;
+                    double spread = CreateNewDrumController.spreadValue;
+                            
+                    if (spread != 0){
 
-                
-                    for (int j = 0; j < simulation.MESH_HEIGHT; j++){
-                        for(int i = 0; i < simulation.MESH_WIDTH; i++) {
+                        for (int j = 0; j < simulation.MESH_HEIGHT; j++){
+                            for(int i = 0; i < simulation.MESH_WIDTH; i++) {
 
-                            if(!points[i][j].isOnEdge()){
+                                if(!points[i][j].isOnEdge()){
 
-                                points[i][j].setPosition(points[i][j].getPosition() + amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
+                                    points[i][j].setPosition(points[i][j].getPosition() + 
+                                            amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
 
+                                }
                             }
-                        }
 
+                        }
                     }
-                    
                     
                 
                 });
@@ -204,5 +208,8 @@ public final class Physics {
     public double[] getBeta() {
         return beta;
     }
+
+    
+    
     
 }

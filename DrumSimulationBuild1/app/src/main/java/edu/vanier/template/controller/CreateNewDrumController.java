@@ -6,6 +6,7 @@ import edu.vanier.template.drumshapes.ParallelogramDrum;
 import edu.vanier.template.drumshapes.RectangleDrum;
 import edu.vanier.template.drumshapes.SquareDrum;
 import edu.vanier.template.drumshapes.TrapezoidDrum;
+import edu.vanier.template.elements.Physics;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +49,8 @@ public class CreateNewDrumController {
     Boolean squareChosen = false;
     Boolean parallelogramChosen = false;
     Boolean trapezoidChosen = false;
+    
+    public static double spreadValue;
     
     Simulation simulation = new Simulation();
 
@@ -229,6 +232,8 @@ public class CreateNewDrumController {
                 numSlider2 = (int) slider2.getValue();
                 numLabel2.setText(Integer.toString(numSlider2) + " M");
 
+                spreadValue = (double)newValue;
+                System.out.println("slider was changed" + spreadValue);
             }
 
         });
@@ -238,10 +243,12 @@ public class CreateNewDrumController {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider3 = (int) slider3.getValue();
                 numLabel3.setText(Integer.toString(numSlider3) + " P");
-                
-                simulation.setDELTATIME((double)newValue);
-            }
 
+                
+                
+
+            }
+        
         });
         
         spinner.setValueFactory(
@@ -475,14 +482,15 @@ public class CreateNewDrumController {
         } else if (rectangleChosen) {
 
             createRectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
-
+            
         } else if (parallelogramChosen) {
 
-            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt((String) spinner.getValue()));
-
+            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt((String) spinner.getValue())); 
+            
         } else if (trapezoidChosen) {
 
             createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble((String) spinner.getValue()));
+
         } else {
 
             System.out.println("Please select a shape before confirming");
@@ -494,13 +502,15 @@ public class CreateNewDrumController {
     public void createSquareDrum(int length) throws IOException {
 
         //stage.close();
-        simulation.startSimulation(new SquareDrum(length));
-
+        setSimulation(new Simulation(new SquareDrum(length)));
+        //System.out.println("sim created");
+        
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
             simulation.translate(event.getCode());
 
         });
+        
 
         simulation.setCloseSim(stage);
 
@@ -524,7 +534,7 @@ public class CreateNewDrumController {
     public void createRectangleDrum(int width, int length) throws IOException {
 
         //stage.close();
-        simulation.startSimulation(new RectangleDrum(width, length));
+        simulation = new Simulation(new RectangleDrum(width, length));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
@@ -553,7 +563,7 @@ public class CreateNewDrumController {
     public void createParallelogramDrum(int width, int height, int angle) throws IOException {
 
         //stage.close();
-        simulation.startSimulation(new ParallelogramDrum(width, height, angle));
+        simulation = new Simulation(new ParallelogramDrum(width, height, angle));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
@@ -582,7 +592,7 @@ public class CreateNewDrumController {
     public void createTrapazoidDrum(int longBase, int shortBase, int height, double angle) throws IOException {
 
         //stage.show();
-        simulation.startSimulation(new TrapezoidDrum(longBase, shortBase, height, angle));
+        simulation = new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 
@@ -607,5 +617,15 @@ public class CreateNewDrumController {
         stage.show();
 
     }
+
+    public Simulation getSimulation() {
+        return this.simulation;
+    }
+
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
+    }
+    
+    
 
 }
