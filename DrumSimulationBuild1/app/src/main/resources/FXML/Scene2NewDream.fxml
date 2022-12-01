@@ -131,7 +131,7 @@
                </VBox.margin>
             </Label>
             <Label fx:id="numLabel3" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="158.0" text="Label" />
-            <Slider fx:id="slider3" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="slider3" max="0.1" showTickLabels="true" showTickMarks="true" />
             <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
                <VBox.margin>
                   <Insets top="10.0" />
