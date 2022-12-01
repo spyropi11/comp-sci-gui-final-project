@@ -494,7 +494,7 @@ public class CreateNewDrumController {
             
         } else if (trapezoidChosen) {
 
-            createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Double.parseDouble((String) spinner.getValue()));
+            createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), Integer.parseInt((String) spinner.getValue()));
 
         } else {
 
@@ -594,7 +594,7 @@ public class CreateNewDrumController {
 
     }
 
-    public void createTrapazoidDrum(int longBase, int shortBase, int height, double angle) throws IOException {
+    public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException {
 
         //stage.show();
         simulation = new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle));
