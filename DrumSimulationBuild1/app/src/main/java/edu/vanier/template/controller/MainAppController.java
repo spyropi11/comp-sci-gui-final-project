@@ -3,6 +3,7 @@ package edu.vanier.template.controller;
 import edu.vanier.template.drumshapes.*;
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.simulation.Simulation;
+import edu.vanier.template.ui.MainApp;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class MainAppController  {
+public class MainAppController extends MainApp{
     
     
     
@@ -49,6 +50,7 @@ public class MainAppController  {
    
     public void handleLoadDrum(ActionEvent event) throws IOException {
     
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoadSavedDrum.fxml"));
 
         //Instantiate the controller   (Controller is where we do our event handling)
