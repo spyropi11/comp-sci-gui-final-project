@@ -29,7 +29,7 @@ public class MainApp extends Application {
    
     public Media media = new Media(musicFilePath); 
     
-    public MediaPlayer mediaPlayer = new MediaPlayer(media);  
+    public  MediaPlayer mediaPlayer = new MediaPlayer(media);  
 
     /**
      * This is where the main stage gets executed
@@ -58,7 +58,7 @@ public class MainApp extends Application {
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
 
-        mediaPlayer.setAutoPlay(false);
+        mediaPlayer.setAutoPlay(true);
         
         stage.setTitle("Drum Sim");
         // Resize the stage so the size matches the scene
