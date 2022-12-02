@@ -202,6 +202,16 @@ public final class Physics {
         cY = oY;
     }
     
+    public void startPlayBack() {
+        playingBack = true;
+        saveEnvelope.getSavedSim().startCount(counter);
+    }
+    
+    public void startRecording() {
+        recording = true;
+        saveEnvelope.getSavedSim().startCount(counter);
+    }
+    
     public void endPlayBack() {
         playingBack = false;
     }

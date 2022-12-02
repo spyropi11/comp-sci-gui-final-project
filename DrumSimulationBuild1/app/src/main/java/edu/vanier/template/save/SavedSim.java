@@ -22,6 +22,7 @@ public class SavedSim {
     
     private int currentCounter = -1;
     private int nextIndex;
+    private int initialCount;
     
     public SavedSim(File csvFile) throws IOException {
         this.csvFile = csvFile;
@@ -38,7 +39,7 @@ public class SavedSim {
     }
     
     public void play(int counter, Physics physics) {
-        if(sim.get(nextIndex).counter == counter) {
+        if(sim.get(nextIndex).counter == (counter - initialCount)) {
             sim.get(nextIndex).createPulse(physics);
         } else {
             currentCounter++;
@@ -49,11 +50,15 @@ public class SavedSim {
     }
     
     public void record(int counter, int pointI, int pointJ, double spread, double amplitude) {
-        PulseInstance pulse = new PulseInstance(counter, pointI, pointJ, spread, amplitude);
+        PulseInstance pulse = new PulseInstance((counter - initialCount), pointI, pointJ, spread, amplitude);
         if(sim.isEmpty()) {
             nextIndex = 0;
         }
         sim.add(pulse);
+    }
+    
+    public void startCount(int counter) {
+        initialCount = counter;
     }
     
 }
