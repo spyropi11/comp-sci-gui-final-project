@@ -243,7 +243,7 @@
                      </graphic></MenuItem>
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Rest">
+            <Menu mnemonicParsing="false" text="Reset">
               <items>
                   <MenuItem fx:id="resetWave" mnemonicParsing="false" text="Reset Wave" />
                 <MenuItem fx:id="resetCamera" mnemonicParsing="false" text="Reset Camera" />
