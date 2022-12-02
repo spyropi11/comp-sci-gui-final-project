@@ -32,11 +32,11 @@ public class RectangleDrum extends Formable {
         for (int j = 0; j < getMeshHeight(); j++){
             for(int i = 0; i < getMeshWidth(); i++) {
                 if(j == 0 || j == getMeshHeight() - 1) {
-                    //This puts two points on the edges and sets their onEdge value to true
+                    // This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
                 } else if(i == 0 || i == getMeshWidth()-1) {
-                    //This puts two points on the edges and sets their onEdge value to true
+                    // This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
                     
@@ -45,6 +45,12 @@ public class RectangleDrum extends Formable {
                     points[i][j].setOnEdge(false);
                 }
                 points[i][j].setup(2*RADIUS*i, 2*RADIUS*j);
+                // One line:
+                if((getMeshWidth() == 1 && getMeshHeight() != 1 && j != 0 && j != getMeshHeight()-1)
+                        || (getMeshHeight() == 1 && getMeshWidth() != 1 && i != 0 && i != getMeshWidth()-1)
+                        ) {
+                    points[i][j].setOnEdge(false);
+                }
             }
         }
         this.mesh = points;
