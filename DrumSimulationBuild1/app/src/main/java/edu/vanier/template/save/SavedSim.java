@@ -33,4 +33,9 @@ public class SavedSim {
         beanToCsv.write(sim);
     }
     
+    public PulseInstance play(int counter) {
+        //TODO
+        return null;
+    }
+    
 }

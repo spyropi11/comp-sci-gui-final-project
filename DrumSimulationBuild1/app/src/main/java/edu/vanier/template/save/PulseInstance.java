@@ -1,6 +1,7 @@
 package edu.vanier.template.save;
 
 import com.opencsv.bean.CsvBindByPosition;
+import edu.vanier.template.elements.Physics;
 
 public class PulseInstance {
     
@@ -14,5 +15,9 @@ public class PulseInstance {
     double spread;
     @CsvBindByPosition(position = 0)
     double amplitude;
+    
+    public void createPulse(Physics physics) {
+        //TODO
+    }
     
 }
