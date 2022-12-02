@@ -56,12 +56,4 @@ public class SavedSim {
         sim.add(pulse);
     }
     
-    public void trackTime(int counter, double deltaTime) {
-        //TODO
-    }
-    
-    public void updateTime() {
-        //TODO
-    }
-    
 }

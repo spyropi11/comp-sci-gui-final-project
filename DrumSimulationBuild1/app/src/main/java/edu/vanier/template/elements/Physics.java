@@ -53,14 +53,14 @@ public final class Physics {
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            if(!Objects.isNull(saveEnvelope.savedSim) && playingBack) {
-                saveEnvelope.savedSim.play(counter, Physics.this);
-                saveEnvelope.savedSim.updateTime();
+            if(!Objects.isNull(saveEnvelope) && playingBack) {
+                saveEnvelope.getSavedSim().play(counter, Physics.this);
+                saveEnvelope.getTimeTracker().updateTime();
             }
             update();
             counter++;
             if(recording) {
-                saveEnvelope.savedSim.trackTime(counter, CreateNewDrumController.deltaTimeValue);
+                saveEnvelope.getTimeTracker().trackTime(counter, CreateNewDrumController.deltaTimeValue);
             }
         }
     };
@@ -103,7 +103,7 @@ public final class Physics {
                     });
 
                     if(recording) {
-                        saveEnvelope.savedSim.record(counter, iclicked, jclicked, spread, amplitude);
+                        saveEnvelope.getSavedSim().record(counter, iclicked, jclicked, spread, amplitude);
                     }
                 }
             }
