@@ -164,6 +164,7 @@ public class Point extends Sphere {
      */
     
     public void updateVelocity() {
+        
         //If onEdge boolean is set to false
         if(!onEdge) {
             //set previous velocity to velocity.

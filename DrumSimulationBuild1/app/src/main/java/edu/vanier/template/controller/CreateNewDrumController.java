@@ -53,6 +53,10 @@ public class CreateNewDrumController {
     public static double spreadValue;
     public static double amplitudeValue;
     public static double deltaTimeValue;
+    public static double densityValue;
+    public static double[] doub = new double[] {1,2};
+    public static double[] doub2 = new double[] {1};
+    public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM,doub2);
 
     Simulation simulation = new Simulation();
 
@@ -505,10 +509,15 @@ public class CreateNewDrumController {
     }
 
     public void createSquareDrum(int length) throws IOException {
-
-        //stage.close();
+        
+        Formable formable = new SquareDrum(length);
+        //formable.setDensity(densityValue);
+        //formable.setMassDistribution(distributionValue);
+        
         simulation.getPhysics().stopTimer();
-        setSimulation(new Simulation(new SquareDrum(length)));
+        setSimulation(new Simulation(formable));
+
+        
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
 

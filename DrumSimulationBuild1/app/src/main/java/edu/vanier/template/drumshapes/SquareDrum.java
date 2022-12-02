@@ -109,14 +109,6 @@ public class SquareDrum extends Formable {
             }
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void formStrength(Distribution strength) {
-        // TODO
-    }
     
     
     public int getSide() {

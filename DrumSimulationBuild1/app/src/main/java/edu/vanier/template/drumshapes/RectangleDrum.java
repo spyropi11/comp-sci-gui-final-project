@@ -131,13 +131,6 @@ public class RectangleDrum extends Formable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void formStrength(Distribution strength) {
-        // TODO
-    }
     
     public int getWidth() {
         return width;

@@ -23,7 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class MainAppController extends MainApp{
+public class MainAppController{
     
     
     
@@ -50,7 +50,7 @@ public class MainAppController extends MainApp{
    
     public void handleLoadDrum(ActionEvent event) throws IOException {
     
-        
+        MainApp.mediaPlayer.stop();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoadSavedDrum.fxml"));
 
         //Instantiate the controller   (Controller is where we do our event handling)
@@ -76,6 +76,8 @@ public class MainAppController extends MainApp{
 
     public void handleCreateNewDrum(ActionEvent event) throws IOException, Exception {
 
+        MainApp.mediaPlayer.stop();
+        
         stage.close();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
