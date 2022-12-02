@@ -128,13 +128,6 @@ public class ParallelogramDrum extends Formable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void formStrength(Distribution strength) {
-        // TODO
-    }
     
     public int getWidthSide() {
         return widthSide;

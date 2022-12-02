@@ -25,11 +25,11 @@ public class MainApp extends Application {
     public int totalPoints = 5;
     public double time = 0;
     
-    public String musicFilePath = getClass().getResource("/Music/QUANDALE.mp3").toString();
+    public static String musicFilePath = MainApp.class.getResource("/Music/QUANDALE.mp3").toString();
    
-    public Media media = new Media(musicFilePath); 
+    public static Media media = new Media(musicFilePath); 
     
-    public MediaPlayer mediaPlayer = new MediaPlayer(media);  
+    public static MediaPlayer mediaPlayer = new MediaPlayer(media);  
 
     /**
      * This is where the main stage gets executed
@@ -58,7 +58,7 @@ public class MainApp extends Application {
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
 
-        mediaPlayer.setAutoPlay(false);
+        mediaPlayer.setAutoPlay(true);
         
         stage.setTitle("Drum Sim");
         // Resize the stage so the size matches the scene

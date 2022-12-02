@@ -106,11 +106,6 @@ public abstract class Formable {
      */
     protected abstract void generateMass();
 
-    /**
-     * Sets the spring constants of the springs in the drum.
-     * @param strength The particular distribution of spring constants.
-     */
-    public abstract void formStrength(Distribution strength);
     
     
     

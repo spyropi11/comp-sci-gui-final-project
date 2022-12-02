@@ -54,7 +54,7 @@
                   <Insets top="4.0" />
                </VBox.margin>
             </Label>
-            <Spinner fx:id="spinner" editable="true" />
+            <Spinner fx:id="spinner" disable="true" editable="true" />
             <Label fx:id="label4" prefHeight="17.0" prefWidth="110.0" text="Enter height value:">
                <VBox.margin>
                   <Insets top="4.0" />
@@ -90,7 +90,7 @@
                   <Insets top="4.0" />
                </VBox.margin>
             </Label>
-            <Spinner fx:id="spinner2" editable="true">
+            <Spinner fx:id="spinner2" disable="true" editable="true">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -243,7 +243,7 @@
                      </graphic></MenuItem>
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Rest">
+            <Menu mnemonicParsing="false" text="Reset">
               <items>
                   <MenuItem fx:id="resetWave" mnemonicParsing="false" text="Reset Wave" />
                 <MenuItem fx:id="resetCamera" mnemonicParsing="false" text="Reset Camera" />

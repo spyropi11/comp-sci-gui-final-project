@@ -42,24 +42,28 @@ public class CreateNewDrumController {
      */
     @FXML
     public Pane paneSim;
-
+    
     public Stage stage;
-
+    
     Boolean rectangleChosen = false;
     Boolean squareChosen = false;
     Boolean parallelogramChosen = false;
     Boolean trapezoidChosen = false;
-
+    
     public static double spreadValue;
     public static double amplitudeValue;
     public static double deltaTimeValue;
+    public static double densityValue;
+    public static double[] doub = new double[] {1,2};
+    public static double[] doub2 = new double[] {1};
+    public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM,doub2);
 
     Simulation simulation = new Simulation();
-
+    
     public CreateNewDrumController(Stage stage) {
-
+        
         this.stage = stage;
-
+        
     }
 
     //Button menu
@@ -69,91 +73,90 @@ public class CreateNewDrumController {
     //Labels
     @FXML
     Label label1;
-
+    
     @FXML
     Label label2;
-
+    
     @FXML
     Label label3;
-
+    
     @FXML
     Label label4;
-
+    
     @FXML
     Label label5;
-
+    
     @FXML
     Label label6;
-
+    
     @FXML
     Label numLabel;
-
+    
     @FXML
     Label numLabel2;
-
+    
     @FXML
     Label numLabel3;
 
     //Text
     @FXML
     TextField textF1;
-
+    
     @FXML
     TextField textF2;
 
     //@FXML
     //TextField textF3;  modified
-
     @FXML
     TextField textF4;
-
+    
     @FXML
     TextField textF5;
-
+    
     @FXML
     TextField textF6;
 
     //Spinner
     @FXML
     Spinner spinner;
-
+    
     @FXML
     Spinner spinner2;
 
     //Sliders
     @FXML
     Slider slider;
-
+    
     @FXML
     Slider slider2;
-
+    
     @FXML
     Slider slider3;
 
     //Bottom button
     @FXML
     Button btnSaveButton;
-
+    
     @FXML
     Button btnConfirm;
 
     //Shapes + MenuBar
     @FXML
     MenuItem square;
-
+    
     @FXML
     MenuItem rectangle;
-
+    
     @FXML
     MenuItem parallelogram;
-
+    
     @FXML
     MenuItem trapezoid;
 
     //Start Screen
     @FXML
     Button btnLoadDrum;
-
+    
     @FXML
     Button btnCreateNewDrum;
 
@@ -196,10 +199,10 @@ public class CreateNewDrumController {
 
     //Slider number value 3
     int numSlider3;
-
+    
     double arcWidth = 0;
     double arcHeight = 0;
-
+    
     public void initialize() {
         textF1.setEditable(false);
         textF2.setEditable(false);
@@ -208,268 +211,273 @@ public class CreateNewDrumController {
         textF4.setEditable(false);
         textF5.setEditable(false);
         textF6.setEditable(false);
-
+        
         numSlider = (int) slider.getValue();
         numLabel.setText(Integer.toString(numSlider) + " N");
-
+        
         numSlider2 = (int) slider2.getValue();
         numLabel2.setText(Integer.toString(numSlider2) + " M");
-
+        
         numSlider3 = (int) slider3.getValue();
         numLabel3.setText(Integer.toString(numSlider3) + " s");
-
+        
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider = (int) slider.getValue();
                 numLabel.setText(Integer.toString(numSlider) + "m");
-
-                amplitudeValue = (double)newValue;
+                
+                amplitudeValue = (double) newValue;
                 System.out.println("slider was changed" + amplitudeValue);
             }
-
+            
         });
-
+        
         slider2.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider2 = (int) slider2.getValue();
                 numLabel2.setText(Integer.toString(numSlider2) + "m");
-
-                spreadValue = (double)newValue;
+                
+                spreadValue = (double) newValue;
                 System.out.println("slider was changed" + spreadValue);
             }
-
+            
         });
-
+        
         slider3.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 numSlider3 = (int) slider3.getValue();
                 numLabel3.setText(Integer.toString(numSlider3) + " P");
-
-                deltaTimeValue = (double)newValue;
+                
+                deltaTimeValue = (double) newValue;
                 System.out.println("slider was changed" + deltaTimeValue);
-
-
+                
             }
-
+            
         });
-
+        
         spinner.setValueFactory(
-            new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
         );
-
+        
         spinner2.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100)
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100)
         );
-
+        
     }
-
+    
     public void rectangleChosen(ActionEvent event) {
-         label1.setVisible(true);
+        label1.setVisible(true);
         textF1.setEditable(true);
-         textF1.setVisible(true);
-
-
-         label2.setVisible(true);
+        textF1.setVisible(true);
+        
+        label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
         //ToDo
         label3.setVisible(false);
         spinner.setVisible(false);
-        if (spinner.getValue() != null )  {
-
+        if (spinner.getValue() != null) {
+            
             spinner.getValueFactory().setValue(0);
-
+            
         }
-
-         label4.setVisible(false);
+        
+        label4.setVisible(false);
         textF4.setVisible(false);
         if (!textF4.getText().isEmpty()) {
-
+            
             textF4.setText("");
         }
-
-         label5.setVisible(false);
+        
+        label5.setVisible(false);
         textF5.setVisible(false);
         if (!textF5.getText().isEmpty()) {
-
+            
             textF5.setText("");
         }
-
-         label6.setVisible(false);
+        
+        label6.setVisible(false);
         textF6.setVisible(false);
         if (!textF6.getText().isEmpty()) {
-
+            
             textF6.setText("");
         }
-
+        
         this.rectangleChosen = true;
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-
+        
+        spinner2.setDisable(false);
     }
-
+    
     public void squareChosen(ActionEvent event) {
-
-         label1.setVisible(false);
+        
+        label1.setVisible(false);
         textF1.setVisible(false);
         if (!textF1.getText().isEmpty()) {
-
+            
             textF1.setText("");
         }
-
-         label2.setVisible(true);
+        
+        label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
         if (!textF2.getText().isEmpty()) {
-
+            
             textF2.setText("");
         }
-
+        
         label3.setVisible(false);
         spinner.setVisible(false);
-        if (spinner.getValue() != null )  {
-
+        if (spinner.getValue() != null) {
+            
             spinner.getValueFactory().setValue(0);
-
+            
         }
-
-         label4.setVisible(false);
+        
+        label4.setVisible(false);
         textF4.setVisible(false);
         if (!textF4.getText().isEmpty()) {
-
+            
             textF4.setText("");
         }
-
-         label5.setVisible(false);
+        
+        label5.setVisible(false);
         textF5.setVisible(false);
         if (!textF5.getText().isEmpty()) {
-
+            
             textF5.setText("");
         }
-
-         label6.setVisible(false);
+        
+        label6.setVisible(false);
         textF6.setVisible(false);
         if (!textF6.getText().isEmpty()) {
-
+            
             textF6.setText("");
         }
-
+        
         this.rectangleChosen = false;
         this.parallelogramChosen = false;
         this.squareChosen = true;
         this.trapezoidChosen = false;
-
+        
+        spinner2.setDisable(false);
+        
     }
-
+    
     public void paraChosen(ActionEvent event) {
-
+        
         label1.setVisible(true);
         textF1.setEditable(true);
         textF1.setVisible(true);
         if (!textF1.getText().isEmpty()) {
-
+            
             textF1.setText("");
         }
-
-         label2.setVisible(false);
+        
+        label2.setVisible(false);
         textF2.setVisible(false);
         if (!textF2.getText().isEmpty()) {
-
+            
             textF2.setText("");
         }
-
+        
+        spinner2.setDisable(false);
+        spinner.setDisable(false);
         spinner.setVisible(true);
-         label3.setVisible(true);
+        label3.setVisible(true);
         spinner.setEditable(true);
-        if (spinner.getValue() != null )  {
-
+        if (spinner.getValue() != null) {
+            
             spinner.getValueFactory().setValue(0);
-
+            
         }
         textF4.setVisible(true);
-         label4.setVisible(true);
+        label4.setVisible(true);
         textF4.setEditable(true);
         if (!textF4.getText().isEmpty()) {
-
+            
             textF4.setText("");
         }
-
-         label5.setVisible(false);
+        
+        label5.setVisible(false);
         textF5.setVisible(false);
         if (!textF5.getText().isEmpty()) {
-
+            
             textF5.setText("");
         }
-
-         label6.setVisible(false);
+        
+        label6.setVisible(false);
         textF6.setVisible(false);
         if (!textF6.getText().isEmpty()) {
-
+            
             textF6.setText("");
         }
-
+        
         this.rectangleChosen = false;
         this.parallelogramChosen = true;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-
+        
     }
-
+    
     public void trapChosen(ActionEvent event) {
-
-         label1.setVisible(false);
+        
+        label1.setVisible(false);
         textF1.setVisible(false);
         if (!textF1.getText().isEmpty()) {
-
+            
             textF1.setText("");
         }
-         label2.setVisible(false);
+        label2.setVisible(false);
         textF2.setVisible(false);
         if (!textF2.getText().isEmpty()) {
-
+            
             textF2.setText("");
         }
-
+        
+        spinner2.setDisable(false);
+        spinner.setDisable(false);
         spinner.setVisible(true);
-         label3.setVisible(true);
+        label3.setVisible(true);
         spinner.setEditable(true);
-         if (spinner.getValue() != null )  {
-
+        if (spinner.getValue() != null) {
+            
             spinner.getValueFactory().setValue(0);
-
+            
         }
-
+        
         textF4.setVisible(true);
-         label4.setVisible(true);
+        label4.setVisible(true);
         textF4.setEditable(true);
         if (!textF4.getText().isEmpty()) {
-
+            
             textF4.setText("");
         }
         textF5.setVisible(true);
-         label5.setVisible(true);
+        label5.setVisible(true);
         textF5.setEditable(true);
         if (!textF5.getText().isEmpty()) {
-
+            
             textF5.setText("");
         }
         textF6.setVisible(true);
-         label6.setVisible(true);
+        label6.setVisible(true);
         textF6.setEditable(true);
         if (!textF6.getText().isEmpty()) {
-
+            
             textF6.setText("");
         }
-
+        
         this.rectangleChosen = false;
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = true;
-
+        
     }
 
     /**
@@ -479,161 +487,163 @@ public class CreateNewDrumController {
      * @param event
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
-
+        
         if (squareChosen) {
-
+            
             createSquareDrum(Integer.parseInt(textF2.getText()));
-
+            
         } else if (rectangleChosen) {
-
+            
             createRectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
-
+            
         } else if (parallelogramChosen) {
-
-            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), (int)spinner.getValue());
-
+            
+            createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
+            
         } else if (trapezoidChosen) {
-
-            createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), (int)spinner.getValue());
-
+            
+            createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
+            
         } else {
-
+            
             System.out.println("Please select a shape before confirming");
-
+            
         }
-
+        
     }
-
+    
     public void createSquareDrum(int length) throws IOException {
-
-        //stage.close();
+        
+        Formable formable = new SquareDrum(length);
+        //formable.setDensity(densityValue);
+        //formable.setMassDistribution(distributionValue);
+        
         simulation.getPhysics().stopTimer();
-        setSimulation(new Simulation(new SquareDrum(length)));
+        setSimulation(new Simulation(formable));
+
+        
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
+            
             simulation.translate(event.getCode());
-
+            
         });
-
-
+        
         simulation.setCloseSim(stage);
 
         //stage.getScene().getRoot().
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
         CreateNewDrumController mainController = new CreateNewDrumController(stage);
         loader.setController(mainController);
-
+        
         BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
+        
         Scene scene = new Scene(root, 700, 700);
         stage.setScene(scene);
-
+        
         stage.setTitle("Drum Simulation.");
         stage.sizeToScene();
         stage.show();
-
+        
     }
-
+    
     public void createRectangleDrum(int width, int length) throws IOException {
 
         //stage.close();
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new RectangleDrum(width, length)));
-
+        
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
+            
             simulation.translate(event.getCode());
-
+            
         });
-
+        
         simulation.setCloseSim(stage);
-
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
         CreateNewDrumController mainController = new CreateNewDrumController(stage);
         loader.setController(mainController);
-
+        
         BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
+        
         Scene scene = new Scene(root, 700, 700);
         stage.setScene(scene);
-
+        
         stage.setTitle("Drum Simulation.");
         stage.sizeToScene();
         stage.show();
-
+        
     }
-
+    
     public void createParallelogramDrum(int width, int height, int angle) throws IOException {
 
         //stage.close();
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new ParallelogramDrum(width, height, angle)));
-
+        
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
+            
             simulation.translate(event.getCode());
-
+            
         });
-
+        
         simulation.setCloseSim(stage);
-
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
         CreateNewDrumController mainController = new CreateNewDrumController(stage);
         loader.setController(mainController);
-
+        
         BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
+        
         Scene scene = new Scene(root, 700, 700);
         stage.setScene(scene);
-
+        
         stage.setTitle("Drum Simulation.");
         stage.sizeToScene();
         stage.show();
-
+        
     }
-
+    
     public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException {
 
         //stage.show();
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle)));
-
+        
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
+            
             simulation.translate(event.getCode());
-
+            
         });
-
+        
         simulation.setCloseSim(stage);
-
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
         CreateNewDrumController mainController = new CreateNewDrumController(stage);
         loader.setController(mainController);
-
+        
         BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
+        
         Scene scene = new Scene(root, 700, 700);
         stage.setScene(scene);
-
+        
         stage.setTitle("Drum Simulation.");
         stage.sizeToScene();
         stage.show();
-
+        
     }
-
+    
     public Simulation getSimulation() {
         return this.simulation;
     }
-
+    
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
     }
-
-
-
+    
 }
