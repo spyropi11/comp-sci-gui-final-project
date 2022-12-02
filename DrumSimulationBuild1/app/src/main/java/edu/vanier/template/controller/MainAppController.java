@@ -20,6 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -31,8 +33,13 @@ public class MainAppController{
   private Scene scene;
   private BorderPane currentRoot;
 
+    public String musicFilePath = getClass().getResource("/Music/QUANDALE.mp3").toString();
    
+    public Media media = new Media(musicFilePath); 
     
+    public  MediaPlayer mediaPlayer = new MediaPlayer(media); 
+    
+  
     public MainAppController(Stage stage) {
         this.stage = stage;
     }
@@ -82,7 +89,7 @@ public class MainAppController{
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
 
-        
+     
         
         //Instantiate the controller   (Controller is where we do our event handling)
         CreateNewDrumController mainController = new CreateNewDrumController(stage);
