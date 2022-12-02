@@ -20,8 +20,15 @@ public class PulseInstance {
     @CsvBindByPosition(position = 0)
     double amplitude;
     
+    public PulseInstance(int counter, int pointI, int pointJ, double spread, double amplitude) {
+        this.counter = counter;
+        this.pointI = pointI;
+        this.pointJ = pointJ;
+        this.spread = spread;
+        this.amplitude = amplitude;
+    }
+    
     public void createPulse(Physics physics) {
-        //TODO
         try {
             robot.mouseMove(physics.getDrummer().getPoint(pointI, pointJ).getTranslateX(), physics.getDrummer().getPoint(pointI, pointJ).getTranslateX());
             robot.mouseClick(MouseButton.PRIMARY);

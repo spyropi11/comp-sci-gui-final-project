@@ -2,8 +2,7 @@ package edu.vanier.template.elements;
 
 import edu.vanier.template.controller.CreateNewDrumController;
 import edu.vanier.template.linear.Matrix;
-import edu.vanier.template.save.PulseInstance;
-import edu.vanier.template.save.SavedSim;
+import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.util.Objects;
@@ -22,8 +21,9 @@ public final class Physics {
     double spread;
     
     private int counter = 0;
-    private boolean paused = false;
-    private SavedSim savedSim = null;
+    private boolean playingBack = false;
+    private boolean recording = false;
+    private SaveEnvelope saveEnvelope;
     
     //Camera centre:
     private double cX;
@@ -53,14 +53,14 @@ public final class Physics {
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            if(!paused) {
-                if(Objects.isNull(savedSim)) {
-                    update();
-                } else {
-                    PulseInstance pulse = savedSim.play(counter);
-                    pulse.createPulse(Physics.this);
-                }
-                counter++;
+            if(!Objects.isNull(saveEnvelope.savedSim) && playingBack) {
+                saveEnvelope.savedSim.play(counter, Physics.this);
+                saveEnvelope.savedSim.updateTime();
+            }
+            update();
+            counter++;
+            if(recording) {
+                saveEnvelope.savedSim.trackTime(counter, CreateNewDrumController.deltaTimeValue);
             }
         }
     };
@@ -80,26 +80,32 @@ public final class Physics {
     }
     
     public void setMouseClicked() {
-        for(int clickedJ = 0; clickedJ < simulation.MESH_HEIGHT; clickedJ++){
-            for(int clickedI = 0; clickedI < simulation.MESH_WIDTH; clickedI++){
-                
-                int iclicked = clickedI;
-                int jclicked = clickedJ;
-                
-                points[clickedI][clickedJ].setOnMouseClicked(event -> {
-                    amplitude = CreateNewDrumController.amplitudeValue;
-                    spread = CreateNewDrumController.spreadValue;
-                    if (spread != 0){
-                        for (int j = 0; j < simulation.MESH_HEIGHT; j++){
-                            for(int i = 0; i < simulation.MESH_WIDTH; i++) {
-                                if(!points[i][j].isOnEdge()){
-                                    points[i][j].setPosition(points[i][j].getPosition() + 
-                                            amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
+        if(!playingBack) {
+            for(int clickedJ = 0; clickedJ < simulation.MESH_HEIGHT; clickedJ++){
+                for(int clickedI = 0; clickedI < simulation.MESH_WIDTH; clickedI++){
+
+                    int iclicked = clickedI;
+                    int jclicked = clickedJ;
+
+                    points[clickedI][clickedJ].setOnMouseClicked(event -> {
+                        amplitude = CreateNewDrumController.amplitudeValue;
+                        spread = CreateNewDrumController.spreadValue;
+                        if (spread != 0){
+                            for (int j = 0; j < simulation.MESH_HEIGHT; j++){
+                                for(int i = 0; i < simulation.MESH_WIDTH; i++) {
+                                    if(!points[i][j].isOnEdge()){
+                                        points[i][j].setPosition(points[i][j].getPosition() + 
+                                                amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
+                                    }
                                 }
                             }
                         }
+                    });
+
+                    if(recording) {
+                        saveEnvelope.savedSim.record(counter, iclicked, jclicked, spread, amplitude);
                     }
-                });
+                }
             }
         }
     }
@@ -111,8 +117,8 @@ public final class Physics {
         */
     }
     
-    public void loadSavedSim(String csvFilePath) throws IOException {
-        savedSim = new SavedSim(csvFilePath);
+    public void loadSaveEnvelope(String folderPath) throws IOException {
+        saveEnvelope = new SaveEnvelope(folderPath);
     }
     
     public void startTimer() {
@@ -194,6 +200,10 @@ public final class Physics {
     public void setCameraCentre(double oX, double oY) {
         cX = oX;
         cY = oY;
+    }
+    
+    public void endPlayBack() {
+        playingBack = false;
     }
     
     //Getters and Setters

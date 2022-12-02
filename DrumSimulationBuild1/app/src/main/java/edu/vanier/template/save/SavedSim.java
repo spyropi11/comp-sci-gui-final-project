@@ -6,6 +6,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import edu.vanier.template.elements.Physics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,9 +20,12 @@ public class SavedSim {
     
     private final File csvFile;
     
-    public SavedSim(String csvFilePath) throws IOException {
-        csvFile = new File(csvFilePath);
-        csvFile.createNewFile();
+    private int currentCounter = -1;
+    private int nextIndex;
+    
+    public SavedSim(File csvFile) throws IOException {
+        this.csvFile = csvFile;
+        this.csvFile.createNewFile();
     }
     
     public void download() throws FileNotFoundException {
@@ -33,9 +37,31 @@ public class SavedSim {
         beanToCsv.write(sim);
     }
     
-    public PulseInstance play(int counter) {
+    public void play(int counter, Physics physics) {
+        if(sim.get(nextIndex).counter == counter) {
+            sim.get(nextIndex).createPulse(physics);
+        } else {
+            currentCounter++;
+            if(currentCounter > sim.size()) {
+                physics.endPlayBack();
+            }
+        }
+    }
+    
+    public void record(int counter, int pointI, int pointJ, double spread, double amplitude) {
+        PulseInstance pulse = new PulseInstance(counter, pointI, pointJ, spread, amplitude);
+        if(sim.isEmpty()) {
+            nextIndex = 0;
+        }
+        sim.add(pulse);
+    }
+    
+    public void trackTime(int counter, double deltaTime) {
         //TODO
-        return null;
+    }
+    
+    public void updateTime() {
+        //TODO
     }
     
 }
