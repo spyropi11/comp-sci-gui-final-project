@@ -21,7 +21,6 @@ public class SaveEnvelope {
      */
     public SaveEnvelope(String folderPath) {
         saveFolder = new File(folderPath);
-        saveFolder.mkdir();
     }
     
     /**
@@ -59,6 +58,7 @@ public class SaveEnvelope {
      * @throws IOException 
      */
     public void create() throws IOException {
+        saveFolder.mkdir();
         saveDrum = new SaveDrum(new File(saveFolder, "Save Drum.txt"));
         savedSim = new SavedSim(new File(saveFolder, "Saved Sim.csv"));
         timeTracker = new TimeTracker(new File(saveFolder, "Time Tracker.txt"));
