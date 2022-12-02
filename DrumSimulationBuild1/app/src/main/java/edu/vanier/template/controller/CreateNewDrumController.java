@@ -507,6 +507,7 @@ public class CreateNewDrumController {
     public void createSquareDrum(int length) throws IOException {
 
         //stage.close();
+        simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new SquareDrum(length)));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
@@ -538,6 +539,7 @@ public class CreateNewDrumController {
     public void createRectangleDrum(int width, int length) throws IOException {
 
         //stage.close();
+        simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new RectangleDrum(width, length)));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
@@ -567,6 +569,7 @@ public class CreateNewDrumController {
     public void createParallelogramDrum(int width, int height, int angle) throws IOException {
 
         //stage.close();
+        simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new ParallelogramDrum(width, height, angle)));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
@@ -596,6 +599,7 @@ public class CreateNewDrumController {
     public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException {
 
         //stage.show();
+        simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle)));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {

@@ -10,10 +10,6 @@ public class DrumCreator {
     Set<Spring> drum = new HashSet<>();
     Set<Point> mesh = new HashSet<>();
     
-    public DrumCreator() {
-        
-    }
-    
     /**
      * Adds spring to drum
      * @param a Point a
@@ -86,6 +82,15 @@ public class DrumCreator {
         for(Point[] pointList : points) {
             mesh.addAll(Arrays.asList(pointList));
         }
+    }
+    
+    public Point getPoint(int i, int j) throws NullPointerException {
+        for(Point point : mesh) {
+            if(point.i == i && point.j == j) {
+                return point;
+            }
+        }
+        throw new NullPointerException("Point " + i + ", " + j + " not found.");
     }
     
     //Getters and Setters
