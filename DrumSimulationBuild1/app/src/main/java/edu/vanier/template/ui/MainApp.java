@@ -54,7 +54,7 @@ public class MainApp extends Application {
         Pane root = loader.load();
 
 
-        Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 600, 600);
         
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);
