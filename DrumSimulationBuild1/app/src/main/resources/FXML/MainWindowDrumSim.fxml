@@ -2,16 +2,23 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="207.0" layoutY="95.0" prefHeight="30.0" prefWidth="185.0" text="Welcome to the Party!" textAlignment="CENTER">
+      <Label layoutX="210.0" layoutY="64.0" prefHeight="30.0" prefWidth="185.0" text="Welcome to the Party!" textAlignment="CENTER">
          <font>
             <Font name="Calibri Light" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnStart" layoutX="277.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleStart" text="Start!" />
+      <Button fx:id="btnStart" layoutX="276.0" layoutY="294.0" mnemonicParsing="false" onAction="#handleStart" text="Start!" />
+      <ImageView fitHeight="216.0" fitWidth="332.0" layoutX="132.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Intro/xqc-hyped.gif" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
