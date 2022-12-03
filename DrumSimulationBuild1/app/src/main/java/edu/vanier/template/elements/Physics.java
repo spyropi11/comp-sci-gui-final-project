@@ -67,7 +67,10 @@ public final class Physics {
     
     public void update() {
         
-        simulation.getCameraLine().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
+        simulation.getCamX().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
+        simulation.getCamY().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
+        simulation.getCamZup().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
+        simulation.getCamZdown().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
         
         for(Point point : drummer.mesh) {
             point.updateVelocity();
@@ -88,7 +91,6 @@ public final class Physics {
 
                     points[clickedI][clickedJ].setOnMouseClicked(event -> {
                         if(!playingBack) {
-                            System.out.println("hi");
                             amplitude = CreateNewDrumController.amplitudeValue;
                             spread = CreateNewDrumController.spreadValue;
                             if (spread != 0){

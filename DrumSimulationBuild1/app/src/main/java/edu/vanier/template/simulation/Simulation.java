@@ -1,15 +1,12 @@
 package edu.vanier.template.simulation;
 
-import edu.vanier.template.controller.CreateNewDrumController;
 import edu.vanier.template.drumshapes.Formable;
 import edu.vanier.template.elements.*;
-import edu.vanier.template.linear.CameraLine;
+import edu.vanier.template.linear.CameraAxis;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.application.Platform;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -17,7 +14,7 @@ import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class Simulation {
+public final class Simulation {
 
 
     /**
@@ -44,10 +41,17 @@ public class Simulation {
     * Root node of scene.
     */
     private Pane root;
-    /**
-    * Line that makes orientation of the drum when displayed clearer.
-    */
-    private CameraLine cameraLine;
+    
+    
+    
+    private CameraAxis camX;
+    private CameraAxis camY;
+    private CameraAxis camZup;
+    private CameraAxis camZdown;
+    
+    
+    
+    
     /**
      * Boolean denoting when the camera line is displayed.
      */
@@ -129,11 +133,20 @@ public class Simulation {
             }
         }
 
-        cameraLine = new CameraLine(physics);
+        camX = new CameraAxis(physics, CameraAxis.Axis.X);
+        camY = new CameraAxis(physics, CameraAxis.Axis.Y);
+        camZup = new CameraAxis(physics, CameraAxis.Axis.Zup);
+        camZdown = new CameraAxis(physics, CameraAxis.Axis.Zdown);
 
         //Scene scene = new Scene(root, WIDTH,HEIGHT);
-        cameraLine.setStrokeWidth(1);
-        root.getChildren().add(cameraLine);
+        camX.setStrokeWidth(2);
+        root.getChildren().add(camX);
+        camY.setStrokeWidth(2);
+        root.getChildren().add(camY);
+        camZup.setStrokeWidth(2);
+        root.getChildren().add(camZup);
+        camZdown.setStrokeWidth(2);
+        root.getChildren().add(camZdown);
         //scene.setFill(Color.AZURE);
 
         //Set camera and camera origin.
@@ -173,13 +186,13 @@ public class Simulation {
 
         switch(keyCode){
 
-                case W -> physics.translate(0, -3*magnificationConstant);
+                case W -> physics.translate(0, 3*magnificationConstant);
 
-                case S -> physics.translate(0, 3*magnificationConstant);
+                case S -> physics.translate(0, -3*magnificationConstant);
 
-                case D -> physics.translate(3*magnificationConstant, 0);
+                case D -> physics.translate(-3*magnificationConstant, 0);
 
-                case A -> physics.translate(-3*magnificationConstant, 0);
+                case A -> physics.translate(3*magnificationConstant, 0);
 
                 case J -> physics.zoom(1.01 + magnificationConstant*(0.01));
 
@@ -218,10 +231,21 @@ public class Simulation {
     public void setRoot(Pane root) {
         this.root = root;
     }
-
-
-    public CameraLine getCameraLine() {
-        return cameraLine;
+    
+    public CameraAxis getCamX() {
+        return camX;
+    }
+    
+    public CameraAxis getCamY() {
+        return camY;
+    }
+    
+    public CameraAxis getCamZup() {
+        return camZup;
+    }
+    
+    public CameraAxis getCamZdown() {
+        return camZdown;
     }
 
     public boolean getDisplay() {

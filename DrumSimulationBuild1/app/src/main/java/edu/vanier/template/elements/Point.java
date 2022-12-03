@@ -75,7 +75,7 @@ public class Point extends Sphere {
         double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
         
         double sumN = v0*n[0] + v1*n[1] + v2*n[2];
-        double height = sumN / Math.pow(norm(n), 2);
+        double height = sumN * norm(n);
         opacityChange(height);
         
         this.setTranslateX(sumX + cameraChangeX);
@@ -206,7 +206,11 @@ public class Point extends Sphere {
     }
     
     private void opacityChange(double height) {
-        setOpacity(Math.pow(1.1, height)/2);
+        double tryDepth = 0.6 + height;
+        setOpacity(
+                tryDepth < 0.2 ? 0.2 :
+                        tryDepth > 1 ? 1 : tryDepth
+        );
     }
     
 }
