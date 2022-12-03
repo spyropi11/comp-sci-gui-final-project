@@ -80,7 +80,6 @@ public final class Physics {
     }
     
     public void setMouseClicked() {
-        if(!playingBack) {
             for(int clickedJ = 0; clickedJ < simulation.MESH_HEIGHT; clickedJ++){
                 for(int clickedI = 0; clickedI < simulation.MESH_WIDTH; clickedI++){
 
@@ -88,26 +87,27 @@ public final class Physics {
                     int jclicked = clickedJ;
 
                     points[clickedI][clickedJ].setOnMouseClicked(event -> {
-                        amplitude = CreateNewDrumController.amplitudeValue;
-                        spread = CreateNewDrumController.spreadValue;
-                        if (spread != 0){
-                            for (int j = 0; j < simulation.MESH_HEIGHT; j++){
-                                for(int i = 0; i < simulation.MESH_WIDTH; i++) {
-                                    if(!points[i][j].isOnEdge()){
-                                        points[i][j].setPosition(points[i][j].getPosition() + 
-                                                amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
+                        if(!playingBack) {
+                            System.out.println("hi");
+                            amplitude = CreateNewDrumController.amplitudeValue;
+                            spread = CreateNewDrumController.spreadValue;
+                            if (spread != 0){
+                                for (int j = 0; j < simulation.MESH_HEIGHT; j++){
+                                    for(int i = 0; i < simulation.MESH_WIDTH; i++) {
+                                        if(!points[i][j].isOnEdge()){
+                                            points[i][j].setPosition(points[i][j].getPosition() + 
+                                                    amplitude*Math.exp(-((Math.pow(i - iclicked, 2))+(Math.pow(j - jclicked, 2)))/spread));
+                                        }
                                     }
                                 }
                             }
                         }
+                        if(recording) {
+                            saveEnvelope.getSavedSim().record(counter, iclicked, jclicked, spread, amplitude);
+                        }
                     });
-
-                    if(recording) {
-                        saveEnvelope.getSavedSim().record(counter, iclicked, jclicked, spread, amplitude);
-                    }
                 }
             }
-        }
     }
     
     public void collapseWaves() {
