@@ -55,33 +55,7 @@ public class MainAppController{
     }
 
    
-    public void handleLoadDrum(ActionEvent event) throws IOException {
-    
-        MainApp.mediaPlayer.stop();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoadSavedDrum.fxml"));
-
-        //Instantiate the controller   (Controller is where we do our event handling)
-        LoadSavedDrumController mainSaveController = new LoadSavedDrumController();
-
-        //Set the controller to the loader
-        loader.setController(mainSaveController);
-
-        //load the FXML
-        Pane root = loader.load();
-        
-        Scene scene = new Scene(root, 500, 500);
-        //--> Step 3) Load the scene into stage (window)
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        // Resize the stage so the size matches the scene
-        stage.sizeToScene();
-        //--> Step 4) Show the window.
-        stage.show();
-        
-    }
-
-    public void handleCreateNewDrum(ActionEvent event) throws IOException, Exception {
+    public void handleStart(ActionEvent event) throws IOException, Exception {
 
         MainApp.mediaPlayer.stop();
         

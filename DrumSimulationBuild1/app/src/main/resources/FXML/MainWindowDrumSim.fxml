@@ -7,12 +7,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="121.0" layoutY="80.0" prefHeight="30.0" prefWidth="255.0" text="Welcome to our application!" textAlignment="CENTER">
+      <Label layoutX="207.0" layoutY="95.0" prefHeight="30.0" prefWidth="185.0" text="Welcome to the Party!" textAlignment="CENTER">
          <font>
             <Font name="Calibri Light" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnLoadDrum" layoutX="131.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleLoadDrum" text="Load Drum" />
-      <Button fx:id="btnCreateNewDrum" layoutX="262.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleCreateNewDrum" text="Create new Drum" />
+      <Button fx:id="btnStart" layoutX="277.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleStart" text="Start!" />
    </children>
 </AnchorPane>

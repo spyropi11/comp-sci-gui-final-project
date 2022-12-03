@@ -198,7 +198,7 @@ public class CreateNewDrumController {
     int numSlider2;
 
     //Slider number value 3
-    int numSlider3;
+    double numSlider3;
     
     double arcWidth = 0;
     double arcHeight = 0;
@@ -218,8 +218,8 @@ public class CreateNewDrumController {
         numSlider2 = (int) slider2.getValue();
         numLabel2.setText(Integer.toString(numSlider2) + " M");
         
-        numSlider3 = (int) slider3.getValue();
-        numLabel3.setText(Integer.toString(numSlider3) + " s");
+        numSlider3 = (double) slider3.getValue();
+        numLabel3.setText(Double.toString(numSlider3) + " s");
         
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -248,12 +248,12 @@ public class CreateNewDrumController {
         slider3.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider3 = (int) slider3.getValue();
-                numLabel3.setText(Integer.toString(numSlider3) + " P");
+                numSlider3 = (double) slider3.getValue();
+                numLabel3.setText(Double.toString(numSlider3) + " s");
                 
                 deltaTimeValue = (double) newValue;
                 System.out.println("slider was changed" + deltaTimeValue);
-                
+               
             }
             
         });
