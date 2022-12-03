@@ -9,10 +9,16 @@ import java.util.Objects;
 
 public class SaveDrum {
     
-    public static Formable download(String filePath) throws IOException {
-        Formable formable = null;
-        File file = new File(filePath);
-        try(FileReader fr = new FileReader(file)) {
+    private final File drumFile;
+    
+    private Formable formable;
+    
+    public SaveDrum(File drumFile) {
+        this.drumFile = drumFile;
+    }
+    
+    public void download() throws IOException {
+        try(FileReader fr = new FileReader(drumFile)) {
             char shape = (char)fr.read();
             switch(shape) {
                 case '1' -> {
@@ -263,15 +269,14 @@ public class SaveDrum {
                 }
             }
         }
-        if(!Objects.isNull(formable)) {
-            return formable;
+        if(Objects.isNull(formable)) {
+            throw new IOException("No shape parsed.");
         }
-        throw new IOException("No shape parsed.");
     }
     
-    public static void upload(String filePath, Formable formable) throws IOException {
-        File file = new File(filePath);
-        try(FileWriter fw = new FileWriter(file)) {
+    public void upload(Formable formable) throws IOException {
+        this.formable = formable;
+        try(FileWriter fw = new FileWriter(drumFile)) {
             if(formable instanceof SquareDrum square) {
                 fw.append('1')
                   .append(Integer.toString(square.getSide()))

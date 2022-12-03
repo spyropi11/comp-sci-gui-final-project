@@ -6,6 +6,7 @@ import edu.vanier.template.drumshapes.ParallelogramDrum;
 import edu.vanier.template.drumshapes.SquareDrum;
 import edu.vanier.template.drumshapes.TrapezoidDrum;
 import edu.vanier.template.elements.Physics;
+import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.File;
 import java.net.URL;
@@ -70,9 +71,8 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-
+        SaveEnvelope.createDirectory();
         launch(args);
-
     }
 
     public MediaPlayer getMediaPlayer() {
