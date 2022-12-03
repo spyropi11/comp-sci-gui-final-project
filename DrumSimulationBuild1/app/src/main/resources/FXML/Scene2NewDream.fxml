@@ -249,6 +249,12 @@
                 <MenuItem fx:id="resetCamera" mnemonicParsing="false" text="Reset Camera" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Recording">
+              <items>
+                <MenuItem fx:id="btnStartRecord" mnemonicParsing="false" text="Start Recording" />
+                  <MenuItem fx:id="btnStopRecord" mnemonicParsing="false" text="Stop Recoding" />
+              </items>
+            </Menu>
          </menus>
       </MenuBar>
    </top>

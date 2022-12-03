@@ -190,6 +190,10 @@ public class CreateNewDrumController {
     @FXML
     MenuItem resetWave;
     MenuItem resetCamera;
+    
+    //MenuItem + Record
+    MenuItem btnStartRecord;
+    MenuItem btnStopRecord;
 
     //Slider Number value 1
     int numSlider;
