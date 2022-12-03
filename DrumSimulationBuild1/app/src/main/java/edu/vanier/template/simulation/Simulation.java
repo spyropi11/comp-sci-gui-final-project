@@ -175,9 +175,9 @@ public final class Simulation {
         physics.setMouseClicked();
 
         
-        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
-        physics.zoom(1.03);
-        physics.rotate(0.5, Physics.Axis.ALPHA);
+//        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
+//        physics.zoom(1.03);
+//        physics.rotate(0.5, Physics.Axis.ALPHA);
         
 
     }
@@ -186,13 +186,13 @@ public final class Simulation {
 
         switch(keyCode){
 
-                case W -> physics.translate(0, 3*magnificationConstant);
+                case W -> physics.translate(0, -3*magnificationConstant);
 
-                case S -> physics.translate(0, -3*magnificationConstant);
+                case S -> physics.translate(0, 3*magnificationConstant);
 
-                case D -> physics.translate(-3*magnificationConstant, 0);
+                case D -> physics.translate(3*magnificationConstant, 0);
 
-                case A -> physics.translate(3*magnificationConstant, 0);
+                case A -> physics.translate(-3*magnificationConstant, 0);
 
                 case J -> physics.zoom(1.01 + magnificationConstant*(0.01));
 
