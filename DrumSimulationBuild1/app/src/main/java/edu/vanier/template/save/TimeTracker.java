@@ -19,9 +19,33 @@ public class TimeTracker {
         time += (counter - initialCounter) + "#" + deltaTime + " ";
     }
     
-    public double updateTime() {
-        //TODO
-        return 0;
+    public double updateTime(int counter) {
+        String count = "";
+        boolean cont = true;
+        while(cont) {
+            char next = time.charAt(0);
+            time = time.substring(1);
+            if(next == '#') {
+                cont = false;
+            } else {
+                count += next;
+            }
+        }
+        String deltaTime = "";
+        cont = true;
+        while(cont) {
+            char next = time.charAt(0);
+            time = time.substring(1);
+            if(next == ' ') {
+                cont = false;
+            } else {
+                deltaTime += next;
+            }
+        }
+        if(counter != Integer.parseInt(count)) {
+            throw new NullPointerException("Current counter does not match with Timer Tracker's counter");
+        }
+        return Double.parseDouble(deltaTime);
     }
     
     public void download() throws IOException {

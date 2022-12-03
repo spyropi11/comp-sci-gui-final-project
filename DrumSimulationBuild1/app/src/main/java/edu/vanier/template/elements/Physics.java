@@ -55,7 +55,7 @@ public final class Physics {
         public void handle(long now) {
             if(!Objects.isNull(saveEnvelope) && playingBack) {
                 saveEnvelope.getSavedSim().play(counter, Physics.this);
-                CreateNewDrumController.deltaTimeValue = saveEnvelope.getTimeTracker().updateTime();
+                CreateNewDrumController.deltaTimeValue = saveEnvelope.getTimeTracker().updateTime(counter);
             }
             update();
             counter++;
