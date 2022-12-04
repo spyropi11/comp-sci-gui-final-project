@@ -6,6 +6,7 @@ import edu.vanier.template.linear.Matrix;
 import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 import javafx.animation.AnimationTimer;
 
@@ -54,7 +55,7 @@ public final class Physics {
                 saveEnvelope.getSavedSim().play(counter, Physics.this);
                 CreateNewDrumController.deltaTimeValue = saveEnvelope.getTimeTracker().updateTime(counter);
             }
-            update();
+            update(alpha, beta, n);
             counter++;
             if(recording) {
                 saveEnvelope.getTimeTracker().trackTime(counter, CreateNewDrumController.deltaTimeValue);
@@ -62,7 +63,7 @@ public final class Physics {
         }
     };
     
-    public void update() {
+    public void update(double[] oa, double[] ob, double[] on) {
         
         simulation.getCamX().display(simulation.getRoot(), simulation.getDisplay());
         simulation.getCamY().display(simulation.getRoot(), simulation.getDisplay());
@@ -75,26 +76,23 @@ public final class Physics {
         for(Point point : drummer.mesh) {
             point.updatePosition();
             point.updateColour();
-            project(point);
+            project(point, oa, ob, on);
         }
-        
         
     }
     
-    private void project(Point point) {
+    private void project(Point point, double[] oa, double[] ob, double[] on) {
+        
         double v0 = point.x-p[0];
         double v1 = point.y-p[1];
         double v2 = point.position-p[2];
         
-        double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
-        double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
+        double sumX = v0*oa[0]+v1*oa[1]+v2*oa[2];
+        double sumY = v0*ob[0]+v1*ob[1]+v2*ob[2];
         
-        double sumN = v0*n[0] + v1*n[1] + v2*n[2];
-        double height = sumN * norm(n);
-//        System.out.println(Arrays.toString(alpha));
-//        opacityChange(height);
-        
-//        System.out.println(Arrays.toString(physics.getN()));
+        double sumN = v0*on[0] + v1*on[1] + v2*on[2];
+        double height = sumN * norm(on);
+        point.opacityChange(height);
         
         point.setTranslateX(sumX + simulation.oX);
         point.setTranslateY(sumY + simulation.oY);

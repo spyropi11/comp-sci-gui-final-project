@@ -1,9 +1,7 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.controller.CreateNewDrumController;
-import edu.vanier.template.linear.CameraAxis;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -16,6 +14,8 @@ public class Point extends Sphere {
     double springConstant = 3;
     double mass;
     double maximumDampening;
+    
+    private double depth = 0.6;
     /**
      * dampeningEditor value must be between 0.0 and 1.0
      */
@@ -107,22 +107,20 @@ public class Point extends Sphere {
     public void updateColour() {
         int temperature = (int)(255*Math.atan(COLOUR_NORMALIZATION*position)/(Math.PI/2));
         if(temperature > 0) {
-            material.setDiffuseColor(Color.rgb(0, 0, temperature));
-            material.setSpecularColor(Color.rgb(0, 0, temperature));
+            material.setDiffuseColor(Color.rgb(0, 0, temperature, depth));
+            material.setSpecularColor(Color.rgb(0, 0, temperature, depth));
         }
         else{
-            material.setDiffuseColor(Color.rgb(-temperature, 0, 0));
-            material.setSpecularColor(Color.rgb(-temperature, 0, 0));
+            material.setDiffuseColor(Color.rgb(-temperature, 0, 0, depth));
+            material.setSpecularColor(Color.rgb(-temperature, 0, 0, depth));
         }
         setMaterial(material);
     }
     
-    private void opacityChange(double height) {
-        double tryDepth = 0.6 + CameraAxis.MAGNIFICATION * height;
-        setOpacity(
-                tryDepth < 0.2 ? 0.2 :
-                        tryDepth > 1 ? 1 : tryDepth
-        );
+    public void opacityChange(double height) {
+        double tryDepth = 0.6 - height / 500;
+        depth = tryDepth < 0.2 ? 0.2 :
+                tryDepth > 1 ? 1 : tryDepth;
     }
     
     //Getters and Setters
