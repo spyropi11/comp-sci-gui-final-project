@@ -192,6 +192,7 @@ public class CreateNewDrumController {
     //MenuItem + Record
     @FXML
     MenuItem btnStartRecord;
+    @FXML
     MenuItem btnStopRecord;
     
     @FXML
@@ -233,6 +234,19 @@ public class CreateNewDrumController {
     public void initialize() {
         disableSettings();
         menuDuringSettings();
+        
+        btnConfirm.setDisable(true);
+        
+        
+        btnStopRecord.setDisable(true);
+        btnStartRecord.setOnAction((event) -> {
+            btnStopRecord.setDisable(false);
+            btnStartRecord.setDisable(true);
+        });
+        btnStopRecord.setOnAction((event) -> {
+            btnStopRecord.setDisable(true);
+            btnStartRecord.setDisable(false);
+        });
         
         UniformMassDChosen = true;
         cartesianChosen = true;
@@ -337,7 +351,7 @@ public class CreateNewDrumController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
             CreateNewDrumController mainController = new CreateNewDrumController(stage);
             loader.setController(mainController);
-            BorderPane root = loader.load();
+            root = loader.load();
             Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
             stage.setScene(scene);
             stage.setTitle("Drum Simulation.");
@@ -356,7 +370,7 @@ public class CreateNewDrumController {
         label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
-        //ToDo
+        //TODO
         label3.setVisible(false);
         spinner.setVisible(false);
         if (spinner.getValue() != null) {
@@ -390,6 +404,8 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = false;
+        
+        btnConfirm.setDisable(false);
         
     }
 
@@ -444,6 +460,7 @@ public class CreateNewDrumController {
         this.squareChosen = true;
         this.trapezoidChosen = false;
         
+        btnConfirm.setDisable(false);
     }
 
     public void paraChosen(ActionEvent event) {
@@ -498,7 +515,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = true;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-
+        
+        btnConfirm.setDisable(false);
+        
     }
 
     public void trapChosen(ActionEvent event) {
@@ -552,7 +571,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = true;
-
+        
+        btnConfirm.setDisable(false);
+        
     }
 
     public void handleUniformMassDChosen(ActionEvent event) {
