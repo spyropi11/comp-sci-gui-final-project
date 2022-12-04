@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
@@ -197,6 +198,24 @@ public class CreateNewDrumController {
     Label customizationLabel;
     
     @FXML
+    Menu shapesMenu;
+    @FXML
+    Menu massMenu;
+    @FXML
+    Menu textureMenu;
+    @FXML
+    Menu resetMenu;
+    @FXML
+    Menu recordingMenu;
+    
+    @FXML
+    Label spreadLabel;
+    @FXML
+    Label powerLabel;
+    @FXML
+    Label timeLabel;
+    
+    @FXML
     BorderPane root;
 
     //Slider Number value 1
@@ -213,22 +232,23 @@ public class CreateNewDrumController {
 
     public void initialize() {
         disableSettings();
+        menuDuringSettings();
         
         UniformMassDChosen = true;
         cartesianChosen = true;
         
         numSlider = (int) slider.getValue();
-        numLabel.setText(Integer.toString(numSlider) + " N");
+        numLabel.setText(Integer.toString(numSlider) + "N");
 
         numSlider2 = (int) slider2.getValue();
-        numLabel2.setText(Integer.toString(numSlider2) + " M");
+        numLabel2.setText(Integer.toString(numSlider2) + "M");
 
         numSlider3 = (double) slider3.getValue();
-        numLabel3.setText(Double.toString(numSlider3) + " s");
+        numLabel3.setText(Double.toString(numSlider3) + "s");
 
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider = (int) slider.getValue();
-            numLabel.setText(Integer.toString(numSlider) + "m");
+            numLabel.setText(Integer.toString(numSlider) + "N");
             
             amplitudeValue = (double) newValue;
             System.out.println("slider was changed" + amplitudeValue);
@@ -236,7 +256,7 @@ public class CreateNewDrumController {
 
         slider2.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider2 = (int) slider2.getValue();
-            numLabel2.setText(Integer.toString(numSlider2) + "m");
+            numLabel2.setText(Integer.toString(numSlider2) + "M");
             
             spreadValue = (double) newValue;
             System.out.println("slider was changed" + spreadValue);
@@ -244,7 +264,7 @@ public class CreateNewDrumController {
 
         slider3.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider3 = (double) slider3.getValue();
-            numLabel3.setText(Double.toString(numSlider3) + " s");
+            numLabel3.setText(Double.toString(numSlider3) + "s");
             
             deltaTimeValue = (double) newValue;
             System.out.println("slider was changed" + deltaTimeValue);
@@ -274,6 +294,40 @@ public class CreateNewDrumController {
         label4.setVisible(false);
         label5.setVisible(false);
         label6.setVisible(false);
+    }
+    
+    private void menuDuringSim() {
+        shapesMenu.setDisable(true);
+        massMenu.setDisable(true);
+        textureMenu.setDisable(true);
+        resetMenu.setDisable(false);
+        recordingMenu.setDisable(false);
+        slider.setDisable(false);
+        slider2.setDisable(false);
+        slider3.setDisable(false);
+        spreadLabel.setDisable(false);
+        powerLabel.setDisable(false);
+        timeLabel.setDisable(false);
+        numLabel.setDisable(false);
+        numLabel2.setDisable(false);
+        numLabel3.setDisable(false);
+    }
+    
+    private void menuDuringSettings() {
+        shapesMenu.setDisable(false);
+        massMenu.setDisable(false);
+        textureMenu.setDisable(false);
+        resetMenu.setDisable(true);
+        recordingMenu.setDisable(true);
+        slider.setDisable(true);
+        slider2.setDisable(true);
+        slider3.setDisable(true);
+        spreadLabel.setDisable(true);
+        powerLabel.setDisable(true);
+        timeLabel.setDisable(true);
+        numLabel.setDisable(true);
+        numLabel2.setDisable(true);
+        numLabel3.setDisable(true);
     }
     
     @FXML
@@ -660,21 +714,25 @@ public class CreateNewDrumController {
 
                 createSquareDrum(Integer.parseInt(textF2.getText()));
                 disableSettings();
+                menuDuringSim();
 
             } else if (rectangleChosen) {
 
                 createRectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
                 disableSettings();
+                menuDuringSim();
 
             } else if (parallelogramChosen) {
 
                 createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
                 disableSettings();
+                menuDuringSim();
 
             } else if (trapezoidChosen) {
 
                 createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
                 disableSettings();
+                menuDuringSim();
 
             } else {
 

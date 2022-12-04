@@ -85,7 +85,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Spread: ">
+            <Label fx:id="spreadLabel" text="Spread: ">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -100,7 +100,7 @@
                   <Insets />
                </VBox.margin>
             </Slider>
-            <Label prefHeight="17.0" prefWidth="47.0" text="Power:">
+            <Label fx:id="powerLabel" prefHeight="17.0" prefWidth="47.0" text="Power:">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -115,7 +115,7 @@
                   <Insets />
                </VBox.margin>
             </Slider>
-            <Label prefHeight="17.0" prefWidth="188.0" text="Δt:">
+            <Label fx:id="timeLabel" prefHeight="17.0" prefWidth="188.0" text="Δt:">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -145,7 +145,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCreateNewDrum" text="Create New Drum" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Shapes">
+            <Menu fx:id="shapesMenu" mnemonicParsing="false" text="Shapes">
                <items>
                   <MenuItem fx:id="square" mnemonicParsing="false" onAction="#squareChosen" text="Square">
                      <graphic>
@@ -169,7 +169,7 @@
                   </MenuItem>
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Mass Distribution">
+            <Menu fx:id="massMenu" mnemonicParsing="false" text="Mass Distribution">
                <items>
                   <MenuItem fx:id="uniformMass" mnemonicParsing="false" onAction="#handleUniformMassDChosen" text="Uniform" />
                   <MenuItem fx:id="horizontalMass" mnemonicParsing="false" onAction="#handleHorizontalMassDChosen" text="Horizontal Gradient" />
@@ -177,7 +177,7 @@
                   <MenuItem fx:id="radialMass" mnemonicParsing="false" onAction="#handleRadialMassDChosen" text="Radial Gradient" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Texture">
+            <Menu fx:id="textureMenu" mnemonicParsing="false" text="Texture">
                <items>
                   <MenuItem fx:id="cartesian" mnemonicParsing="false" onAction="#handleCartesianChosen" text="Cartesian">
                      <graphic>
@@ -221,13 +221,13 @@
                      </graphic></MenuItem>
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Reset">
+            <Menu fx:id="resetMenu" mnemonicParsing="false" text="Reset">
               <items>
                   <MenuItem fx:id="resetWave" mnemonicParsing="false" text="Reset Wave" />
                 <MenuItem fx:id="resetCamera" mnemonicParsing="false" text="Reset Camera" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Recording">
+            <Menu fx:id="recordingMenu" mnemonicParsing="false" text="Recording">
               <items>
                 <MenuItem fx:id="btnStartRecord" mnemonicParsing="false" text="Start Recording" />
                   <MenuItem fx:id="btnStopRecord" mnemonicParsing="false" text="Stop Recoding" />
