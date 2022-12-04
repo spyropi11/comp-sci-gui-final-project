@@ -181,6 +181,7 @@ public abstract class Formable {
     public Arrangement getTexture() {
         return texture;
     }
+
     
     public Distribution getMass() {
         return mass;

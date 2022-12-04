@@ -193,7 +193,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Texture">
                <items>
-                  <MenuItem fx:id="cartesian" mnemonicParsing="false" text="Cartesian">
+                  <MenuItem fx:id="cartesian" mnemonicParsing="false" onAction="#handleCartesianChosen" text="Cartesian">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -201,7 +201,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem fx:id="parallel" mnemonicParsing="false" text="Parallel">
+                  <MenuItem fx:id="parallel" mnemonicParsing="false" onAction="#handleParallelChosen" text="Parallel">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -209,7 +209,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem fx:id="triangular" mnemonicParsing="false" text="Triangular">
+                  <MenuItem fx:id="triangular" mnemonicParsing="false" onAction="#handleTriangularChosen" text="Triangular">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -217,7 +217,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem fx:id="thin" mnemonicParsing="false" text="Crossed Thin">
+                  <MenuItem fx:id="thin" mnemonicParsing="false" onAction="#handleCrossedThinChosen" text="Crossed Thin">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -225,7 +225,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem fx:id="thick" mnemonicParsing="false" text="Crossed Thick">
+                  <MenuItem fx:id="thick" mnemonicParsing="false" onAction="#handleCrossedThickChosen" text="Crossed Thick">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>

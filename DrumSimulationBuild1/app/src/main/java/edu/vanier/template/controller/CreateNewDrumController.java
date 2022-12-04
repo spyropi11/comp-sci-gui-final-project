@@ -2,6 +2,12 @@ package edu.vanier.template.controller;
 
 import edu.vanier.template.drumshapes.Distribution;
 import edu.vanier.template.drumshapes.Formable;
+import edu.vanier.template.drumshapes.Formable.Arrangement;
+import static edu.vanier.template.drumshapes.Formable.Arrangement.CARTESIAN;
+import static edu.vanier.template.drumshapes.Formable.Arrangement.CROSSED_THICK;
+import static edu.vanier.template.drumshapes.Formable.Arrangement.CROSSED_THIN;
+import static edu.vanier.template.drumshapes.Formable.Arrangement.PARALLEL;
+import static edu.vanier.template.drumshapes.Formable.Arrangement.TRIANGULAR;
 import edu.vanier.template.drumshapes.ParallelogramDrum;
 import edu.vanier.template.drumshapes.RectangleDrum;
 import edu.vanier.template.drumshapes.SquareDrum;
@@ -55,13 +61,19 @@ public class CreateNewDrumController {
     Boolean VerticalMassDChosen = false;
     Boolean RadialMassDChosen = false;
     
-
+    Boolean cartesianChosen = false;
+    Boolean crossedThinChosen = false;
+    Boolean crossedThickChosen = false;
+    Boolean parallelChosen = false;
+    Boolean triangularChosen = false;
+    
     public static double spreadValue;
     public static double amplitudeValue;
     public static double deltaTimeValue;
     public static double densityValue;
     public static double[] stops = {1};
     public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
+    public static Arrangement arrangementValue;
 
     Simulation simulation = new Simulation();
     
@@ -524,7 +536,58 @@ public class CreateNewDrumController {
         this.RadialMassDChosen = true;
         
     }
-
+    
+    
+    //Textures
+    public void handleCartesianChosen(ActionEvent event){
+        
+        cartesianChosen = true;
+        crossedThinChosen = false;
+        crossedThickChosen = false;
+        parallelChosen = false;
+        triangularChosen = false;
+        
+    }
+    
+    public void handleCrossedThinChosen(ActionEvent event){
+        
+        cartesianChosen = false;
+        crossedThinChosen = true;
+        crossedThickChosen = false;
+        parallelChosen = false;
+        triangularChosen = false;
+        
+    }
+    
+    public void handleCrossedThickChosen(ActionEvent event){
+        
+        cartesianChosen = false;
+        crossedThinChosen = false;
+        crossedThickChosen = true;
+        parallelChosen = false;
+        triangularChosen = false;
+        
+    }
+    
+    public void handleParallelChosen(ActionEvent event){
+        
+        cartesianChosen = false;
+        crossedThinChosen = false;
+        crossedThickChosen = false;
+        parallelChosen = true;
+        triangularChosen = false;
+        
+    }
+    
+    public void handleTriangularChosen(ActionEvent event){
+        
+        cartesianChosen = false;
+        crossedThinChosen = false;
+        crossedThickChosen = false;
+        parallelChosen = false;
+        triangularChosen = true;
+    }
+            
     /**
      * Whenever the user clicks on the confirm button this method gets the width
      * and length
@@ -533,7 +596,27 @@ public class CreateNewDrumController {
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
         
-        
+        if(cartesianChosen){
+            
+            arrangementValue = CARTESIAN;
+            
+        }else if(crossedThinChosen){
+            
+            arrangementValue = CROSSED_THIN;
+            
+        }else if(crossedThickChosen){
+            
+            arrangementValue = CROSSED_THICK;
+            
+        }else if(parallelChosen){
+            
+            arrangementValue = PARALLEL;
+            
+        }else if(triangularChosen){
+            
+            arrangementValue = TRIANGULAR;
+            
+        }
         
         if(UniformMassDChosen){
             
@@ -587,6 +670,7 @@ public class CreateNewDrumController {
         
         Formable formable = new SquareDrum(length);
         formable.setMassDistribution(distributionValue);
+        formable.setArrangement(arrangementValue);
         
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
@@ -622,6 +706,7 @@ public class CreateNewDrumController {
 
         Formable formable = new RectangleDrum(width, length);
         formable.setMassDistribution(distributionValue);
+        formable.setArrangement(arrangementValue);
         
         //stage.close();
         simulation.getPhysics().stopTimer();
@@ -655,6 +740,7 @@ public class CreateNewDrumController {
 
         Formable formable = new ParallelogramDrum(width, height, angle);
         formable.setMassDistribution(distributionValue);
+        formable.setArrangement(arrangementValue);
         
         //stage.close();
         simulation.getPhysics().stopTimer();
@@ -688,6 +774,7 @@ public class CreateNewDrumController {
 
         Formable formable = new TrapezoidDrum(longBase, shortBase, height, angle);
         formable.setMassDistribution(distributionValue);
+        formable.setArrangement(arrangementValue);
         
         //stage.show();
         simulation.getPhysics().stopTimer();
