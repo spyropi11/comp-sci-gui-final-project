@@ -47,7 +47,7 @@ public class MainApp extends Application {
         
         stage.setScene(scene);
 
-//        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setAutoPlay(true);
         
         stage.setTitle("Drum Sim");
         // Resize the stage so the size matches the scene
