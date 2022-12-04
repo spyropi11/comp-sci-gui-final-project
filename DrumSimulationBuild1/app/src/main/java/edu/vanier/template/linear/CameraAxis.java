@@ -15,7 +15,7 @@ public class CameraAxis extends Line {
     /**
      * The initial length of an axis.
      */
-    private static final double MAGNIFICATION = 50;
+    public static final double MAGNIFICATION = 50;
     /**
      * The possible axes that can be projected onto the screen.
      */

@@ -1,6 +1,7 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.controller.CreateNewDrumController;
+import static edu.vanier.template.elements.Point.norm;
 import edu.vanier.template.linear.Matrix;
 import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
@@ -32,19 +33,18 @@ public final class Physics {
     
     public Point[][] points;
     
-    //The color is already handled in Point
-    //PhongMaterial mBlue = new PhongMaterial(Color.LIGHTBLUE);
-    //PhongMaterial mRed = new PhongMaterial(Color.LIGHTPINK);
-    //PhongMaterial mBlack = new PhongMaterial(Color.BLACK);
-    
     public Physics(Simulation simulation) {
         this.simulation = simulation;
-        System.out.println(simulation.getDELTATIME());
         drummer = new DrumCreator();
     }
     
     public void setPoints(Point[][] points) {
         this.points = points;
+        for(Point[] pointList : this.points) {
+            for(Point point : pointList) {
+                point.setPhysics(this);
+            }
+        }
     }
     
     private final AnimationTimer timer = new AnimationTimer() {
@@ -75,8 +75,29 @@ public final class Physics {
         for(Point point : drummer.mesh) {
             point.updatePosition();
             point.updateColour();
-            point.projection(p, alpha, beta, n, simulation.oX, simulation.oY);
+            project(point);
         }
+        
+        
+    }
+    
+    private void project(Point point) {
+        double v0 = point.x-p[0];
+        double v1 = point.y-p[1];
+        double v2 = point.position-p[2];
+        
+        double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
+        double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
+        
+        double sumN = v0*n[0] + v1*n[1] + v2*n[2];
+        double height = sumN * norm(n);
+//        System.out.println(Arrays.toString(alpha));
+//        opacityChange(height);
+        
+//        System.out.println(Arrays.toString(physics.getN()));
+        
+        point.setTranslateX(sumX + simulation.oX);
+        point.setTranslateY(sumY + simulation.oY);
     }
     
     public void setMouseClicked() {
@@ -183,7 +204,6 @@ public final class Physics {
         alpha = rotation.act(alpha);
         beta = rotation.act(beta);
         n = rotation.act(n);
-        
     }
     
     public void setOrigin(double px, double py, double pz) {

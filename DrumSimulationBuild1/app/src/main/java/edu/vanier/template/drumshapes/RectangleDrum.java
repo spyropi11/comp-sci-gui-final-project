@@ -39,8 +39,8 @@ public class RectangleDrum extends Formable {
                 }
                 points[i][j].setup(2*RADIUS*i, 2*RADIUS*j);
                 // One line:
-                if((width == 1 && height != 1 && j != 0 && j != height-1)
-                        || (height == 1 && width != 1 && i != 0 && i != width-1)
+                if(((width == 1 || width == 2) && height != 1 && height != 2 && j != 0 && j != height-1)
+                        || ((height == 1 || height == 2) && width != 1 && width != 2 && i != 0 && i != width-1)
                         ) {
                     points[i][j].setOnEdge(false);
                 }
@@ -121,7 +121,6 @@ public class RectangleDrum extends Formable {
             }
         }
     }
-
     
     public int getWidth() {
         return width;

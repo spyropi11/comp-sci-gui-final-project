@@ -96,16 +96,12 @@ public final class Simulation {
         this.physics = new Physics(this);
     }
     
-    
-    
     /**
      * Initiates a wave simulation.
      * @param formable The shape of the drum.
      *
      */
     public Simulation(Formable formable) {
-        
-        
         
         this.formable = formable;
         this.root = new Pane();
@@ -197,7 +193,6 @@ public final class Simulation {
         });
         
         physics.setMouseClicked();
-        physics.startTimer();
         
     }
 
@@ -234,7 +229,10 @@ public final class Simulation {
 
     public void setCloseSim(Stage stage){
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
-            System.out.println("Simulation ended");
+            physics.stopTimer();
+            Platform.exit();
+        });
+        stage.setOnHidden((WindowEvent windowEvent) -> {
             physics.stopTimer();
             Platform.exit();
         });

@@ -1,17 +1,18 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.controller.CreateNewDrumController;
+import edu.vanier.template.linear.CameraAxis;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
 public class Point extends Sphere {
     
-    double position;
+    double position = 0;
     double vPrevious = 0;
     double velocity = 0;
-    //static double DELTATIME = 0.06;
     double springConstant = 3;
     double mass;
     double maximumDampening;
@@ -22,7 +23,7 @@ public class Point extends Sphere {
     double dampeningConstant;
     boolean onEdge;
     ArrayList<Spring> connectors = new ArrayList<>();
-
+    
     double x;
     double y;
     
@@ -35,10 +36,7 @@ public class Point extends Sphere {
     
     static final double COLOUR_NORMALIZATION = 0.2;
     
-    //Constructors
-    public Point() {
-        super();
-    }
+    private Physics physics;
     
     /**
      * 
@@ -66,22 +64,6 @@ public class Point extends Sphere {
         this.y = y;
     }
     
-    public void projection(double[] p, double[] alpha, double[] beta, double[] n, double cameraChangeX, double cameraChangeY) {
-        double v0 = x-p[0];
-        double v1 = y-p[1];
-        double v2 = position-p[2];
-        
-        double sumX = v0*alpha[0]+v1*alpha[1]+v2*alpha[2];
-        double sumY = v0*beta[0]+v1*beta[1]+v2*beta[2];
-        
-        double sumN = v0*n[0] + v1*n[1] + v2*n[2];
-        double height = sumN * norm(n);
-        opacityChange(height);
-        
-        this.setTranslateX(sumX + cameraChangeX);
-        this.setTranslateY(sumY + cameraChangeY);
-    }
-    
     public static double norm(double... vector) {
         double sum = 0;
         for(double v : vector) {
@@ -90,79 +72,9 @@ public class Point extends Sphere {
         return Math.sqrt(sum);
     }
     
-    public static double[] crossProduct(double[] u, double[] v) {
-        double[] cross = new double[3];
-        cross[0] = u[1]*v[2] - u[2]*v[1];
-        cross[1] = u[2]*v[0] - u[0]*v[2];
-        cross[2] = u[0]*v[1] - u[1]*v[0];
-        return cross;
-    }
-    
-    //Getters and Setters
-    public double getPosition() {
-        return position;
-    }
-
-    public void setPosition(double position) {
-        this.position = position;
-    }
-
-    public double getvPrevious() {
-        return vPrevious;
-    }
-
-    public void setvPrevious(double vPrevious) {
-        this.vPrevious = vPrevious;
-    }
-
-    public double getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
-    }
-
-
-    public double getMass() {
-        return mass;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-    
-    public boolean isOnEdge() {
-        return onEdge;
-    }
-    
-    public void setOnEdge(boolean isEdge) {
-        this.onEdge = isEdge;
-    }
-    
-    public double getX() {
-        return x;
-    }
-    
-    public double getY() {
-        return y;
-    }
-    
-    public double getDampeningConstant() {
-        return dampeningConstant;
-    }
-    
-    public void setDampeningConstant(double dampeningConstant) {
-        this.dampeningConstant = dampeningConstant;
-    }
-    
-    
-    //I think that the calculations should be done in a separate class now that we're using Springs. -Ryan
-    
     /**
      * Updates the velocity
      */
-    
     public void updateVelocity() {
         
         //If onEdge boolean is set to false
@@ -206,11 +118,72 @@ public class Point extends Sphere {
     }
     
     private void opacityChange(double height) {
-        double tryDepth = 0.6 + height;
+        double tryDepth = 0.6 + CameraAxis.MAGNIFICATION * height;
         setOpacity(
                 tryDepth < 0.2 ? 0.2 :
                         tryDepth > 1 ? 1 : tryDepth
         );
+    }
+    
+    //Getters and Setters
+    public double getPosition() {
+        return position;
+    }
+
+    public void setPosition(double position) {
+        this.position = position;
+    }
+
+    public double getvPrevious() {
+        return vPrevious;
+    }
+
+    public void setvPrevious(double vPrevious) {
+        this.vPrevious = vPrevious;
+    }
+
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+    
+    public boolean isOnEdge() {
+        return onEdge;
+    }
+    
+    public void setOnEdge(boolean isEdge) {
+        this.onEdge = isEdge;
+    }
+    
+    public double getX() {
+        return x;
+    }
+    
+    public double getY() {
+        return y;
+    }
+    
+    public double getDampeningConstant() {
+        return dampeningConstant;
+    }
+    
+    public void setDampeningConstant(double dampeningConstant) {
+        this.dampeningConstant = dampeningConstant;
+    }
+    
+    public void setPhysics(Physics physics) {
+        this.physics = physics;
     }
     
 }

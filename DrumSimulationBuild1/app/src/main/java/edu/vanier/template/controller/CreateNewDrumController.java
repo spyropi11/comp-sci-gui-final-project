@@ -65,9 +65,10 @@ public class CreateNewDrumController {
     Simulation simulation = new Simulation();
 
     public CreateNewDrumController(Stage stage) {
-
         this.stage = stage;
-
+        this.stage.setOnCloseRequest((event) -> {
+            System.exit(0);
+        });
     }
 
     //Button menu
@@ -340,6 +341,11 @@ public class CreateNewDrumController {
     public void handleCreateNewDrum(ActionEvent event) {
         try {
             stage.close();
+            try {
+                simulation.physics.stopTimer();
+            } catch(NullPointerException e) {
+                
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
             CreateNewDrumController mainController = new CreateNewDrumController(stage);
             loader.setController(mainController);
@@ -794,6 +800,7 @@ public class CreateNewDrumController {
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
         btnConfirm.setVisible(false);
+        simulation.physics.startTimer();
     }
 
     public void createRectangleDrum(int width, int length) throws IOException, ArithmeticException {
@@ -811,6 +818,7 @@ public class CreateNewDrumController {
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
         btnConfirm.setVisible(false);
+        simulation.physics.startTimer();
     }
 
     public void createParallelogramDrum(int width, int height, int angle) throws IOException, ArithmeticException {
@@ -828,6 +836,7 @@ public class CreateNewDrumController {
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
         btnConfirm.setVisible(false);
+        simulation.physics.startTimer();
     }
 
     public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException, ArithmeticException {
@@ -845,6 +854,7 @@ public class CreateNewDrumController {
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
         btnConfirm.setVisible(false);
+        simulation.physics.startTimer();
     }
 
     public Simulation getSimulation() {

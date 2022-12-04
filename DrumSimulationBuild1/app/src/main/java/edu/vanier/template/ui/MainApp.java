@@ -64,4 +64,9 @@ public class MainApp extends Application {
         return MainApp.mediaPlayer;
     }
     
+    @Override
+    public void stop() {
+        System.exit(0);
+    }
+    
 }
