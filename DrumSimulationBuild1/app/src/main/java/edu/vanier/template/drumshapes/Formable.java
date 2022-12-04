@@ -5,8 +5,11 @@ import edu.vanier.template.elements.Spring;
 import edu.vanier.template.simulation.Simulation;
 import java.util.ArrayList;
 
+/**
+ * The Formable abstract class represents an arbitrary shape the drum can take on, along with properties and methods used to
+ * generate the points and springs in the drum, in a particular arrangement.
+ */
 public abstract class Formable {
-
     /**
      * Constant denoting the maximum number of points possible that the application can handle.
      */
@@ -43,29 +46,35 @@ public abstract class Formable {
         CROSSED_THICK
     }
     /**
-     * Forms a shape for the drum with mass and decay distributions.
+     * Forms a shape for the drum with a default mass distribution.
      */
     public Formable() {
         double[] defaultMass = {Simulation.NATURAL_MASS};
         mass = new Distribution(Distribution.Surface.UNIFORM, defaultMass);
     }
-    
+    /**
+     * Forms a mesh of points.
+     * @return 
+     */
     public Point[][] formMesh() {
         generateMesh();
         generateMass();
         return mesh;
     }
-    
+    /**
+     * Forms a collection of springs that connect the points in the drum.
+     * @return 
+     */
     public ArrayList<Spring> formDrum() {
         generateDrum();
         return drum;
     }
     /**
-     * Creates a mesh of points in the selected shape.
+     * Generates the mesh of points in the selected shape.
      */
     protected abstract void generateMesh();
     /**
-     * Creates a drum of springs in the selected shape.
+     * Generates the drum of springs in the selected shape.
      * 
      */
     protected abstract void generateDrum();
@@ -93,7 +102,6 @@ public abstract class Formable {
     public void setMassDistribution(Distribution mass) {
         this.mass = mass;
     }
-
     /**
      * Sets the arrangement of springs in the drum.
      * @param texture 
@@ -105,10 +113,6 @@ public abstract class Formable {
      * Sets the masses of the points in the mesh.
      */
     protected abstract void generateMass();
-
-    
-    
-    
     /**
      * Returns indices of points to be bound by springs in the arrangement of this drum's texture.
      * @param i Horizontal index of point.
@@ -173,17 +177,22 @@ public abstract class Formable {
             default -> {return null;}
         }
     }
-    
+    /**
+     * @return The density of points per area of pixels.
+     */
     public double getDensity() {
         return density;
     }
-    
+    /**
+     * @return The arrangement of springs, which affects the transmission of waves.
+     */
     public Arrangement getTexture() {
         return texture;
     }
-    
+    /**
+     * @return The distribution of mass amongst the points, which may be uniform or a gradient.
+     */
     public Distribution getMass() {
         return mass;
     }
-    
 }

@@ -60,8 +60,8 @@ public class CreateNewDrumController {
     public static double amplitudeValue;
     public static double deltaTimeValue;
     public static double densityValue;
-    public static double[] stops = {1};
-    public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
+    public static double[] defaultStops = {1};
+    public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, defaultStops);
 
     Simulation simulation = new Simulation();
     

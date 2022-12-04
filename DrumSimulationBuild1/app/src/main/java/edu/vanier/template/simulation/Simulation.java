@@ -49,7 +49,8 @@ public final class Simulation {
     private CameraAxis camZup;
     private CameraAxis camZdown;
     
-    
+    public double oX;
+    public double oY;
     
     
     /**
@@ -137,8 +138,7 @@ public final class Simulation {
         camY = new CameraAxis(physics, CameraAxis.Axis.Y);
         camZup = new CameraAxis(physics, CameraAxis.Axis.Zup);
         camZdown = new CameraAxis(physics, CameraAxis.Axis.Zdown);
-
-        //Scene scene = new Scene(root, WIDTH,HEIGHT);
+        
         camX.setStrokeWidth(2);
         root.getChildren().add(camX);
         camY.setStrokeWidth(2);
@@ -147,14 +147,13 @@ public final class Simulation {
         root.getChildren().add(camZup);
         camZdown.setStrokeWidth(2);
         root.getChildren().add(camZdown);
-        //scene.setFill(Color.AZURE);
-
+        
         //Set camera and camera origin.
-        double oX = root.getPrefWidth()/2;
-        double oY = root.getPrefHeight()/2;
+        oX = root.getPrefWidth()/2;
+        oY = root.getPrefHeight()/2;
         physics.setOrigin(oX, oY, 0);
-        physics.setCameraCentre(oX, oY);
-        Sphere cameraCentre = new Sphere(4, 4);
+//        physics.setCameraCentre(oX, oY);
+        Sphere cameraCentre = new Sphere(4);
         cameraCentre.setTranslateX(oX);
         cameraCentre.setTranslateY(oY);
         PhongMaterial cameraMaterial = new PhongMaterial();
@@ -162,24 +161,45 @@ public final class Simulation {
         cameraMaterial.setDiffuseColor(Color.YELLOW);
         cameraCentre.setMaterial(cameraMaterial);
         root.getChildren().add(cameraCentre);
-
-
-
-
-        //stage.setTitle("Drum Sim 2D");
-        //stage.setScene(scene);
-        //stage.sizeToScene();
-        //stage.show();
-
-        physics.startTimer();
+        
+        
+        camX.setStartX(oX);
+        camX.setStartY(oY);
+        camY.setStartX(oX);
+        camY.setStartY(oY);
+        camZup.setStartX(oX);
+        camZup.setStartY(oY);
+        camZdown.setStartX(oX);
+        camZdown.setStartY(oY);
+        
+        root.widthProperty().addListener((observable, oldValue, newValue) -> {
+            oX = (double)newValue/2;
+            camX.setStartX(oX);
+            camX.setEndX(camX.xV + oX);
+            camY.setStartX(oX);
+            camY.setEndX(camY.xV + oX);
+            camZup.setStartX(oX);
+            camZup.setEndX(camZup.xV + oX);
+            camZdown.setStartX(oX);
+            camZdown.setEndX(camZdown.xV + oX);
+            cameraCentre.setTranslateX(oX);
+        });
+        root.heightProperty().addListener((observable, oldValue, newValue) -> {
+            Simulation.this.oY = (double)newValue/2;
+            camX.setStartY(oY);
+            camX.setEndY(camX.yV + oY);
+            camY.setStartY(oY);
+            camY.setEndY(camY.yV + oY);
+            camZup.setStartY(oY);
+            camZup.setEndY(camZup.yV + oY);
+            camZdown.setStartY(oY);
+            camZdown.setEndY(camZdown.yV + oY);
+            cameraCentre.setTranslateY(oY);
+        });
+        
         physics.setMouseClicked();
-
+        physics.startTimer();
         
-//        physics.translate(MESH_WIDTH/2, MESH_HEIGHT/2);
-//        physics.zoom(1.03);
-//        physics.rotate(0.5, Physics.Axis.ALPHA);
-        
-
     }
 
     public void translate(KeyCode keyCode){
@@ -211,7 +231,6 @@ public final class Simulation {
                 case X -> physics.rotate(0.02*magnificationConstant, Physics.Axis.ALPHA);
 
             }
-
     }
 
     public void setCloseSim(Stage stage){
@@ -220,8 +239,6 @@ public final class Simulation {
             physics.stopTimer();
             Platform.exit();
         });
-
-
     }
 
     public Pane getRoot() {
@@ -272,14 +289,4 @@ public final class Simulation {
         this.physics = physics;
     }
     
-    
-
-    
-    
-    
-    
-
-
-
-
 }

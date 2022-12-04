@@ -25,10 +25,6 @@ public final class Physics {
     private boolean recording = false;
     private SaveEnvelope saveEnvelope;
     
-    //Camera centre:
-    private double cX;
-    private double cY;
-    
     final Simulation simulation;
     
     public Point[][] points;
@@ -42,8 +38,6 @@ public final class Physics {
         this.simulation = simulation;
         System.out.println(simulation.getDELTATIME());
         drummer = new DrumCreator();
-        cX = simulation.getRoot().getPrefWidth()/2;
-        cY = simulation.getRoot().getPrefHeight()/2;
     }
     
     public void setPoints(Point[][] points) {
@@ -67,10 +61,10 @@ public final class Physics {
     
     public void update() {
         
-        simulation.getCamX().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
-        simulation.getCamY().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
-        simulation.getCamZup().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
-        simulation.getCamZdown().display(simulation.getRoot(), cX, cY, simulation.getDisplay());
+        simulation.getCamX().display(simulation.getRoot(), simulation.getDisplay());
+        simulation.getCamY().display(simulation.getRoot(), simulation.getDisplay());
+        simulation.getCamZup().display(simulation.getRoot(), simulation.getDisplay());
+        simulation.getCamZdown().display(simulation.getRoot(), simulation.getDisplay());
         
         for(Point point : drummer.mesh) {
             point.updateVelocity();
@@ -78,7 +72,7 @@ public final class Physics {
         for(Point point : drummer.mesh) {
             point.updatePosition();
             point.updateColour();
-            point.projection(p, alpha, beta, n, cX, cY);
+            point.projection(p, alpha, beta, n, simulation.oX, simulation.oY);
         }
     }
     
@@ -201,11 +195,6 @@ public final class Physics {
         p[0] = px;
         p[1] = py;
         p[2] = pz;
-    }
-    
-    public void setCameraCentre(double oX, double oY) {
-        cX = oX;
-        cY = oY;
     }
     
     public void startPlayBack() {
