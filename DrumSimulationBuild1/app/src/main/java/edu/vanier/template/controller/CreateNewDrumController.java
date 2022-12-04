@@ -17,6 +17,8 @@ import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -208,8 +210,12 @@ public class CreateNewDrumController {
     MenuItem resetCamera;
 
     //MenuItem + Record
+    @FXML
     MenuItem btnStartRecord;
     MenuItem btnStopRecord;
+    
+    @FXML
+    Label customizationLabel;
 
     //Slider Number value 1
     int numSlider;
@@ -226,15 +232,25 @@ public class CreateNewDrumController {
     public void initialize() {
         textF1.setEditable(false);
         textF2.setEditable(false);
-        //textF3.setEditable(false);
-
         textF4.setEditable(false);
         textF5.setEditable(false);
         textF6.setEditable(false);
+        textF1.setVisible(false);
+        textF2.setVisible(false);
+        textF4.setVisible(false);
+        textF5.setVisible(false);
+        textF6.setVisible(false);
+        spinner.setVisible(false);
+        label1.setVisible(false);
+        label2.setVisible(false);
+        label3.setVisible(false);
+        label4.setVisible(false);
+        label5.setVisible(false);
+        label6.setVisible(false);
         
         UniformMassDChosen = true;
         cartesianChosen = true;
-
+        
         numSlider = (int) slider.getValue();
         numLabel.setText(Integer.toString(numSlider) + " N");
 
@@ -272,6 +288,24 @@ public class CreateNewDrumController {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
         );
 
+    }
+    
+    @FXML
+    public void handleCreateNewDrum(ActionEvent event) {
+        try {
+            stage.close();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
+            CreateNewDrumController mainController = new CreateNewDrumController(stage);
+            loader.setController(mainController);
+            BorderPane root = loader.load();
+            Scene scene = new Scene(root, 700, 700);
+            stage.setScene(scene);
+            stage.setTitle("Drum Simulation.");
+            stage.sizeToScene();
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println("Exception loading Scene2NewDream.fxml");
+        }
     }
 
     public void rectangleChosen(ActionEvent event) {

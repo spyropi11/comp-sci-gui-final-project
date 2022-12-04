@@ -21,7 +21,7 @@
    <left>
       <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="19.0" prefWidth="141.0" text="Drum Customization:">
+            <Label fx:id="customizationLabel" prefHeight="19.0" prefWidth="141.0" text="Drum Customization:">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -147,7 +147,7 @@
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem fx:id="loadSavedDrum" mnemonicParsing="false" text="Load Saved Drum" />
-                  <MenuItem mnemonicParsing="false" text="Create New Drum" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCreateNewDrum" text="Create New Drum" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Shapes">
