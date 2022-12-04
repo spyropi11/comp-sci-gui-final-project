@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="759.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" prefHeight="759.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
@@ -122,11 +122,6 @@
             </Label>
             <Label fx:id="numLabel3" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="158.0" text="Label" />
             <Slider fx:id="slider3" max="0.1" showTickLabels="true" showTickMarks="true" />
-            <Button fx:id="btnSaveButton" mnemonicParsing="false" text="Save Button">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
             <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#handleBtnConfirm" prefHeight="26.0" prefWidth="81.0" text="Confirm">
                <VBox.margin>
                   <Insets top="5.0" />

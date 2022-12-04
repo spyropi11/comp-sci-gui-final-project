@@ -43,7 +43,7 @@ public class MainApp extends Application {
         Pane root = loader.load();
 
 
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
         
         stage.setScene(scene);
 

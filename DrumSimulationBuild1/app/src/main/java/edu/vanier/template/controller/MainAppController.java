@@ -51,7 +51,7 @@ public class MainAppController{
         //load the FXML
         BorderPane root = loader.load();
         
-        scene = new Scene(root, 700, 700);
+        scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 
         //--> Step 3) Load the scene into stage (window)
         stage.setScene(scene);

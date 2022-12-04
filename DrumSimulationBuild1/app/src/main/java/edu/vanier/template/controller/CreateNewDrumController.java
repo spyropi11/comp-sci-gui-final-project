@@ -1,31 +1,14 @@
 package edu.vanier.template.controller;
 
-import edu.vanier.template.drumshapes.Distribution;
-import edu.vanier.template.drumshapes.Formable;
-import edu.vanier.template.drumshapes.Formable.Arrangement;
-import static edu.vanier.template.drumshapes.Formable.Arrangement.CARTESIAN;
-import static edu.vanier.template.drumshapes.Formable.Arrangement.CROSSED_THICK;
-import static edu.vanier.template.drumshapes.Formable.Arrangement.CROSSED_THIN;
-import static edu.vanier.template.drumshapes.Formable.Arrangement.PARALLEL;
-import static edu.vanier.template.drumshapes.Formable.Arrangement.TRIANGULAR;
-import edu.vanier.template.drumshapes.ParallelogramDrum;
-import edu.vanier.template.drumshapes.RectangleDrum;
-import edu.vanier.template.drumshapes.SquareDrum;
-import edu.vanier.template.drumshapes.TrapezoidDrum;
-import edu.vanier.template.elements.Physics;
+import edu.vanier.template.drumshapes.*;
+import edu.vanier.template.drumshapes.Formable.*;
+import static edu.vanier.template.drumshapes.Formable.Arrangement.*;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -39,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class CreateNewDrumController {
@@ -75,7 +57,7 @@ public class CreateNewDrumController {
     public static double deltaTimeValue;
     public static double densityValue;
 
-    public static double[] defaultStops = {1};
+    public static final double[] defaultStops = {1};
     public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, defaultStops);
     public static Arrangement arrangementValue;
 
@@ -153,9 +135,6 @@ public class CreateNewDrumController {
 
     //Bottom button
     @FXML
-    Button btnSaveButton;
-
-    @FXML
     Button btnConfirm;
 
     //Shapes + MenuBar
@@ -216,6 +195,9 @@ public class CreateNewDrumController {
     
     @FXML
     Label customizationLabel;
+    
+    @FXML
+    BorderPane root;
 
     //Slider Number value 1
     int numSlider;
@@ -230,23 +212,7 @@ public class CreateNewDrumController {
     double arcHeight = 0;
 
     public void initialize() {
-        textF1.setEditable(false);
-        textF2.setEditable(false);
-        textF4.setEditable(false);
-        textF5.setEditable(false);
-        textF6.setEditable(false);
-        textF1.setVisible(false);
-        textF2.setVisible(false);
-        textF4.setVisible(false);
-        textF5.setVisible(false);
-        textF6.setVisible(false);
-        spinner.setVisible(false);
-        label1.setVisible(false);
-        label2.setVisible(false);
-        label3.setVisible(false);
-        label4.setVisible(false);
-        label5.setVisible(false);
-        label6.setVisible(false);
+        disableSettings();
         
         UniformMassDChosen = true;
         cartesianChosen = true;
@@ -290,6 +256,26 @@ public class CreateNewDrumController {
 
     }
     
+    private void disableSettings() {
+        textF1.setEditable(false);
+        textF2.setEditable(false);
+        textF4.setEditable(false);
+        textF5.setEditable(false);
+        textF6.setEditable(false);
+        textF1.setVisible(false);
+        textF2.setVisible(false);
+        textF4.setVisible(false);
+        textF5.setVisible(false);
+        textF6.setVisible(false);
+        spinner.setVisible(false);
+        label1.setVisible(false);
+        label2.setVisible(false);
+        label3.setVisible(false);
+        label4.setVisible(false);
+        label5.setVisible(false);
+        label6.setVisible(false);
+    }
+    
     @FXML
     public void handleCreateNewDrum(ActionEvent event) {
         try {
@@ -298,7 +284,7 @@ public class CreateNewDrumController {
             CreateNewDrumController mainController = new CreateNewDrumController(stage);
             loader.setController(mainController);
             BorderPane root = loader.load();
-            Scene scene = new Scene(root, 700, 700);
+            Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
             stage.setScene(scene);
             stage.setTitle("Drum Simulation.");
             stage.sizeToScene();
@@ -673,18 +659,22 @@ public class CreateNewDrumController {
             if (squareChosen) {
 
                 createSquareDrum(Integer.parseInt(textF2.getText()));
+                disableSettings();
 
             } else if (rectangleChosen) {
 
                 createRectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
+                disableSettings();
 
             } else if (parallelogramChosen) {
 
                 createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
+                disableSettings();
 
             } else if (trapezoidChosen) {
 
                 createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
+                disableSettings();
 
             } else {
 
@@ -719,7 +709,6 @@ public class CreateNewDrumController {
     }
 
     public void createSquareDrum(int length) throws IOException, ArithmeticException {
-
         Formable formable = new SquareDrum(length);
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
@@ -728,130 +717,63 @@ public class CreateNewDrumController {
         setSimulation(new Simulation(formable));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
             simulation.translate(event.getCode());
-
         });
 
         simulation.setCloseSim(stage);
-
-        //stage.getScene().getRoot().
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-
-        BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-
+        btnConfirm.setVisible(false);
     }
 
     public void createRectangleDrum(int width, int length) throws IOException, ArithmeticException {
-
         Formable formable = new RectangleDrum(width, length);
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-
-        //stage.close();
+        
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
             simulation.translate(event.getCode());
-
         });
 
         simulation.setCloseSim(stage);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-
-        BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-
+        btnConfirm.setVisible(false);
     }
 
     public void createParallelogramDrum(int width, int height, int angle) throws IOException, ArithmeticException {
-
         Formable formable = new ParallelogramDrum(width, height, angle);
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-
-        //stage.close();
+        
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
             simulation.translate(event.getCode());
-
         });
 
         simulation.setCloseSim(stage);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-
-        BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-
+        btnConfirm.setVisible(false);
     }
 
     public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException, ArithmeticException {
-
         Formable formable = new TrapezoidDrum(longBase, shortBase, height, angle);
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-
-        //stage.show();
+        
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-
             simulation.translate(event.getCode());
-
         });
 
         simulation.setCloseSim(stage);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-        CreateNewDrumController mainController = new CreateNewDrumController(stage);
-        loader.setController(mainController);
-
-        BorderPane root = loader.load();
         root.setCenter(simulation.getRoot());
-
-        Scene scene = new Scene(root, 700, 700);
-        stage.setScene(scene);
-
-        stage.setTitle("Drum Simulation.");
-        stage.sizeToScene();
-        stage.show();
-
+        btnConfirm.setVisible(false);
     }
 
     public Simulation getSimulation() {
