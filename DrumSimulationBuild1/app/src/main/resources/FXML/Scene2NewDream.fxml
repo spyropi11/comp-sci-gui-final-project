@@ -191,14 +191,6 @@
                   <MenuItem fx:id="radialMass" mnemonicParsing="false" onAction="#handleRadialMassDChosen" text="Radial Gradient" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Decay Distribution">
-               <items>
-                  <MenuItem fx:id="uniformDecay" mnemonicParsing="false" text="Uniform" />
-                  <MenuItem fx:id="horizontalDecay" mnemonicParsing="false" text="Horizontal Gradient" />
-                  <MenuItem fx:id="verticalDecay" mnemonicParsing="false" text="Vertical Gradient" />
-                  <MenuItem fx:id="radialDecay" mnemonicParsing="false" text="Radial Gradient" />
-               </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Texture">
                <items>
                   <MenuItem fx:id="cartesian" mnemonicParsing="false" text="Cartesian">

@@ -55,11 +55,13 @@ public class CreateNewDrumController {
     Boolean VerticalMassDChosen = false;
     Boolean RadialMassDChosen = false;
     
+
     public static double spreadValue;
     public static double amplitudeValue;
     public static double deltaTimeValue;
     public static double densityValue;
-    public static Distribution distributionValue;
+    public static double[] stops = {1};
+    public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
 
     Simulation simulation = new Simulation();
     
@@ -530,6 +532,8 @@ public class CreateNewDrumController {
      * @param event
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
+        
+        
         
         if(UniformMassDChosen){
             
