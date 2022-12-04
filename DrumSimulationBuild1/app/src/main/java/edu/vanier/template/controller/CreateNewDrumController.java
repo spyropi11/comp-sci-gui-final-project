@@ -249,7 +249,7 @@ public class CreateNewDrumController {
             numLabel.setText(Integer.toString(numSlider) + "N");
             
             amplitudeValue = (double) newValue;
-            System.out.println("slider was changed" + amplitudeValue);
+            System.out.println("slider was changed " + amplitudeValue);
         });
 
         slider2.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -257,7 +257,7 @@ public class CreateNewDrumController {
             numLabel2.setText(Integer.toString(numSlider2) + "M");
             
             spreadValue = (double) newValue;
-            System.out.println("slider was changed" + spreadValue);
+            System.out.println("slider was changed " + spreadValue);
         });
 
         slider3.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -265,11 +265,11 @@ public class CreateNewDrumController {
             numLabel3.setText(Double.toString(numSlider3) + "s");
             
             deltaTimeValue = (double) newValue;
-            System.out.println("slider was changed" + deltaTimeValue);
+            System.out.println("slider was changed " + deltaTimeValue);
         });
 
         spinner.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 170)
         );
         
         resetWave.setOnAction((event) -> {

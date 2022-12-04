@@ -88,7 +88,7 @@ public final class Physics {
 
                     points[clickedI][clickedJ].setOnMouseClicked(event -> {
                         if(!playingBack) {
-                            amplitude = CreateNewDrumController.amplitudeValue;
+                            amplitude = -CreateNewDrumController.amplitudeValue;
                             spread = CreateNewDrumController.spreadValue;
                             if (spread != 0){
                                 for (int j = 0; j < simulation.MESH_HEIGHT; j++){
@@ -107,13 +107,6 @@ public final class Physics {
                     });
                 }
             }
-    }
-    
-    public void collapseWaves() {
-        /*
-        * TODO
-        * When reset waves button is clicked, this method should collapse the waves.
-        */
     }
     
     public void loadSaveEnvelope(String folderPath) throws IOException {

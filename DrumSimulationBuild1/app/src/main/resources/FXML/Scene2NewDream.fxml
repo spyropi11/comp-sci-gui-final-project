@@ -110,7 +110,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <Slider fx:id="slider" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="slider" min="-100.0" showTickLabels="true" showTickMarks="true">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
