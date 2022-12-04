@@ -11,31 +11,24 @@ public class RectangleDrum extends Formable {
     private final int width;
     private final int height;
     
-    public RectangleDrum(int width, int height) {
+    public RectangleDrum(int width, int height) throws ArithmeticException {
         this.width = width;
         this.height = height;
-    }
-    
-    private int getMeshWidth() {
-        return (int)Math.floor(density*width);
-    }
-    
-    private int getMeshHeight() {
-        return (int)Math.floor(density*height);
+        checkCap();
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void generateMesh() {
-        Point[][] points = new Point[getMeshWidth()][getMeshHeight()];
-        for (int j = 0; j < getMeshHeight(); j++){
-            for(int i = 0; i < getMeshWidth(); i++) {
-                if(j == 0 || j == getMeshHeight() - 1) {
+        Point[][] points = new Point[width][height];
+        for (int j = 0; j < height; j++){
+            for(int i = 0; i < width; i++) {
+                if(j == 0 || j == height - 1) {
                     // This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
-                } else if(i == 0 || i == getMeshWidth()-1) {
+                } else if(i == 0 || i == width-1) {
                     // This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
@@ -46,8 +39,8 @@ public class RectangleDrum extends Formable {
                 }
                 points[i][j].setup(2*RADIUS*i, 2*RADIUS*j);
                 // One line:
-                if((getMeshWidth() == 1 && getMeshHeight() != 1 && j != 0 && j != getMeshHeight()-1)
-                        || (getMeshHeight() == 1 && getMeshWidth() != 1 && i != 0 && i != getMeshWidth()-1)
+                if((width == 1 && height != 1 && j != 0 && j != height-1)
+                        || (height == 1 && width != 1 && i != 0 && i != width-1)
                         ) {
                     points[i][j].setOnEdge(false);
                 }
@@ -61,8 +54,8 @@ public class RectangleDrum extends Formable {
     @Override
     public void generateDrum() {
         ArrayList<Spring> springs = new ArrayList<>();
-        for(int i = 0; i < getMeshWidth(); i++){
-            for(int j = 0; j < getMeshHeight(); j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
                 for(int[] pair : bindSpring(i, j)) {
                     try {
                         springs.add(new Spring(mesh[i][j], mesh[pair[0]][pair[1]]));
@@ -76,10 +69,8 @@ public class RectangleDrum extends Formable {
      * {@inheritDoc}
      */
     @Override
-    protected int particleCount(double density) {
-        int meshWidth = (int)Math.floor(density*width);
-        int meshHeight = (int)Math.floor(density*height);
-        return meshWidth*meshHeight;
+    protected int particleCount() {
+        return width*height;
     }
     /**
      * Creates distribution for parameter mass, decay, or spring constant in drum.
@@ -94,24 +85,24 @@ public class RectangleDrum extends Formable {
                 return distribution.getStops()[0];
             }
             case HORIZONTAL_GRADIENT -> {
-                return distribution.getStops()[0] + i*(distribution.getStops()[1] - distribution.getStops()[0])/(getMeshWidth() - 1);
+                return distribution.getStops()[0] + i*(distribution.getStops()[1] - distribution.getStops()[0])/(width - 1);
             }
             case VERTICAL_GRADIENT -> {
-                return distribution.getStops()[0] + j*(distribution.getStops()[1] - distribution.getStops()[0])/(getMeshHeight() - 1);
+                return distribution.getStops()[0] + j*(distribution.getStops()[1] - distribution.getStops()[0])/(height - 1);
             }
             case RADIAL_GRADIENT -> {
                 int ringI;
                 int ringJ;
-                int ringTotal = getMeshWidth() < getMeshHeight() ? (int)Math.ceil(getMeshWidth()/2) : (int)Math.ceil(getMeshHeight()/2);
-                if(i < getMeshWidth()/2) {
+                int ringTotal = width < height ? (int)Math.ceil(width/2) : (int)Math.ceil(height/2);
+                if(i < width/2) {
                     ringI = i;
                 } else {
-                    ringI = getMeshWidth() - i;
+                    ringI = width - i;
                 }
-                if(j < getMeshHeight()/2) {
+                if(j < height/2) {
                     ringJ = j;
                 } else {
-                    ringJ = getMeshHeight() - j;
+                    ringJ = height - j;
                 }
                 int ring = ringI < ringJ ? ringI : ringJ;
                 return distribution.getStops()[0] + ring*(distribution.getStops()[1] - distribution.getStops()[0])/(ringTotal);
@@ -124,8 +115,8 @@ public class RectangleDrum extends Formable {
      */
     @Override
     public void generateMass() {
-        for(int i = 0; i < getMeshWidth(); i++) {
-            for(int j = 0; j < getMeshHeight(); j++) {
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
                 mesh[i][j].setMass(distributeIndex(mass, i, j));
             }
         }

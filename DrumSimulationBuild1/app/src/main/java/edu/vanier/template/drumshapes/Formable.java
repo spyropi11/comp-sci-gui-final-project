@@ -15,10 +15,6 @@ public abstract class Formable {
      */
     public static final int particleCountCap = 10000;
     /**
-     * Density of points in the mesh.
-     */
-    protected double density = 1;
-    /**
      * The arrangement of springs in the drum.
      */
     protected Arrangement texture = Arrangement.CARTESIAN;
@@ -79,21 +75,17 @@ public abstract class Formable {
      */
     protected abstract void generateDrum();
     /**
-     * Determines the total number of points in a mesh of given density.
-     * @param density The density of the mesh.
+     * Determines the total number of points in a mesh of given dimension.
      * @return The 'area' of the mesh.
      */
-    protected abstract int particleCount(double density);
+    protected abstract int particleCount();
     /**
-     * Sets the density of the mesh, if possible.
-     * @param density The desired density of the mesh.
-     * @throws ArithmeticException Throws if the density creates too many points for the application to handle.
+     * Checks if the number of points in the mesh would be greater than the cap. If the particle count is too high, the animation won't run well.
      */
-    public void setDensity(double density) throws ArithmeticException {
-        if(particleCount(density) > particleCountCap) {
+    protected void checkCap() throws ArithmeticException {
+        if(particleCount() > particleCountCap) {
             throw new ArithmeticException("Exceeded maximum point count. Reduce density or other parameters.");
         }
-        this.density = density;
     }
     /**
      * Sets the distribution of mass among the points in the mesh.
@@ -176,12 +168,6 @@ public abstract class Formable {
             }
             default -> {return null;}
         }
-    }
-    /**
-     * @return The density of points per area of pixels.
-     */
-    public double getDensity() {
-        return density;
     }
     /**
      * @return The arrangement of springs, which affects the transmission of waves.

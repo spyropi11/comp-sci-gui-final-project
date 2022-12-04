@@ -10,26 +10,23 @@ public class SquareDrum extends Formable {
     
     private final int side;
     
-    public SquareDrum(int side) {
+    public SquareDrum(int side) throws ArithmeticException {
         this.side = side;
-    }
-    
-    private int getMeshSide() {
-        return (int)Math.floor(density*side);
+        checkCap();
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void generateMesh() {
-        Point[][] points = new Point[getMeshSide()][getMeshSide()];
-        for (int j = 0; j < getMeshSide(); j++){
-            for(int i = 0; i < getMeshSide(); i++) {
-                if(j == 0 || j == getMeshSide() - 1) {
+        Point[][] points = new Point[side][side];
+        for (int j = 0; j < side; j++){
+            for(int i = 0; i < side; i++) {
+                if(j == 0 || j == side - 1) {
                     //This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
-                } else if(i == 0 || i == getMeshSide()-1) {
+                } else if(i == 0 || i == side-1) {
                     //This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
@@ -49,8 +46,8 @@ public class SquareDrum extends Formable {
     @Override
     public void generateDrum() {
         ArrayList<Spring> springs = new ArrayList<>();
-        for(int i = 0; i < getMeshSide(); i++){
-            for(int j = 0; j < getMeshSide(); j++){
+        for(int i = 0; i < side; i++){
+            for(int j = 0; j < side; j++){
                 for(int[] pair : bindSpring(i, j)) {
                     try {
                         springs.add(new Spring(mesh[i][j], mesh[pair[0]][pair[1]]));
@@ -64,8 +61,8 @@ public class SquareDrum extends Formable {
      * {@inheritDoc}
      */
     @Override
-    protected int particleCount(double density) {
-        return ((int)Math.floor(density*side))^2;
+    protected int particleCount() {
+        return side^2;
     }
     /**
      * Creates distribution for parameter mass, decay, or spring constant in drum.
@@ -80,18 +77,18 @@ public class SquareDrum extends Formable {
                 return distribution.getStops()[0];
             }
             case HORIZONTAL_GRADIENT -> {
-                return distribution.getStops()[0] + i*(distribution.getStops()[1] - distribution.getStops()[0])/(getMeshSide() - 1);
+                return distribution.getStops()[0] + i*(distribution.getStops()[1] - distribution.getStops()[0])/(side - 1);
             }
             case VERTICAL_GRADIENT -> {
-                return distribution.getStops()[0] + j*(distribution.getStops()[1] - distribution.getStops()[0])/(getMeshSide() - 1);
+                return distribution.getStops()[0] + j*(distribution.getStops()[1] - distribution.getStops()[0])/(side - 1);
             }
             case RADIAL_GRADIENT -> {
                 int ring;
-                int ringTotal = (int)Math.ceil(getMeshSide()/2);
-                if(i < getMeshSide()/2) {
+                int ringTotal = (int)Math.ceil(side/2);
+                if(i < side/2) {
                     ring = i;
                 } else {
-                    ring = getMeshSide() - i;
+                    ring = side - i;
                 }
                 return distribution.getStops()[0] + ring*(distribution.getStops()[1] - distribution.getStops()[0])/(ringTotal);
             }
@@ -103,8 +100,8 @@ public class SquareDrum extends Formable {
      */
     @Override
     public void generateMass() {
-        for(int i = 0; i < getMeshSide(); i++) {
-            for(int j = 0; j < getMeshSide(); j++) {
+        for(int i = 0; i < side; i++) {
+            for(int j = 0; j < side; j++) {
                 mesh[i][j].setMass(distributeIndex(mass, i, j));
             }
         }

@@ -150,17 +150,6 @@ public class SaveDrum {
                     }
                 }
             }
-            boolean cont = true;
-            String density = "";
-            do {
-                char next = (char)fr.read();
-                if(next == ' ') {
-                    cont = false;
-                } else {
-                    density += next;
-                }
-            } while(cont);
-            formable.setDensity(Double.parseDouble(density));
             char texture = (char)fr.read();
             switch(texture) {
                 case '1' -> {
@@ -183,7 +172,7 @@ public class SaveDrum {
             switch(surface) {
                 case '1' -> {
                     String value = "";
-                    cont = true;
+                    boolean cont = true;
                     do {
                         char next = (char)fr.read();
                         if(next == ' ') {
@@ -197,7 +186,7 @@ public class SaveDrum {
                 }
                 case '2' -> {
                     String value1 = "";
-                    cont = true;
+                    boolean cont = true;
                     do {
                         char next = (char)fr.read();
                         if(next == ' ') {
@@ -221,7 +210,7 @@ public class SaveDrum {
                 }
                 case '3' -> {
                     String value1 = "";
-                    cont = true;
+                    boolean cont = true;
                     do {
                         char next = (char)fr.read();
                         if(next == ' ') {
@@ -245,7 +234,7 @@ public class SaveDrum {
                 }
                 case '4' -> {
                     String value1 = "";
-                    cont = true;
+                    boolean cont = true;
                     do {
                         char next = (char)fr.read();
                         if(next == ' ') {
@@ -308,8 +297,6 @@ public class SaveDrum {
             } else {
                 throw new IOException("Formable is not a shape.");
             }
-            fw.append(Double.toString(formable.getDensity()))
-              .append(' ');
             switch(formable.getTexture()) {
                 case CARTESIAN -> {
                     fw.append('1');

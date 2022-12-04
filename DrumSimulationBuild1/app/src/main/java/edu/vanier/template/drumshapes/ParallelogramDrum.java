@@ -12,32 +12,25 @@ public class ParallelogramDrum extends Formable {
     private final int heightSide;
     private final int angle;
     
-    public ParallelogramDrum(int widthSide, int heightSide, int angle) {
+    public ParallelogramDrum(int widthSide, int heightSide, int angle) throws ArithmeticException {
         this.widthSide = widthSide;
         this.heightSide = heightSide;
         this.angle = angle;
-    }
-    
-    private int getMeshWidth() {
-        return (int)Math.floor(density*widthSide);
-    }
-    
-    private int getMeshHeight() {
-        return (int)Math.floor(density*heightSide);
+        checkCap();
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void generateMesh() {
-        Point[][] points = new Point[getMeshWidth()][getMeshHeight()];
-        for (int j = 0; j < getMeshHeight(); j++){
-            for(int i = 0; i < getMeshWidth(); i++) {
-                if(j == 0 || j == getMeshHeight() - 1) {
+        Point[][] points = new Point[widthSide][heightSide];
+        for (int j = 0; j < heightSide; j++){
+            for(int i = 0; i < widthSide; i++) {
+                if(j == 0 || j == heightSide - 1) {
                     //This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
-                } else if(i == 0 || i == getMeshWidth()-1) {
+                } else if(i == 0 || i == widthSide-1) {
                     //This puts two points on the edges and sets their onEdge value to true
                     points[i][j] = new Point(RADIUS, 0, NATURAL_MASS);
                     points[i][j].setOnEdge(true);
@@ -58,8 +51,8 @@ public class ParallelogramDrum extends Formable {
     @Override
     public void generateDrum() {
         ArrayList<Spring> springs = new ArrayList<>();
-        for(int i = 0; i < getMeshWidth(); i++){
-            for(int j = 0; j < getMeshHeight(); j++){
+        for(int i = 0; i < widthSide; i++){
+            for(int j = 0; j < heightSide; j++){
                 for(int[] pair : bindSpring(i, j)) {
                     try {
                         springs.add(new Spring(mesh[i][j], mesh[pair[0]][pair[1]]));
@@ -73,10 +66,8 @@ public class ParallelogramDrum extends Formable {
      * {@inheritDoc}
      */
     @Override
-    protected int particleCount(double density) {
-        int meshWidth = (int)Math.floor(density*widthSide);
-        int meshHeight = (int)Math.floor(density*heightSide);
-        return meshWidth*meshHeight;
+    protected int particleCount() {
+        return widthSide*heightSide;
     }
     /**
      * Creates distribution for parameter mass, decay, or spring constant in drum.
@@ -91,24 +82,24 @@ public class ParallelogramDrum extends Formable {
                 return distribution.getStops()[0];
             }
             case HORIZONTAL_GRADIENT -> {
-                return distribution.getStops()[0] + i*(distribution.getStops()[1] - distribution.getStops()[0])/(getMeshWidth() - 1);
+                return distribution.getStops()[0] + i*(distribution.getStops()[1] - distribution.getStops()[0])/(widthSide - 1);
             }
             case VERTICAL_GRADIENT -> {
-                return distribution.getStops()[0] + j*(distribution.getStops()[1] - distribution.getStops()[0])/(getMeshHeight() - 1);
+                return distribution.getStops()[0] + j*(distribution.getStops()[1] - distribution.getStops()[0])/(heightSide - 1);
             }
             case RADIAL_GRADIENT -> {
                 int ringI;
                 int ringJ;
-                int ringTotal = getMeshWidth() < getMeshHeight() ? (int)Math.ceil(getMeshWidth()/2) : (int)Math.ceil(getMeshHeight()/2);
-                if(i < getMeshWidth()/2) {
+                int ringTotal = widthSide < heightSide ? (int)Math.ceil(widthSide/2) : (int)Math.ceil(heightSide/2);
+                if(i < widthSide/2) {
                     ringI = i;
                 } else {
-                    ringI = getMeshWidth() - i;
+                    ringI = widthSide - i;
                 }
-                if(j < getMeshHeight()/2) {
+                if(j < heightSide/2) {
                     ringJ = j;
                 } else {
-                    ringJ = getMeshHeight() - j;
+                    ringJ = heightSide - j;
                 }
                 int ring = ringI < ringJ ? ringI : ringJ;
                 return distribution.getStops()[0] + ring*(distribution.getStops()[1] - distribution.getStops()[0])/(ringTotal);
@@ -121,8 +112,8 @@ public class ParallelogramDrum extends Formable {
      */
     @Override
     public void generateMass() {
-        for(int i = 0; i < getMeshWidth(); i++) {
-            for(int j = 0; j < getMeshHeight(); j++) {
+        for(int i = 0; i < widthSide; i++) {
+            for(int j = 0; j < heightSide; j++) {
                 mesh[i][j].setMass(distributeIndex(mass, i, j));
             }
         }
