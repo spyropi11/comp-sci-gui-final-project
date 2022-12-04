@@ -50,13 +50,16 @@ public class CreateNewDrumController {
     Boolean parallelogramChosen = false;
     Boolean trapezoidChosen = false;
     
+    Boolean UniformMassDChosen = false;
+    Boolean HorizontalMassDChosen = false;
+    Boolean VerticalMassDChosen = false;
+    Boolean RadialMassDChosen = false;
+    
     public static double spreadValue;
     public static double amplitudeValue;
     public static double deltaTimeValue;
     public static double densityValue;
-    public static double[] doub = new double[] {1,2};
-    public static double[] doub2 = new double[] {1};
-    public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM,doub2);
+    public static Distribution distributionValue;
 
     Simulation simulation = new Simulation();
     
@@ -483,6 +486,42 @@ public class CreateNewDrumController {
         this.trapezoidChosen = true;
         
     }
+    
+    public void handleUniformMassDChosen(ActionEvent event){
+        
+        this.UniformMassDChosen = true;
+        this.HorizontalMassDChosen = false;
+        this.VerticalMassDChosen = false;
+        this.RadialMassDChosen = false;
+        
+    }
+    
+    public void handleHorizontalMassDChosen(ActionEvent event){
+        
+        this.UniformMassDChosen = false;
+        this.HorizontalMassDChosen = true;
+        this.VerticalMassDChosen = false;
+        this.RadialMassDChosen = false;
+        
+    }
+    
+    public void handleVerticalMassDChosen(ActionEvent event){
+        
+        this.UniformMassDChosen = false;
+        this.HorizontalMassDChosen = false;
+        this.VerticalMassDChosen = true;
+        this.RadialMassDChosen = false;
+        
+    }
+    
+    public void handleRadialMassDChosen(ActionEvent event){
+        
+        this.UniformMassDChosen = false;
+        this.HorizontalMassDChosen = false;
+        this.VerticalMassDChosen = false;
+        this.RadialMassDChosen = true;
+        
+    }
 
     /**
      * Whenever the user clicks on the confirm button this method gets the width
@@ -491,6 +530,28 @@ public class CreateNewDrumController {
      * @param event
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
+        
+        if(UniformMassDChosen){
+            
+            double[] stops = new double[] {1};
+            distributionValue = new Distribution(Distribution.Surface.UNIFORM,stops);
+                        
+        }else if(HorizontalMassDChosen){
+            
+            double[] stops = new double[] {1,15};
+            distributionValue = new Distribution(Distribution.Surface.HORIZONTAL_GRADIENT,stops);
+            
+        }else if (VerticalMassDChosen){
+            
+            double[] stops = new double[] {1,15};
+            distributionValue = new Distribution(Distribution.Surface.VERTICAL_GRADIENT,stops);
+            
+        }else if (RadialMassDChosen){
+            
+            double[] stops = new double[] {1,15};
+            distributionValue = new Distribution(Distribution.Surface.RADIAL_GRADIENT,stops);
+            
+        }
         
         if (squareChosen) {
             
@@ -514,13 +575,14 @@ public class CreateNewDrumController {
             
         }
         
+        
+        
     }
     
     public void createSquareDrum(int length) throws IOException {
         
         Formable formable = new SquareDrum(length);
-        //formable.setDensity(densityValue);
-        //formable.setMassDistribution(distributionValue);
+        formable.setMassDistribution(distributionValue);
         
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
@@ -554,9 +616,12 @@ public class CreateNewDrumController {
     
     public void createRectangleDrum(int width, int length) throws IOException {
 
+        Formable formable = new RectangleDrum(width, length);
+        formable.setMassDistribution(distributionValue);
+        
         //stage.close();
         simulation.getPhysics().stopTimer();
-        setSimulation(new Simulation(new RectangleDrum(width, length)));
+        setSimulation(new Simulation(formable));
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             
@@ -584,9 +649,12 @@ public class CreateNewDrumController {
     
     public void createParallelogramDrum(int width, int height, int angle) throws IOException {
 
+        Formable formable = new ParallelogramDrum(width, height, angle);
+        formable.setMassDistribution(distributionValue);
+        
         //stage.close();
         simulation.getPhysics().stopTimer();
-        setSimulation(new Simulation(new ParallelogramDrum(width, height, angle)));
+        setSimulation(new Simulation(formable));
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             
@@ -614,9 +682,12 @@ public class CreateNewDrumController {
     
     public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException {
 
+        Formable formable = new TrapezoidDrum(longBase, shortBase, height, angle);
+        formable.setMassDistribution(distributionValue);
+        
         //stage.show();
         simulation.getPhysics().stopTimer();
-        setSimulation(new Simulation(new TrapezoidDrum(longBase, shortBase, height, angle)));
+        setSimulation(new Simulation(formable));
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             

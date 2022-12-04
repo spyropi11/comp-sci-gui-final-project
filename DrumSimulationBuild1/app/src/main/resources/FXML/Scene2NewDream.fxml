@@ -185,10 +185,10 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Mass Distribution">
                <items>
-                  <MenuItem fx:id="uniformMass" mnemonicParsing="false" text="Uniform" />
-                  <MenuItem fx:id="horizontalMass" mnemonicParsing="false" text="Horizontal Gradient" />
-                  <MenuItem fx:id="verticalMass" mnemonicParsing="false" text="Vertical Gradient" />
-                  <MenuItem fx:id="radialMass" mnemonicParsing="false" text="Radial Gradient" />
+                  <MenuItem fx:id="uniformMass" mnemonicParsing="false" onAction="#handleUniformMassDChosen" text="Uniform" />
+                  <MenuItem fx:id="horizontalMass" mnemonicParsing="false" onAction="#handleHorizontalMassDChosen" text="Horizontal Gradient" />
+                  <MenuItem fx:id="verticalMass" mnemonicParsing="false" onAction="#handleVerticalMassDChosen" text="Vertical Gradient" />
+                  <MenuItem fx:id="radialMass" mnemonicParsing="false" onAction="#handleRadialMassDChosen" text="Radial Gradient" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Decay Distribution">
