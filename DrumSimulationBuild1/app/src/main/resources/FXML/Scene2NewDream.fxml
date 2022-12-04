@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="759.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="759.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
@@ -85,16 +85,6 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Density:">
-               <VBox.margin>
-                  <Insets top="4.0" />
-               </VBox.margin>
-            </Label>
-            <Spinner fx:id="spinner2" disable="true" editable="true">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Spinner>
             <Label text="Spread: ">
                <VBox.margin>
                   <Insets top="5.0" />
@@ -157,6 +147,7 @@
             <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem fx:id="loadSavedDrum" mnemonicParsing="false" text="Load Saved Drum" />
+                  <MenuItem mnemonicParsing="false" text="Create New Drum" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Shapes">
