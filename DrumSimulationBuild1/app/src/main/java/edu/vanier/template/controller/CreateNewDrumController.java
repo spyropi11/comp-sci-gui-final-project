@@ -139,9 +139,6 @@ public class CreateNewDrumController {
     @FXML
     Spinner spinner;
 
-    @FXML
-    Spinner spinner2;
-
     //Sliders
     @FXML
     Slider slider;
@@ -234,6 +231,9 @@ public class CreateNewDrumController {
         textF4.setEditable(false);
         textF5.setEditable(false);
         textF6.setEditable(false);
+        
+        UniformMassDChosen = true;
+        cartesianChosen = true;
 
         numSlider = (int) slider.getValue();
         numLabel.setText(Integer.toString(numSlider) + " N");
@@ -244,49 +244,32 @@ public class CreateNewDrumController {
         numSlider3 = (double) slider3.getValue();
         numLabel3.setText(Double.toString(numSlider3) + " s");
 
-        slider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider = (int) slider.getValue();
-                numLabel.setText(Integer.toString(numSlider) + "m");
-
-                amplitudeValue = (double) newValue;
-                System.out.println("slider was changed" + amplitudeValue);
-            }
-
+        slider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            numSlider = (int) slider.getValue();
+            numLabel.setText(Integer.toString(numSlider) + "m");
+            
+            amplitudeValue = (double) newValue;
+            System.out.println("slider was changed" + amplitudeValue);
         });
 
-        slider2.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider2 = (int) slider2.getValue();
-                numLabel2.setText(Integer.toString(numSlider2) + "m");
-
-                spreadValue = (double) newValue;
-                System.out.println("slider was changed" + spreadValue);
-            }
-
+        slider2.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            numSlider2 = (int) slider2.getValue();
+            numLabel2.setText(Integer.toString(numSlider2) + "m");
+            
+            spreadValue = (double) newValue;
+            System.out.println("slider was changed" + spreadValue);
         });
 
-        slider3.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                numSlider3 = (double) slider3.getValue();
-                numLabel3.setText(Double.toString(numSlider3) + " s");
-
-                deltaTimeValue = (double) newValue;
-                System.out.println("slider was changed" + deltaTimeValue);
-
-            }
-
+        slider3.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            numSlider3 = (double) slider3.getValue();
+            numLabel3.setText(Double.toString(numSlider3) + " s");
+            
+            deltaTimeValue = (double) newValue;
+            System.out.println("slider was changed" + deltaTimeValue);
         });
 
         spinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
-        );
-
-        spinner2.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100)
         );
 
     }
@@ -333,8 +316,7 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-
-        spinner2.setDisable(false);
+        
     }
 
     public void squareChosen(ActionEvent event) {
@@ -387,9 +369,7 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = true;
         this.trapezoidChosen = false;
-
-        spinner2.setDisable(false);
-
+        
     }
 
     public void paraChosen(ActionEvent event) {
@@ -408,8 +388,7 @@ public class CreateNewDrumController {
 
             textF2.setText("");
         }
-
-        spinner2.setDisable(false);
+        
         spinner.setDisable(false);
         spinner.setVisible(true);
         label3.setVisible(true);
@@ -462,8 +441,7 @@ public class CreateNewDrumController {
 
             textF2.setText("");
         }
-
-        spinner2.setDisable(false);
+        
         spinner.setDisable(false);
         spinner.setVisible(true);
         label3.setVisible(true);
@@ -594,6 +572,7 @@ public class CreateNewDrumController {
      * and length
      *
      * @param event
+     * @throws java.io.IOException
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
         Alert saveAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -682,26 +661,30 @@ public class CreateNewDrumController {
 
             }
 
-        } catch (Exception e) {
+        } catch (NumberFormatException | NullPointerException e) {
+            
+            if(!validate) {
+                saveAlert.setHeaderText(" error");
+                saveAlert.setContentText(" enter the appropriate values before pressing confirm");
 
-            saveAlert.setHeaderText(" error");
-            saveAlert.setContentText(" enter the appropriate values before pressing confirm");
-
-            System.out.println(" enter the appropriate values before pressing confirm");
-            saveAlert.showAndWait();
-
-            if (validate) {
+                System.out.println(" enter the appropriate values before pressing confirm");
+                saveAlert.showAndWait();
+            } else {
 
                 saveAlert.setHeaderText(" error");
                 saveAlert.setContentText(" please select a mass distribution , texture please ");
                 saveAlert.showAndWait();
 
             }
+        } catch(ArithmeticException e) {
+            saveAlert.setHeaderText("Error");
+            saveAlert.setContentText(e.getMessage());
+            saveAlert.showAndWait();
         }
 
     }
 
-    public void createSquareDrum(int length) throws IOException {
+    public void createSquareDrum(int length) throws IOException, ArithmeticException {
 
         Formable formable = new SquareDrum(length);
         formable.setMassDistribution(distributionValue);
@@ -735,7 +718,7 @@ public class CreateNewDrumController {
 
     }
 
-    public void createRectangleDrum(int width, int length) throws IOException {
+    public void createRectangleDrum(int width, int length) throws IOException, ArithmeticException {
 
         Formable formable = new RectangleDrum(width, length);
         formable.setMassDistribution(distributionValue);
@@ -769,7 +752,7 @@ public class CreateNewDrumController {
 
     }
 
-    public void createParallelogramDrum(int width, int height, int angle) throws IOException {
+    public void createParallelogramDrum(int width, int height, int angle) throws IOException, ArithmeticException {
 
         Formable formable = new ParallelogramDrum(width, height, angle);
         formable.setMassDistribution(distributionValue);
@@ -803,7 +786,7 @@ public class CreateNewDrumController {
 
     }
 
-    public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException {
+    public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException, ArithmeticException {
 
         Formable formable = new TrapezoidDrum(longBase, shortBase, height, angle);
         formable.setMassDistribution(distributionValue);

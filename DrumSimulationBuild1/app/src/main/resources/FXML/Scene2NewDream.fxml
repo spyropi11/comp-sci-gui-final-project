@@ -29,7 +29,7 @@
                   <Insets top="-65.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="label1" prefHeight="17.0" prefWidth="99.0" text="Enter Width :">
+            <Label fx:id="label1" prefHeight="17.0" prefWidth="99.0" text="Enter Width:">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -39,7 +39,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label2" text="Enter Length : ">
+            <Label fx:id="label2" text="Enter Length:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
@@ -49,13 +49,13 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label3" text="Enter angle value : ">
+            <Label fx:id="label3" text="Enter Angle:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
             </Label>
             <Spinner fx:id="spinner" disable="true" editable="true" />
-            <Label fx:id="label4" prefHeight="17.0" prefWidth="110.0" text="Enter height value:">
+            <Label fx:id="label4" prefHeight="17.0" prefWidth="110.0" text="Enter Height:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
@@ -65,7 +65,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label5" text="Enter lower base value : ">
+            <Label fx:id="label5" text="Enter Base One:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
@@ -75,7 +75,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label6" text="Enter long base value :">
+            <Label fx:id="label6" text="Enter Base Two:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
@@ -95,7 +95,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Spinner>
-            <Label text="Spread : ">
+            <Label text="Spread: ">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
