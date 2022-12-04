@@ -54,7 +54,7 @@ public abstract class Formable {
     }
     /**
      * Forms a mesh of points.
-     * @return 
+     * @return
      */
     public Point[][] formMesh() {
         generateMesh();
@@ -63,7 +63,7 @@ public abstract class Formable {
     }
     /**
      * Forms a collection of springs that connect the points in the drum.
-     * @return 
+     * @return
      */
     public ArrayList<Spring> formDrum() {
         generateDrum();
@@ -75,7 +75,7 @@ public abstract class Formable {
     protected abstract void generateMesh();
     /**
      * Generates the drum of springs in the selected shape.
-     * 
+     *
      */
     protected abstract void generateDrum();
     /**
@@ -97,14 +97,14 @@ public abstract class Formable {
     }
     /**
      * Sets the distribution of mass among the points in the mesh.
-     * @param mass 
+     * @param mass
      */
     public void setMassDistribution(Distribution mass) {
         this.mass = mass;
     }
     /**
      * Sets the arrangement of springs in the drum.
-     * @param texture 
+     * @param texture
      */
     public void setArrangement(Arrangement texture) {
         this.texture = texture;
