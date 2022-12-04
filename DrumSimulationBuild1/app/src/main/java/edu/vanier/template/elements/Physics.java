@@ -17,6 +17,9 @@ public final class Physics {
     private double[] beta = {0, 1, 0};
     private double[] n = {0, 0, 1};
     
+    private double totalTranslateX = 0;
+    private double totalTranslateY = 0;
+    
     double amplitude;
     double spread;
     
@@ -126,13 +129,12 @@ public final class Physics {
     }
     
     public void translate(double x, double y) {
-//        for(int i = 0; i < 3; i++) {
-//            p[i] += x*alpha[i] + y*beta[i];
-//        }
         for(Point point : drummer.mesh) {
             point.x += x;
             point.y += y;
         }
+        totalTranslateX += x;
+        totalTranslateY += y;
     }
     
     public void zoom(double s) throws ArithmeticException {
@@ -213,6 +215,33 @@ public final class Physics {
         playingBack = false;
     }
     
+    public void resetWaves() {
+        //TODO
+        for(Point point : drummer.mesh) {
+            point.position = 0;
+            point.velocity = 0;
+            point.vPrevious = 0;
+        }
+    }
+    
+    public void resetCamera() {
+        alpha[0] = 1;
+        alpha[1] = 0;
+        alpha[2] = 0;
+        beta[0] = 0;
+        beta[1] = 1;
+        beta[2] = 0;
+        n[0] = 0;
+        n[1] = 0;
+        n[2] = 1;
+        for(Point point : drummer.mesh) {
+            point.x -= totalTranslateX;
+            point.y -= totalTranslateY;
+        }
+        totalTranslateX = 0;
+        totalTranslateY = 0;
+    }
+    
     //Getters and Setters
     
     public DrumCreator getDrummer() {
@@ -238,8 +267,5 @@ public final class Physics {
     public double[] getBeta() {
         return beta;
     }
-
-    
-    
     
 }

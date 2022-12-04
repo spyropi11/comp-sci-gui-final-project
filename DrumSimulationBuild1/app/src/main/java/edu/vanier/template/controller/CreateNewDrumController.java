@@ -164,29 +164,20 @@ public class CreateNewDrumController {
 
     //MenuBar + Mass
     @FXML
-    MenuItem uniformMass;
-    MenuItem horizontalMass;
-    MenuItem verticalMass;
-    MenuItem radialMass;
+    MenuItem uniformMass, horizontalMass, verticalMass, radialMass;
 
     //MenuBar + decay
     @FXML
-    MenuItem uniformDecay;
-    MenuItem horizontalDecay;
-    MenuItem verticalDecay;
-    MenuItem radialDecay;
+    MenuItem uniformDecay, horizontalDecay, verticalDecay, radialDecay;
 
     //MenuBar + Texture
     @FXML
-    MenuItem cartesian;
-    MenuItem parallel;
-    MenuItem triangular;
-    MenuItem thin;
-    MenuItem thick;
+    MenuItem cartesian, parallel, triangular, thin, thick;
 
     //MenuItem + Rest
     @FXML
     MenuItem resetWave;
+    @FXML
     MenuItem resetCamera;
 
     //MenuItem + Record
@@ -199,15 +190,7 @@ public class CreateNewDrumController {
     Label customizationLabel;
     
     @FXML
-    Menu shapesMenu;
-    @FXML
-    Menu massMenu;
-    @FXML
-    Menu textureMenu;
-    @FXML
-    Menu resetMenu;
-    @FXML
-    Menu recordingMenu;
+    Menu shapesMenu, massMenu, textureMenu, resetMenu, recordingMenu;
     
     @FXML
     Label spreadLabel;
@@ -237,13 +220,14 @@ public class CreateNewDrumController {
         
         btnConfirm.setDisable(true);
         
-        
         btnStopRecord.setDisable(true);
         btnStartRecord.setOnAction((event) -> {
+            //TODO
             btnStopRecord.setDisable(false);
             btnStartRecord.setDisable(true);
         });
         btnStopRecord.setOnAction((event) -> {
+            //TODO
             btnStopRecord.setDisable(true);
             btnStartRecord.setDisable(false);
         });
@@ -287,6 +271,14 @@ public class CreateNewDrumController {
         spinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 175)
         );
+        
+        resetWave.setOnAction((event) -> {
+            simulation.physics.resetWaves();
+        });
+        
+        resetCamera.setOnAction((event) -> {
+            simulation.physics.resetCamera();
+        });
 
     }
     

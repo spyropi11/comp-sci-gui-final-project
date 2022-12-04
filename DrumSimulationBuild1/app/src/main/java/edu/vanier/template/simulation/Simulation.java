@@ -152,7 +152,6 @@ public final class Simulation {
         oX = root.getPrefWidth()/2;
         oY = root.getPrefHeight()/2;
         physics.setOrigin(oX, oY, 0);
-//        physics.setCameraCentre(oX, oY);
         Sphere cameraCentre = new Sphere(4);
         cameraCentre.setTranslateX(oX);
         cameraCentre.setTranslateY(oY);
