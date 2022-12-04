@@ -33,7 +33,7 @@ public class MainAppController{
   private Scene scene;
   private BorderPane currentRoot;
 
-    public String musicFilePath = getClass().getResource("/Music/QUANDALE.mp3").toString();
+    public String musicFilePath = MainAppController.class.getResource("/Music/lofi.mp3").toString();
    
     public Media media = new Media(musicFilePath); 
     
@@ -58,6 +58,8 @@ public class MainAppController{
     public void handleStart(ActionEvent event) throws IOException, Exception {
 
         MainApp.mediaPlayer.stop();
+        
+        mediaPlayer.setAutoPlay(true);
         
         stage.close();
         
