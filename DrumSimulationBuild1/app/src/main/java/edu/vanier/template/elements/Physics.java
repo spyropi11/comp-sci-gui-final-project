@@ -6,7 +6,6 @@ import edu.vanier.template.linear.Matrix;
 import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 import javafx.animation.AnimationTimer;
 
@@ -33,6 +32,8 @@ public final class Physics {
     final Simulation simulation;
     
     public Point[][] points;
+    
+    private boolean terminated;
     
     public Physics(Simulation simulation) {
         this.simulation = simulation;
@@ -71,9 +72,15 @@ public final class Physics {
         simulation.getCamZdown().display(simulation.getRoot(), simulation.getDisplay());
         
         for(Point point : drummer.mesh) {
+            if(terminated) {
+                break;
+            }
             point.updateVelocity();
         }
         for(Point point : drummer.mesh) {
+            if(terminated) {
+                break;
+            }
             point.updatePosition();
             point.updateColour();
             project(point, oa, ob, on);
@@ -134,10 +141,12 @@ public final class Physics {
     
     public void startTimer() {
         timer.start();
+        terminated = false;
     }
     
     public void stopTimer() {
         timer.stop();
+        terminated = true;
     }
     
     public void translate(double x, double y) {
