@@ -65,7 +65,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label5" text="Enter Base One:">
+            <Label fx:id="label5" text="Enter Top Base:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
@@ -75,7 +75,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="label6" text="Enter Base Two:">
+            <Label fx:id="label6" text="Enter Bottom Base:">
                <VBox.margin>
                   <Insets top="4.0" />
                </VBox.margin>
