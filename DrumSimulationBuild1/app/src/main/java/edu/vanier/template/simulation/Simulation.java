@@ -230,11 +230,6 @@ public final class Simulation {
     public void setCloseSim(Stage stage){
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
             physics.stopTimer();
-            Platform.exit();
-        });
-        stage.setOnHidden((WindowEvent windowEvent) -> {
-            physics.stopTimer();
-            Platform.exit();
         });
     }
 

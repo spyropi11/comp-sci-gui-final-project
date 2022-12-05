@@ -13,7 +13,7 @@ public abstract class Formable {
     /**
      * Constant denoting the maximum number of points possible that the application can handle.
      */
-    public static final int particleCountCap = 10000;
+    private static final int particleCountCap = 10000;
     /**
      * The arrangement of springs in the drum.
      */
@@ -82,9 +82,9 @@ public abstract class Formable {
     /**
      * Checks if the number of points in the mesh would be greater than the cap. If the particle count is too high, the animation won't run well.
      */
-    protected void checkCap() throws ArithmeticException {
+    public void checkCap() throws ArithmeticException {
         if(particleCount() > particleCountCap) {
-            throw new ArithmeticException("Exceeded maximum point count. Reduce density or other parameters.");
+            throw new ArithmeticException("Exceeded maximum point count. Please reduce the parameter values.");
         }
     }
     /**

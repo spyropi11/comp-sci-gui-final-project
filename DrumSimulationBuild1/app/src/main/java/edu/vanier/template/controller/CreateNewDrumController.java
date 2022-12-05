@@ -42,12 +42,12 @@ public class CreateNewDrumController {
     Boolean parallelogramChosen = false;
     Boolean trapezoidChosen = false;
 
-    Boolean UniformMassDChosen = false;
+    Boolean UniformMassDChosen = true;
     Boolean HorizontalMassDChosen = false;
     Boolean VerticalMassDChosen = false;
     Boolean RadialMassDChosen = false;
 
-    Boolean cartesianChosen = false;
+    Boolean cartesianChosen = true;
     Boolean crossedThinChosen = false;
     Boolean crossedThickChosen = false;
     Boolean parallelChosen = false;
@@ -66,9 +66,6 @@ public class CreateNewDrumController {
 
     public CreateNewDrumController(Stage stage) {
         this.stage = stage;
-        this.stage.setOnCloseRequest((event) -> {
-            System.exit(0);
-        });
     }
 
     //Button menu
@@ -572,84 +569,67 @@ public class CreateNewDrumController {
     }
 
     public void handleUniformMassDChosen(ActionEvent event) {
-
         this.UniformMassDChosen = true;
         this.HorizontalMassDChosen = false;
         this.VerticalMassDChosen = false;
         this.RadialMassDChosen = false;
-
     }
 
     public void handleHorizontalMassDChosen(ActionEvent event) {
-
         this.UniformMassDChosen = false;
         this.HorizontalMassDChosen = true;
         this.VerticalMassDChosen = false;
         this.RadialMassDChosen = false;
-
     }
 
     public void handleVerticalMassDChosen(ActionEvent event) {
-
         this.UniformMassDChosen = false;
         this.HorizontalMassDChosen = false;
         this.VerticalMassDChosen = true;
         this.RadialMassDChosen = false;
-
     }
 
     public void handleRadialMassDChosen(ActionEvent event) {
-
         this.UniformMassDChosen = false;
         this.HorizontalMassDChosen = false;
         this.VerticalMassDChosen = false;
         this.RadialMassDChosen = true;
-
     }
 
     //Textures
     public void handleCartesianChosen(ActionEvent event) {
-
         cartesianChosen = true;
         crossedThinChosen = false;
         crossedThickChosen = false;
         parallelChosen = false;
         triangularChosen = false;
-
     }
 
     public void handleCrossedThinChosen(ActionEvent event) {
-
         cartesianChosen = false;
         crossedThinChosen = true;
         crossedThickChosen = false;
         parallelChosen = false;
         triangularChosen = false;
-
     }
 
     public void handleCrossedThickChosen(ActionEvent event) {
-
         cartesianChosen = false;
         crossedThinChosen = false;
         crossedThickChosen = true;
         parallelChosen = false;
         triangularChosen = false;
-
     }
 
     public void handleParallelChosen(ActionEvent event) {
-
         cartesianChosen = false;
         crossedThinChosen = false;
         crossedThickChosen = false;
         parallelChosen = true;
         triangularChosen = false;
-
     }
 
     public void handleTriangularChosen(ActionEvent event) {
-
         cartesianChosen = false;
         crossedThinChosen = false;
         crossedThickChosen = false;
@@ -665,125 +645,69 @@ public class CreateNewDrumController {
      * @throws java.io.IOException
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
-        Alert saveAlert = new Alert(Alert.AlertType.INFORMATION);
-
-        boolean validate = true;
-        boolean validate2 = true;
-
+        Alert invalidAlert = new Alert(Alert.AlertType.WARNING);
         try {
-
             if (cartesianChosen) {
-
                 arrangementValue = CARTESIAN;
-
-                validate = false;
-
             } else if (crossedThinChosen) {
-
                 arrangementValue = CROSSED_THIN;
-                validate = false;
-
             } else if (crossedThickChosen) {
-
                 arrangementValue = CROSSED_THICK;
-                validate = false;
-
             } else if (parallelChosen) {
-
                 arrangementValue = PARALLEL;
-                validate = false;
-
             } else if (triangularChosen) {
-
                 arrangementValue = TRIANGULAR;
-                validate = false;
-
             }
-
+            
             if (UniformMassDChosen) {
-
                 double[] stops = new double[]{1};
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
-                validate = false;
-
             } else if (HorizontalMassDChosen) {
-
                 double[] stops = new double[]{1, 15};
                 distributionValue = new Distribution(Distribution.Surface.HORIZONTAL_GRADIENT, stops);
-                validate = false;
-
             } else if (VerticalMassDChosen) {
-
                 double[] stops = new double[]{1, 15};
                 distributionValue = new Distribution(Distribution.Surface.VERTICAL_GRADIENT, stops);
-                validate = false;
-
             } else if (RadialMassDChosen) {
-
                 double[] stops = new double[]{1, 15};
                 distributionValue = new Distribution(Distribution.Surface.RADIAL_GRADIENT, stops);
-                validate = false;
-
             }
 
             if (squareChosen) {
-
                 createSquareDrum(Integer.parseInt(textF2.getText()));
                 disableSettings();
                 menuDuringSim();
-
             } else if (rectangleChosen) {
-
                 createRectangleDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF2.getText()));
                 disableSettings();
                 menuDuringSim();
-
             } else if (parallelogramChosen) {
-
                 createParallelogramDrum(Integer.parseInt(textF1.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
                 disableSettings();
                 menuDuringSim();
-
             } else if (trapezoidChosen) {
-
                 createTrapazoidDrum(Integer.parseInt(textF6.getText()), Integer.parseInt(textF5.getText()), Integer.parseInt(textF4.getText()), (int) spinner.getValue());
                 disableSettings();
                 menuDuringSim();
-
             } else {
-
-                System.out.println("Please select a shape before confirming");
-                saveAlert.setHeaderText(" error");
-                saveAlert.setContentText("  Please select a shape before confirming ");
-                saveAlert.showAndWait();
-
+                invalidAlert.setHeaderText("Error: no shape selected");
+                invalidAlert.setContentText("Please select a shape before confirming.");
+                invalidAlert.showAndWait();
             }
-
         } catch (NumberFormatException | NullPointerException e) {
-            
-            if(!validate) {
-                saveAlert.setHeaderText(" error");
-                saveAlert.setContentText(" enter the appropriate values before pressing confirm");
-
-                System.out.println(" enter the appropriate values before pressing confirm");
-                saveAlert.showAndWait();
-            } else {
-
-                saveAlert.setHeaderText(" error");
-                saveAlert.setContentText(" please select a mass distribution , texture please ");
-                saveAlert.showAndWait();
-
-            }
+                invalidAlert.setHeaderText("Error: invalid input");
+                invalidAlert.setContentText("Please enter valid numbers before confirming");
+                invalidAlert.showAndWait();
         } catch(ArithmeticException e) {
-            saveAlert.setHeaderText("Error");
-            saveAlert.setContentText(e.getMessage());
-            saveAlert.showAndWait();
+            invalidAlert.setHeaderText("Error: particle cap exceeded");
+            invalidAlert.setContentText(e.getMessage());
+            invalidAlert.showAndWait();
         }
-
     }
 
-    public void createSquareDrum(int length) throws IOException, ArithmeticException {
+    public void createSquareDrum(int length) throws ArithmeticException {
         Formable formable = new SquareDrum(length);
+        formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
 
@@ -800,8 +724,9 @@ public class CreateNewDrumController {
         simulation.physics.startTimer();
     }
 
-    public void createRectangleDrum(int width, int length) throws IOException, ArithmeticException {
+    public void createRectangleDrum(int width, int length) throws ArithmeticException {
         Formable formable = new RectangleDrum(width, length);
+        formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
         
@@ -818,8 +743,9 @@ public class CreateNewDrumController {
         simulation.physics.startTimer();
     }
 
-    public void createParallelogramDrum(int width, int height, int angle) throws IOException, ArithmeticException {
+    public void createParallelogramDrum(int width, int height, int angle) throws ArithmeticException {
         Formable formable = new ParallelogramDrum(width, height, angle);
+        formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
         
@@ -836,8 +762,9 @@ public class CreateNewDrumController {
         simulation.physics.startTimer();
     }
 
-    public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws IOException, ArithmeticException {
+    public void createTrapazoidDrum(int longBase, int shortBase, int height, int angle) throws ArithmeticException {
         Formable formable = new TrapezoidDrum(longBase, shortBase, height, angle);
+        formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
         

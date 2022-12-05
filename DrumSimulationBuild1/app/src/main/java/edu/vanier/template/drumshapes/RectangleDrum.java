@@ -14,7 +14,6 @@ public class RectangleDrum extends Formable {
     public RectangleDrum(int width, int height) throws ArithmeticException {
         this.width = width;
         this.height = height;
-        checkCap();
     }
     /**
      * {@inheritDoc}

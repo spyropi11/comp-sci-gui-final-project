@@ -16,7 +16,6 @@ public class ParallelogramDrum extends Formable {
         this.widthSide = widthSide;
         this.heightSide = heightSide;
         this.angle = angle;
-        checkCap();
     }
     /**
      * {@inheritDoc}

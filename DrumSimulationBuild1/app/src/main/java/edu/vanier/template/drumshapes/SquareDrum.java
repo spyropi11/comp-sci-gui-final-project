@@ -12,7 +12,6 @@ public class SquareDrum extends Formable {
     
     public SquareDrum(int side) throws ArithmeticException {
         this.side = side;
-        checkCap();
     }
     /**
      * {@inheritDoc}
@@ -62,7 +61,7 @@ public class SquareDrum extends Formable {
      */
     @Override
     protected int particleCount() {
-        return side^2;
+        return side*side;
     }
     /**
      * Creates distribution for parameter mass, decay, or spring constant in drum.

@@ -20,7 +20,6 @@ public class TrapezoidDrum extends Formable {
         this.heightSide = heightSide;
         this.angle = angle;
         widthSide = baseOne > baseTwo ? baseOne : baseTwo;
-        checkCap();
     }
     /**
      * {@inheritDoc}
