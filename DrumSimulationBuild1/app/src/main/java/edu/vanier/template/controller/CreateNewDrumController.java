@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
@@ -198,6 +199,9 @@ public class CreateNewDrumController {
     Label timeLabel;
     
     @FXML
+    CheckBox displayCamera;
+    
+    @FXML
     BorderPane root;
 
     //Slider Number value 1
@@ -273,6 +277,15 @@ public class CreateNewDrumController {
         
         resetCamera.setOnAction((event) -> {
             simulation.physics.resetCamera();
+        });
+        
+        displayCamera.setSelected(true);
+        displayCamera.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            simulation.getCamX().setVisible(newValue);
+            simulation.getCamY().setVisible(newValue);
+            simulation.getCamZup().setVisible(newValue);
+            simulation.getCamZdown().setVisible(newValue);
+            simulation.getCameraCentre().setVisible(newValue);
         });
 
     }

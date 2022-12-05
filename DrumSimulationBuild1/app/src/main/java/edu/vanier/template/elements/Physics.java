@@ -66,10 +66,10 @@ public final class Physics {
     
     public void update(double[] oa, double[] ob, double[] on) {
         
-        simulation.getCamX().display(simulation.getRoot(), simulation.getDisplay());
-        simulation.getCamY().display(simulation.getRoot(), simulation.getDisplay());
-        simulation.getCamZup().display(simulation.getRoot(), simulation.getDisplay());
-        simulation.getCamZdown().display(simulation.getRoot(), simulation.getDisplay());
+        simulation.getCamX().display(simulation.getRoot());
+        simulation.getCamY().display(simulation.getRoot());
+        simulation.getCamZup().display(simulation.getRoot());
+        simulation.getCamZdown().display(simulation.getRoot());
         
         for(Point point : drummer.mesh) {
             if(terminated) {

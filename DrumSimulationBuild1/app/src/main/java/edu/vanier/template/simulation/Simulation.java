@@ -5,7 +5,6 @@ import edu.vanier.template.elements.*;
 import edu.vanier.template.linear.CameraAxis;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -42,8 +41,6 @@ public final class Simulation {
     */
     private Pane root;
     
-    
-    
     private CameraAxis camX;
     private CameraAxis camY;
     private CameraAxis camZup;
@@ -52,6 +49,7 @@ public final class Simulation {
     public double oX;
     public double oY;
     
+    private Sphere cameraCentre;
     
     /**
      * Boolean denoting when the camera line is displayed.
@@ -148,7 +146,7 @@ public final class Simulation {
         oX = root.getPrefWidth()/2;
         oY = root.getPrefHeight()/2;
         physics.setOrigin(oX, oY, 0);
-        Sphere cameraCentre = new Sphere(4);
+        cameraCentre = new Sphere(4);
         cameraCentre.setTranslateX(oX);
         cameraCentre.setTranslateY(oY);
         PhongMaterial cameraMaterial = new PhongMaterial();
@@ -274,11 +272,15 @@ public final class Simulation {
     }
 
     public Physics getPhysics() {
-        return this.physics;
+        return physics;
     }
 
     public void setPhysics(Physics physics) {
         this.physics = physics;
+    }
+    
+    public Sphere getCameraCentre() {
+        return cameraCentre;
     }
     
 }

@@ -33,6 +33,10 @@ public class CameraAxis extends Line {
      * The physics property provides the nature of the screen's plane representation.
      */
     private final Physics physics;
+    
+    public double xV;
+    public double yV;
+    
     /**
      * Instantiates a CameraAxis that utilizes the physics' projecting plane.
      * @param physics
@@ -45,13 +49,8 @@ public class CameraAxis extends Line {
     /**
      * Displays a line on screen representing an axis in the current camera's frame of reference.
      * @param root The line is displayed on this pane.
-     * @param display Whether the line should be displayed.
      */
-    public void display(Pane root, boolean display) {
-        if(!display) {
-            return;
-        }
-        
+    public void display(Pane root) {
         int component = -1;
         double direction = 0;
         switch(axis) {
@@ -93,8 +92,4 @@ public class CameraAxis extends Line {
                         tryDepth > 1 ? 1 : tryDepth
         );
     }
-    
-    public double xV;
-    public double yV;
-    
 }
