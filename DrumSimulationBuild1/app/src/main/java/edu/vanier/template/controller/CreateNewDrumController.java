@@ -9,6 +9,8 @@ import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.util.Objects;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -129,7 +131,7 @@ public class CreateNewDrumController {
     Slider slider2;
 
     @FXML
-    Slider slider3;
+    public Slider slider3;
 
     //Bottom button
     @FXML
@@ -796,6 +798,7 @@ public class CreateNewDrumController {
 
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
+        this.simulation.setController(this);
     }
 
 }

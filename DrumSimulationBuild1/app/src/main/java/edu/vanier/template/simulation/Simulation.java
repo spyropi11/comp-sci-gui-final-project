@@ -1,5 +1,6 @@
 package edu.vanier.template.simulation;
 
+import edu.vanier.template.controller.CreateNewDrumController;
 import edu.vanier.template.drumshapes.Formable;
 import edu.vanier.template.elements.*;
 import edu.vanier.template.linear.CameraAxis;
@@ -233,6 +234,10 @@ public final class Simulation {
         stage.setOnCloseRequest((WindowEvent windowEvent) -> {
             physics.stopTimer();
         });
+    }
+    
+    public void setController(CreateNewDrumController controller) {
+        physics.setController(controller);
     }
 
     public Pane getRoot() {
