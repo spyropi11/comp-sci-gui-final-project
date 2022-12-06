@@ -64,6 +64,7 @@ public class SaveRecordingController {
                 Alert fileError = new Alert(Alert.AlertType.ERROR);
                 fileError.setHeaderText("Errot saving recording.");
                 fileError.setContentText(e.getMessage());
+                fileError.setTitle(stage.getTitle());
                 fileError.showAndWait();
             }
             stage.close();
