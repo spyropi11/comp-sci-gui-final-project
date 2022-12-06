@@ -9,6 +9,8 @@ import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -561,31 +563,52 @@ public class CreateNewDrumController {
     }
 
     public void handleUniformMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = true;
-        this.HorizontalMassDChosen = false;
-        this.VerticalMassDChosen = false;
-        this.RadialMassDChosen = false;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            this.UniformMassDChosen = true;
+            this.HorizontalMassDChosen = false;
+            this.VerticalMassDChosen = false;
+            this.RadialMassDChosen = false;
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void handleHorizontalMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = false;
-        this.HorizontalMassDChosen = true;
-        this.VerticalMassDChosen = false;
-        this.RadialMassDChosen = false;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            this.UniformMassDChosen = false;
+            this.HorizontalMassDChosen = true;
+            this.VerticalMassDChosen = false;
+            this.RadialMassDChosen = false;
+        } catch (IOException ex) {
+            
+        }
     }
 
     public void handleVerticalMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = false;
-        this.HorizontalMassDChosen = false;
-        this.VerticalMassDChosen = true;
-        this.RadialMassDChosen = false;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            this.UniformMassDChosen = false;
+            this.HorizontalMassDChosen = false;
+            this.VerticalMassDChosen = true;
+            this.RadialMassDChosen = false;
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void handleRadialMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = false;
-        this.HorizontalMassDChosen = false;
-        this.VerticalMassDChosen = false;
-        this.RadialMassDChosen = true;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            this.UniformMassDChosen = false;
+            this.HorizontalMassDChosen = false;
+            this.VerticalMassDChosen = false;
+            this.RadialMassDChosen = true;
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     //Textures
@@ -637,7 +660,7 @@ public class CreateNewDrumController {
      * @throws java.io.IOException
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
-         showLegend.setVisible(true);
+        showLegend.setVisible(true);
         Alert invalidAlert = new Alert(Alert.AlertType.WARNING);
         try {
             if (cartesianChosen) {
@@ -655,6 +678,7 @@ public class CreateNewDrumController {
             if (UniformMassDChosen) {
                 double[] stops = new double[]{1};
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
+                System.out.println("chosen");
             } else if (HorizontalMassDChosen) {
                 double[] stops = new double[]{1, 15};
                 distributionValue = new Distribution(Distribution.Surface.HORIZONTAL_GRADIENT, stops);
@@ -713,6 +737,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
@@ -732,6 +757,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
@@ -751,6 +777,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
@@ -770,6 +797,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
