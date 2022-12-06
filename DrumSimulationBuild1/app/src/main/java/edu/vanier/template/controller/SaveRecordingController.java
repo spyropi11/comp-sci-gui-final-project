@@ -19,13 +19,18 @@ public class SaveRecordingController {
     @FXML
     Button saveBtn;
     
-    private boolean cancelled = true;
-    
     SaveEnvelope saver;
+    
+    private final Stage stage;
+    
+    private final CreateNewDrumController controller;
+    
+    private final double prevDeltaTime;
     
     @SuppressWarnings("LeakingThisInConstructor")
     public SaveRecordingController(Stage owner, CreateNewDrumController controller) throws IOException {
-        Stage stage = new Stage();
+        this.controller = controller;
+        stage = new Stage();
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
         
@@ -36,32 +41,31 @@ public class SaveRecordingController {
         stage.setTitle(owner.getTitle());
         stage.show();
         
-        double prevDeltaTime = CreateNewDrumController.deltaTimeValue;
+        prevDeltaTime = CreateNewDrumController.deltaTimeValue;
         CreateNewDrumController.deltaTimeValue = 0;
-        
+    }
+    
+    @FXML
+    public void initialize() {
         saveBtn.setOnAction((evenet) -> {
             try {
                 if(!nameTxt.getText().isEmpty()) {
                     String folderName = nameTxt.getText();
                     saver = new SaveEnvelope(folderName);
                     saver.create();
-                    cancelled = false;
+                    controller.btnStopRecord.setDisable(false);
+                    controller.btnStartRecord.setDisable(true);
+                    controller.currentSaveEnvelope = saver;
+                    controller.simulation.getPhysics().setSaveEnvelope(saver);
+                    controller.simulation.physics.startRecording();
                 }
             } catch(IOException e) {}
             stage.close();
         });
         
         stage.setOnCloseRequest((event) -> {
-            if(!cancelled) {
-                controller.btnStopRecord.setDisable(false);
-                controller.btnStartRecord.setDisable(true);
-                controller.currentSaveEnvelope = saver;
-                controller.simulation.getPhysics().setSaveEnvelope(saver);
-                controller.simulation.physics.startRecording();
-            }
             CreateNewDrumController.deltaTimeValue = prevDeltaTime;
         });
-        
     }
     
 }
