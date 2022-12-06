@@ -1,10 +1,16 @@
 package edu.vanier.template.controller;
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import edu.vanier.template.drumshapes.*;
 import edu.vanier.template.drumshapes.Formable.*;
 import static edu.vanier.template.drumshapes.Formable.Arrangement.*;
+import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +21,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
@@ -29,9 +34,8 @@ import javafx.stage.Stage;
 public class CreateNewDrumController {
 
     /**
-     * paneSim is the fx id of the pane in the sceneBuilder thats going to be
+     * paneSim is the fx:id of the pane in the sceneBuilder that's going to be
      * used to display the simulation
-     *
      */
     @FXML
     public Pane paneSim;
@@ -68,10 +72,6 @@ public class CreateNewDrumController {
     public CreateNewDrumController(Stage stage) {
         this.stage = stage;
     }
-
-    //Button menu
-    @FXML
-    MenuButton menuButton1;
 
     //Labels
     @FXML
@@ -137,42 +137,6 @@ public class CreateNewDrumController {
     @FXML
     Button btnConfirm;
 
-    //Shapes + MenuBar
-    @FXML
-    MenuItem square;
-
-    @FXML
-    MenuItem rectangle;
-
-    @FXML
-    MenuItem parallelogram;
-
-    @FXML
-    MenuItem trapezoid;
-
-    //Start Screen
-    @FXML
-    Button btnLoadDrum;
-
-    @FXML
-    Button btnCreateNewDrum;
-
-    //MenuBar + file
-    @FXML
-    MenuItem loadSavedDrum;
-
-    //MenuBar + Mass
-    @FXML
-    MenuItem uniformMass, horizontalMass, verticalMass, radialMass;
-
-    //MenuBar + decay
-    @FXML
-    MenuItem uniformDecay, horizontalDecay, verticalDecay, radialDecay;
-
-    //MenuBar + Texture
-    @FXML
-    MenuItem cartesian, parallel, triangular, thin, thick;
-
     //MenuItem + Rest
     @FXML
     MenuItem resetWave;
@@ -184,9 +148,6 @@ public class CreateNewDrumController {
     MenuItem btnStartRecord;
     @FXML
     MenuItem btnStopRecord;
-    
-    @FXML
-    Label customizationLabel;
     
     @FXML
     Menu shapesMenu, massMenu, textureMenu, resetMenu, recordingMenu;
@@ -203,7 +164,7 @@ public class CreateNewDrumController {
     
     @FXML
     BorderPane root;
-
+    
     //Slider Number value 1
     int numSlider;
 
@@ -212,10 +173,10 @@ public class CreateNewDrumController {
 
     //Slider number value 3
     double numSlider3;
-
-    double arcWidth = 0;
-    double arcHeight = 0;
-
+    
+    SaveEnvelope currentSaveEnvelope;
+    
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void initialize() {
         disableSettings();
         menuDuringSettings();
@@ -224,14 +185,21 @@ public class CreateNewDrumController {
         
         btnStopRecord.setDisable(true);
         btnStartRecord.setOnAction((event) -> {
-            //TODO
-            btnStopRecord.setDisable(false);
-            btnStartRecord.setDisable(true);
+            try {
+                new SaveRecordingController(stage, this);
+            } catch(IOException e) {}
         });
         btnStopRecord.setOnAction((event) -> {
-            //TODO
-            btnStopRecord.setDisable(true);
-            btnStartRecord.setDisable(false);
+            try {
+                currentSaveEnvelope.upload(simulation.formable);
+                btnStopRecord.setDisable(true);
+                btnStartRecord.setDisable(false);
+            } catch(IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {}
+        });
+        stage.setOnCloseRequest((event) -> {
+            if(!Objects.isNull(currentSaveEnvelope)) {
+                btnStopRecord.fire();
+            }
         });
         
         UniformMassDChosen = true;
@@ -362,9 +330,29 @@ public class CreateNewDrumController {
             stage.setTitle("Drum Simulation.");
             stage.sizeToScene();
             stage.show();
-        } catch (IOException ex) {
-            System.out.println("Exception loading Scene2NewDream.fxml");
-        }
+        } catch (IOException ex) {}
+    }
+    
+    @FXML
+    public void handleLoadSavedDrum(ActionEvent event) {
+        try {
+            stage.close();
+            try {
+                simulation.physics.stopTimer();
+            } catch(NullPointerException e) {
+                
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
+            CreateNewDrumController mainController = new CreateNewDrumController(stage);
+            loader.setController(mainController);
+            root = loader.load();
+            Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+            stage.setScene(scene);
+            stage.setTitle("Drum Simulation.");
+            stage.sizeToScene();
+            stage.show();
+        } catch (IOException ex) {}
+        //TODO load saved drum
     }
 
     public void rectangleChosen(ActionEvent event) {
