@@ -330,7 +330,7 @@ public class CreateNewDrumController {
             CreateNewDrumController mainController = new CreateNewDrumController(stage);
             loader.setController(mainController);
             root = loader.load();
-            Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+            Scene scene = new Scene(root, root.getWidth(), root.getHeight());
             stage.setScene(scene);
             stage.setTitle("Drum Simulation.");
             stage.sizeToScene();
