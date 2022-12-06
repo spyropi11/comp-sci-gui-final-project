@@ -29,6 +29,10 @@ public class SaveEnvelope {
      * @throws IOException
      */
     public void download() throws IOException {
+        if(!saveFolder.exists()) {
+            throw new IOException("Please verify that the save folder exists in " + saveDirectory);
+        }
+        
         for(File file : saveFolder.listFiles()) {
             if(file.getName().equals("Save Drum.txt")) {
                 saveDrum = new SaveDrum(file);

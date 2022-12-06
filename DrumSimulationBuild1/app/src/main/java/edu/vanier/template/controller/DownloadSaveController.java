@@ -90,7 +90,8 @@ public class DownloadSaveController {
             } catch(IOException e) {
                 Alert fileError = new Alert(Alert.AlertType.ERROR);
                 fileError.setHeaderText("Folder does not exist or is corrupted.");
-                fileError.setContentText("Please verify that the following folder exists: " + System.getProperty("user.home") + "\\Drum Sim save folders");
+                fileError.setContentText(e.getMessage());
+                fileError.setTitle(owner.getTitle());
                 fileError.showAndWait();
             }
         });
