@@ -578,7 +578,7 @@ public class CreateNewDrumController {
 
     public void handleHorizontalMassDChosen(ActionEvent event) {
         try {
-            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            GradientMassSettingController GC = new GradientMassSettingController(stage,this);
             this.UniformMassDChosen = false;
             this.HorizontalMassDChosen = true;
             this.VerticalMassDChosen = false;
@@ -591,7 +591,7 @@ public class CreateNewDrumController {
     public void handleVerticalMassDChosen(ActionEvent event) {
         try {
             System.out.println("mass chosen");
-            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            GradientMassSettingController GC = new GradientMassSettingController(stage,this);
             this.UniformMassDChosen = false;
             this.HorizontalMassDChosen = false;
             this.VerticalMassDChosen = true;
@@ -603,7 +603,7 @@ public class CreateNewDrumController {
 
     public void handleRadialMassDChosen(ActionEvent event) {
         try {
-            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            GradientMassSettingController GC = new GradientMassSettingController(stage,this);
             this.UniformMassDChosen = false;
             this.HorizontalMassDChosen = false;
             this.VerticalMassDChosen = false;
@@ -683,13 +683,13 @@ public class CreateNewDrumController {
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
                 System.out.println("chosen");
             } else if (HorizontalMassDChosen) {
-                double[] stops = new double[]{1, 15};
+                double[] stops = new double[]{massOneDC, massTwoDC};
                 distributionValue = new Distribution(Distribution.Surface.HORIZONTAL_GRADIENT, stops);
             } else if (VerticalMassDChosen) {
-                double[] stops = new double[]{1, 15};
+                double[] stops = new double[]{massOneDC, massTwoDC};
                 distributionValue = new Distribution(Distribution.Surface.VERTICAL_GRADIENT, stops);
             } else if (RadialMassDChosen) {
-                double[] stops = new double[]{1, 15};
+                double[] stops = new double[]{massOneDC, massTwoDC};
                 distributionValue = new Distribution(Distribution.Surface.RADIAL_GRADIENT, stops);
             }
 
