@@ -48,7 +48,7 @@ public class SaveRecordingController {
     
     @FXML
     public void initialize() {
-        saveBtn.setOnAction((evenet) -> {
+        saveBtn.setOnAction((event) -> {
             try {
                 if(!nameTxt.getText().isEmpty()) {
                     String folderName = nameTxt.getText();

@@ -83,6 +83,7 @@ public class DownloadSaveController {
                         mainController.simulation.physics.startTimer();
                         mainController.disableSettings();
                         mainController.menuDuringSim();
+                        mainController.simulation.physics.loadSaveEnvelope(downloader);
                     } catch (IOException ex) {}
                     stage.close();
                 }

@@ -9,8 +9,8 @@ import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -131,12 +131,12 @@ public class CreateNewDrumController {
     Slider slider2;
 
     @FXML
-    Slider slider3;
+    public Slider slider3;
 
     //Bottom button
     @FXML
     Button btnConfirm;
-    
+
     @FXML
     Button showLegend;
 
@@ -151,23 +151,23 @@ public class CreateNewDrumController {
     MenuItem btnStartRecord;
     @FXML
     MenuItem btnStopRecord;
-    
+
     @FXML
     Menu shapesMenu, massMenu, textureMenu, resetMenu, recordingMenu;
-    
+
     @FXML
     Label spreadLabel;
     @FXML
     Label powerLabel;
     @FXML
     Label timeLabel;
-    
+
     @FXML
     CheckBox displayCamera;
-    
+
     @FXML
     BorderPane root;
-    
+
     //Slider Number value 1
     int numSlider;
 
@@ -176,17 +176,17 @@ public class CreateNewDrumController {
 
     //Slider number value 3
     double numSlider3;
-    
+
     SaveEnvelope currentSaveEnvelope;
-    
+
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void initialize() {
         showLegend.setVisible(false);
         disableSettings();
         menuDuringSettings();
-        
+
         btnConfirm.setDisable(true);
-        
+
         btnStopRecord.setDisable(true);
         btnStartRecord.setOnAction((event) -> {
             try {
@@ -206,10 +206,10 @@ public class CreateNewDrumController {
                 btnStopRecord.fire();
             }
         });
-        
+
         UniformMassDChosen = true;
         cartesianChosen = true;
-        
+
         numSlider = (int) slider.getValue();
         numLabel.setText(Integer.toString(numSlider) + "N");
 
@@ -222,36 +222,36 @@ public class CreateNewDrumController {
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider = (int) slider.getValue();
             numLabel.setText(Integer.toString(numSlider) + "N");
-            
+
             amplitudeValue = (double) newValue;
         });
 
         slider2.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider2 = (int) slider2.getValue();
             numLabel2.setText(Integer.toString(numSlider2) + "M");
-            
+
             spreadValue = (double) newValue;
         });
 
         slider3.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider3 = (double) slider3.getValue();
             numLabel3.setText(Double.toString(numSlider3) + "s");
-            
+
             deltaTimeValue = (double) newValue;
         });
 
         spinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 170)
         );
-        
+
         resetWave.setOnAction((event) -> {
             simulation.physics.resetWaves();
         });
-        
+
         resetCamera.setOnAction((event) -> {
             simulation.physics.resetCamera();
         });
-        
+
         displayCamera.setSelected(true);
         displayCamera.selectedProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -264,7 +264,7 @@ public class CreateNewDrumController {
         });
 
     }
-    
+
     void disableSettings() {
         textF1.setEditable(false);
         textF2.setEditable(false);
@@ -284,7 +284,7 @@ public class CreateNewDrumController {
         label5.setVisible(false);
         label6.setVisible(false);
     }
-    
+
     void menuDuringSim() {
         shapesMenu.setDisable(true);
         massMenu.setDisable(true);
@@ -301,7 +301,7 @@ public class CreateNewDrumController {
         numLabel2.setDisable(false);
         numLabel3.setDisable(false);
     }
-    
+
     private void menuDuringSettings() {
         shapesMenu.setDisable(false);
         massMenu.setDisable(false);
@@ -318,7 +318,7 @@ public class CreateNewDrumController {
         numLabel2.setDisable(true);
         numLabel3.setDisable(true);
     }
-    
+
     @FXML
     public void handleCreateNewDrum(ActionEvent event) {
         try {
@@ -326,20 +326,20 @@ public class CreateNewDrumController {
             try {
                 simulation.physics.stopTimer();
             } catch(NullPointerException e) {
-                
+
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
             CreateNewDrumController mainController = new CreateNewDrumController(stage);
             loader.setController(mainController);
             root = loader.load();
-            Scene scene = new Scene(root, root.getWidth(), root.getHeight());
+            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
             stage.setScene(scene);
             stage.setTitle("Drum Simulation.");
             stage.sizeToScene();
             stage.show();
         } catch (IOException ex) {}
     }
-    
+
     @FXML
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void handleLoadSavedDrum(ActionEvent event) {
@@ -356,7 +356,7 @@ public class CreateNewDrumController {
         label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
-        
+
         label3.setVisible(false);
         spinner.setVisible(false);
         if (spinner.getValue() != null) {
@@ -390,9 +390,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-        
+
         btnConfirm.setDisable(false);
-        
+
     }
 
     public void squareChosen(ActionEvent event) {
@@ -445,7 +445,7 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = true;
         this.trapezoidChosen = false;
-        
+
         btnConfirm.setDisable(false);
     }
 
@@ -465,7 +465,7 @@ public class CreateNewDrumController {
 
             textF2.setText("");
         }
-        
+
         spinner.setDisable(false);
         spinner.setVisible(true);
         label3.setVisible(true);
@@ -501,9 +501,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = true;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-        
+
         btnConfirm.setDisable(false);
-        
+
     }
 
     public void trapChosen(ActionEvent event) {
@@ -520,7 +520,7 @@ public class CreateNewDrumController {
 
             textF2.setText("");
         }
-        
+
         spinner.setDisable(false);
         spinner.setVisible(true);
         label3.setVisible(true);
@@ -557,9 +557,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = true;
-        
+
         btnConfirm.setDisable(false);
-        
+
     }
 
     public void handleUniformMassDChosen(ActionEvent event) {
@@ -582,7 +582,7 @@ public class CreateNewDrumController {
             this.VerticalMassDChosen = false;
             this.RadialMassDChosen = false;
         } catch (IOException ex) {
-            
+
         }
     }
 
@@ -608,7 +608,7 @@ public class CreateNewDrumController {
         } catch (IOException ex) {
             Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     //Textures
@@ -674,7 +674,7 @@ public class CreateNewDrumController {
             } else if (triangularChosen) {
                 arrangementValue = TRIANGULAR;
             }
-            
+
             if (UniformMassDChosen) {
                 double[] stops = new double[]{1};
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
@@ -747,7 +747,7 @@ public class CreateNewDrumController {
         formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-        
+
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
@@ -767,7 +767,7 @@ public class CreateNewDrumController {
         formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-        
+
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
@@ -787,7 +787,7 @@ public class CreateNewDrumController {
         formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-        
+
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
@@ -801,21 +801,21 @@ public class CreateNewDrumController {
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
-    
+
      public void legendSelected(ActionEvent event){
-        
+
              Alert camInfo = new Alert(Alert.AlertType.INFORMATION);
                 camInfo.setHeaderText("Legend for camera controls");
                 camInfo.setContentText( "W/S: translation on green axis " + "\n" +
                         "A/D : translation on purple axis " + "\n"
-                        + "X/C : rotates about purple axis " + "\n" + 
-                        "V/B : rotates about green axis" + "\n" + 
-                        " N/M : rotates about normal axis" + "\n" + 
+                        + "X/C : rotates about purple axis " + "\n" +
+                        "V/B : rotates about green axis" + "\n" +
+                        " N/M : rotates about normal axis" + "\n" +
                         "J : zoom in" +"\n" + "K : zooms out");
                 camInfo.showAndWait();
-        
-              
-        
+
+
+
     }
 
     public Simulation getSimulation() {
@@ -824,6 +824,7 @@ public class CreateNewDrumController {
 
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
+        this.simulation.setController(this);
     }
 
 }
