@@ -27,7 +27,7 @@ public class MainAppController{
     }
     
     public void initialize() { 
-        System.out.println("Initialising the process");  
+        
     }
     
     public void handleStart(ActionEvent event) throws IOException {

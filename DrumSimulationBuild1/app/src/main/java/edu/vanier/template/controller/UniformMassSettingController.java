@@ -5,19 +5,14 @@
  */
 package edu.vanier.template.controller;
 
-import edu.vanier.template.save.SaveEnvelope;
-import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -58,15 +53,14 @@ public class UniformMassSettingController {
     @FXML
     public void initialize() {
         
-        
-        
-        
         confirmButton.setOnAction((event) -> {
             try {
                 setMassOne(Double.valueOf(massOneText.getText()));
+                if(massOne <= 0) {
+                    throw new NumberFormatException("Mass must be positive.");
+                }
                 controller.setMassOneDC(getMassOne());
-                
-            }catch(Exception e) {
+            } catch(NumberFormatException | NullPointerException e) {
                 Alert massError = new Alert(Alert.AlertType.ERROR);
                 massError.setHeaderText("Incorrect input for mass");
                 massError.setContentText(e.getMessage());
@@ -75,9 +69,6 @@ public class UniformMassSettingController {
             }
             stage.close();
         });
-
-        
-        
     }
 
     public double getMassOne() {
