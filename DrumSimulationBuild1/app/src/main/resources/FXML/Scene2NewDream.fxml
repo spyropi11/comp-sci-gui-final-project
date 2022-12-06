@@ -18,9 +18,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" prefHeight="759.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" prefHeight="759.0" prefWidth="1000.0" style="-fx-background-color: #f0dbed77;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: #f0dbed77;" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="19.0" prefWidth="141.0" text="Drum Customization:">
                <font>
@@ -133,7 +133,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <CheckBox fx:id="displayCamera" mnemonicParsing="false" text="Display camera">
+            <CheckBox fx:id="displayCamera" mnemonicParsing="false" text="Display axes">
                <padding>
                   <Insets top="60.0" />
                </padding>
@@ -148,7 +148,7 @@
       </VBox>
    </left>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar style="-fx-background-color: ANTIQUEWHITE; -fx-border-color: white; -fx-border-width: 1;" BorderPane.alignment="CENTER">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
@@ -247,4 +247,11 @@
          </menus>
       </MenuBar>
    </top>
+   <center>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Intro/XQC.png" />
+         </image>
+      </ImageView>
+   </center>
 </BorderPane>

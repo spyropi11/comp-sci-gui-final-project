@@ -9,6 +9,10 @@ import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,10 +64,14 @@ public class CreateNewDrumController {
     public static double amplitudeValue;
     public static double deltaTimeValue;
     public static double densityValue;
-
-    public static final double[] defaultStops = {1};
+    
+    public static final double DEFAULTMASS = 1.0;
+    public static final double[] defaultStops = {DEFAULTMASS};
     public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, defaultStops);
     public static Arrangement arrangementValue;
+    
+    public double massOneDC = 1.0;
+    public double massTwoDC = 1.0;
 
     Simulation simulation = new Simulation();
 
@@ -129,12 +137,12 @@ public class CreateNewDrumController {
     Slider slider2;
 
     @FXML
-    Slider slider3;
+    public Slider slider3;
 
     //Bottom button
     @FXML
     Button btnConfirm;
-    
+
     @FXML
     Button showLegend;
 
@@ -149,23 +157,23 @@ public class CreateNewDrumController {
     MenuItem btnStartRecord;
     @FXML
     MenuItem btnStopRecord;
-    
+
     @FXML
     Menu shapesMenu, massMenu, textureMenu, resetMenu, recordingMenu;
-    
+
     @FXML
     Label spreadLabel;
     @FXML
     Label powerLabel;
     @FXML
     Label timeLabel;
-    
+
     @FXML
     CheckBox displayCamera;
-    
+
     @FXML
     BorderPane root;
-    
+
     //Slider Number value 1
     int numSlider;
 
@@ -174,17 +182,17 @@ public class CreateNewDrumController {
 
     //Slider number value 3
     double numSlider3;
-    
+
     SaveEnvelope currentSaveEnvelope;
-    
+
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void initialize() {
         showLegend.setVisible(false);
         disableSettings();
         menuDuringSettings();
-        
+
         btnConfirm.setDisable(true);
-        
+
         btnStopRecord.setDisable(true);
         btnStartRecord.setOnAction((event) -> {
             try {
@@ -204,10 +212,10 @@ public class CreateNewDrumController {
                 btnStopRecord.fire();
             }
         });
-        
+
         UniformMassDChosen = true;
         cartesianChosen = true;
-        
+
         numSlider = (int) slider.getValue();
         numLabel.setText(Integer.toString(numSlider) + "N");
 
@@ -220,36 +228,36 @@ public class CreateNewDrumController {
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider = (int) slider.getValue();
             numLabel.setText(Integer.toString(numSlider) + "N");
-            
+
             amplitudeValue = (double) newValue;
         });
 
         slider2.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider2 = (int) slider2.getValue();
             numLabel2.setText(Integer.toString(numSlider2) + "M");
-            
+
             spreadValue = (double) newValue;
         });
 
         slider3.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numSlider3 = (double) slider3.getValue();
             numLabel3.setText(Double.toString(numSlider3) + "s");
-            
+
             deltaTimeValue = (double) newValue;
         });
 
         spinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 170)
         );
-        
+
         resetWave.setOnAction((event) -> {
             simulation.physics.resetWaves();
         });
-        
+
         resetCamera.setOnAction((event) -> {
             simulation.physics.resetCamera();
         });
-        
+
         displayCamera.setSelected(true);
         displayCamera.selectedProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -262,7 +270,7 @@ public class CreateNewDrumController {
         });
 
     }
-    
+
     void disableSettings() {
         textF1.setEditable(false);
         textF2.setEditable(false);
@@ -282,7 +290,7 @@ public class CreateNewDrumController {
         label5.setVisible(false);
         label6.setVisible(false);
     }
-    
+
     void menuDuringSim() {
         shapesMenu.setDisable(true);
         massMenu.setDisable(true);
@@ -299,7 +307,7 @@ public class CreateNewDrumController {
         numLabel2.setDisable(false);
         numLabel3.setDisable(false);
     }
-    
+
     private void menuDuringSettings() {
         shapesMenu.setDisable(false);
         massMenu.setDisable(false);
@@ -316,7 +324,7 @@ public class CreateNewDrumController {
         numLabel2.setDisable(true);
         numLabel3.setDisable(true);
     }
-    
+
     @FXML
     public void handleCreateNewDrum(ActionEvent event) {
         try {
@@ -324,20 +332,20 @@ public class CreateNewDrumController {
             try {
                 simulation.physics.stopTimer();
             } catch(NullPointerException e) {
-                
+
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
             CreateNewDrumController mainController = new CreateNewDrumController(stage);
             loader.setController(mainController);
             root = loader.load();
-            Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
             stage.setScene(scene);
             stage.setTitle("Drum Simulation.");
             stage.sizeToScene();
             stage.show();
         } catch (IOException ex) {}
     }
-    
+
     @FXML
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void handleLoadSavedDrum(ActionEvent event) {
@@ -354,7 +362,7 @@ public class CreateNewDrumController {
         label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
-        
+
         label3.setVisible(false);
         spinner.setVisible(false);
         if (spinner.getValue() != null) {
@@ -388,9 +396,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-        
+
         btnConfirm.setDisable(false);
-        
+
     }
 
     public void squareChosen(ActionEvent event) {
@@ -443,7 +451,7 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = true;
         this.trapezoidChosen = false;
-        
+
         btnConfirm.setDisable(false);
     }
 
@@ -463,7 +471,7 @@ public class CreateNewDrumController {
 
             textF2.setText("");
         }
-        
+
         spinner.setDisable(false);
         spinner.setVisible(true);
         label3.setVisible(true);
@@ -499,9 +507,9 @@ public class CreateNewDrumController {
         this.parallelogramChosen = true;
         this.squareChosen = false;
         this.trapezoidChosen = false;
-        
+
         btnConfirm.setDisable(false);
-        
+
     }
 
     public void trapChosen(ActionEvent event) {
@@ -518,7 +526,7 @@ public class CreateNewDrumController {
 
             textF2.setText("");
         }
-        
+
         spinner.setDisable(false);
         spinner.setVisible(true);
         label3.setVisible(true);
@@ -555,37 +563,59 @@ public class CreateNewDrumController {
         this.parallelogramChosen = false;
         this.squareChosen = false;
         this.trapezoidChosen = true;
-        
+
         btnConfirm.setDisable(false);
-        
+
     }
 
     public void handleUniformMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = true;
-        this.HorizontalMassDChosen = false;
-        this.VerticalMassDChosen = false;
-        this.RadialMassDChosen = false;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            this.UniformMassDChosen = true;
+            this.HorizontalMassDChosen = false;
+            this.VerticalMassDChosen = false;
+            this.RadialMassDChosen = false;
+        } catch (IOException ex) {
+            
+        }
     }
 
     public void handleHorizontalMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = false;
-        this.HorizontalMassDChosen = true;
-        this.VerticalMassDChosen = false;
-        this.RadialMassDChosen = false;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            this.UniformMassDChosen = false;
+            this.HorizontalMassDChosen = true;
+            this.VerticalMassDChosen = false;
+            this.RadialMassDChosen = false;
+        } catch (IOException ex) {
+
+        }
     }
 
     public void handleVerticalMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = false;
-        this.HorizontalMassDChosen = false;
-        this.VerticalMassDChosen = true;
-        this.RadialMassDChosen = false;
+        try {
+            System.out.println("mass chosen");
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            this.UniformMassDChosen = false;
+            this.HorizontalMassDChosen = false;
+            this.VerticalMassDChosen = true;
+            this.RadialMassDChosen = false;
+        } catch (IOException ex) {
+            
+        }
     }
 
     public void handleRadialMassDChosen(ActionEvent event) {
-        this.UniformMassDChosen = false;
-        this.HorizontalMassDChosen = false;
-        this.VerticalMassDChosen = false;
-        this.RadialMassDChosen = true;
+        try {
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
+            this.UniformMassDChosen = false;
+            this.HorizontalMassDChosen = false;
+            this.VerticalMassDChosen = false;
+            this.RadialMassDChosen = true;
+        } catch (IOException ex) {
+            
+        }
+
     }
 
     //Textures
@@ -637,7 +667,7 @@ public class CreateNewDrumController {
      * @throws java.io.IOException
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
-         showLegend.setVisible(true);
+        showLegend.setVisible(true);
         Alert invalidAlert = new Alert(Alert.AlertType.WARNING);
         try {
             if (cartesianChosen) {
@@ -651,10 +681,11 @@ public class CreateNewDrumController {
             } else if (triangularChosen) {
                 arrangementValue = TRIANGULAR;
             }
-            
+
             if (UniformMassDChosen) {
-                double[] stops = new double[]{1};
+                double[] stops = new double[]{massOneDC};
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
+                System.out.println("chosen");
             } else if (HorizontalMassDChosen) {
                 double[] stops = new double[]{1, 15};
                 distributionValue = new Distribution(Distribution.Surface.HORIZONTAL_GRADIENT, stops);
@@ -713,6 +744,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
@@ -722,7 +754,7 @@ public class CreateNewDrumController {
         formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-        
+
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
@@ -732,6 +764,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
@@ -741,7 +774,7 @@ public class CreateNewDrumController {
         formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-        
+
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
@@ -751,6 +784,7 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
@@ -760,7 +794,7 @@ public class CreateNewDrumController {
         formable.checkCap();
         formable.setMassDistribution(distributionValue);
         formable.setArrangement(arrangementValue);
-        
+
         simulation.getPhysics().stopTimer();
         setSimulation(new Simulation(formable));
 
@@ -770,24 +804,25 @@ public class CreateNewDrumController {
 
         simulation.setCloseSim(stage);
         root.setCenter(simulation.getRoot());
+        root.getCenter().toBack();
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
     }
-    
+
      public void legendSelected(ActionEvent event){
-        
+
              Alert camInfo = new Alert(Alert.AlertType.INFORMATION);
                 camInfo.setHeaderText("Legend for camera controls");
                 camInfo.setContentText( "W/S: translation on green axis " + "\n" +
                         "A/D : translation on purple axis " + "\n"
-                        + "X/C : rotates about purple axis " + "\n" + 
-                        "V/B : rotates about green axis" + "\n" + 
-                        " N/M : rotates about normal axis" + "\n" + 
+                        + "X/C : rotates about purple axis " + "\n" +
+                        "V/B : rotates about green axis" + "\n" +
+                        " N/M : rotates about normal axis" + "\n" +
                         "J : zoom in" +"\n" + "K : zooms out");
                 camInfo.showAndWait();
-        
-              
-        
+
+
+
     }
 
     public Simulation getSimulation() {
@@ -796,6 +831,26 @@ public class CreateNewDrumController {
 
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
+        this.simulation.setController(this);
     }
+
+    public double getMassOneDC() {
+        return this.massOneDC;
+    }
+
+    public void setMassOneDC(double massOneDC) {
+        this.massOneDC = massOneDC;
+    }
+
+    public double getMassTwoDC() {
+        return this.massTwoDC;
+    }
+
+    public void setMassTwoDC(double massTwoDC) {
+        this.massTwoDC = massTwoDC;
+    }
+
+    
+    
 
 }

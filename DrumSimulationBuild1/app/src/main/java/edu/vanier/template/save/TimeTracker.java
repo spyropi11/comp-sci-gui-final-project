@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class TimeTracker {
     
     private final File timeFile;
     private String time = "";
     private int initialCounter;
+    
+    private HashMap<Integer, Double> track = new HashMap<>();
     
     public TimeTracker(File timeFile) {
         this.timeFile = timeFile;
@@ -20,43 +23,38 @@ public class TimeTracker {
     }
     
     public double updateTime(int counter) {
-        String count = "";
-        boolean cont = true;
-        while(cont) {
-            char next = time.charAt(0);
-            time = time.substring(1);
-            if(next == '#') {
-                cont = false;
-            } else {
-                count += next;
-            }
-        }
-        String deltaTime = "";
-        cont = true;
-        while(cont) {
-            char next = time.charAt(0);
-            time = time.substring(1);
-            if(next == ' ') {
-                cont = false;
-            } else {
-                deltaTime += next;
-            }
-        }
-        if(counter != Integer.parseInt(count)) {
-            throw new NullPointerException("Current counter does not match with Timer Tracker's counter");
-        }
-        return Double.parseDouble(deltaTime);
+        return track.get(counter);
     }
     
     public void download() throws IOException {
         try(FileReader fr = new FileReader(timeFile)) {
-            boolean cont = true;
-            while(cont) {
-                int i = fr.read();
-                if(i == -1) {
-                    cont = false;
-                } else {
-                    time += (char)i;
+            boolean more = true;
+            while(more) {
+                String count = "";
+                while(true) {
+                    int nextInt = fr.read();
+                    if(nextInt == -1) {
+                        more = false;
+                        break;
+                    }
+                    char next = (char)nextInt;
+                    if(next == '#') {
+                        break;
+                    } else {
+                        count += next;
+                    }
+                }
+                if(more) {
+                    String t = "";
+                    while(true) {
+                        char next = (char)fr.read();
+                        if(next == ' ') {
+                            break;
+                        } else {
+                            t += next;
+                        }
+                    }
+                    track.put(Integer.parseInt(count), Double.parseDouble(t));
                 }
             }
         }

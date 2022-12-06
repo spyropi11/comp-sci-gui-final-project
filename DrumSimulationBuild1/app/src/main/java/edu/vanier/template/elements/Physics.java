@@ -13,6 +13,8 @@ public final class Physics {
     
     DrumCreator drummer;
     
+    private CreateNewDrumController controller;
+    
     private final double[] p = {0, 0, 0};
     private double[] alpha = {1, 0, 0};
     private double[] beta = {0, 1, 0};
@@ -135,8 +137,9 @@ public final class Physics {
             }
     }
     
-    public void loadSaveEnvelope(String folderPath) throws IOException {
-        saveEnvelope = new SaveEnvelope(folderPath);
+    public void loadSaveEnvelope(SaveEnvelope downloaded) throws IOException {
+        saveEnvelope = downloaded;
+        startPlayBack();
     }
     
     public void startTimer() {
@@ -219,10 +222,11 @@ public final class Physics {
         p[2] = pz;
     }
     
-    public void startPlayBack() {
+    private void startPlayBack() {
         playingBack = true;
         saveEnvelope.getSavedSim().startCount(counter);
         saveEnvelope.getTimeTracker().startCount(counter);
+        controller.slider3.setDisable(true);
     }
     
     public void startRecording() {
@@ -233,6 +237,7 @@ public final class Physics {
     
     public void endPlayBack() {
         playingBack = false;
+        controller.slider3.setDisable(false);
     }
     
     public void endRecording() {
@@ -264,6 +269,10 @@ public final class Physics {
         }
         totalTranslateX = 0;
         totalTranslateY = 0;
+    }
+    
+    public void setController(CreateNewDrumController controller) {
+        this.controller = controller;
     }
     
     //Getters and Setters
