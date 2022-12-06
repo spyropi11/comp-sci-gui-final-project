@@ -134,6 +134,9 @@ public class CreateNewDrumController {
     //Bottom button
     @FXML
     Button btnConfirm;
+    
+    @FXML
+    Button showLegend;
 
     //MenuItem + Rest
     @FXML
@@ -176,6 +179,7 @@ public class CreateNewDrumController {
     
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void initialize() {
+        showLegend.setVisible(false);
         disableSettings();
         menuDuringSettings();
         
@@ -633,6 +637,7 @@ public class CreateNewDrumController {
      * @throws java.io.IOException
      */
     public void handleBtnConfirm(ActionEvent event) throws IOException {
+         showLegend.setVisible(true);
         Alert invalidAlert = new Alert(Alert.AlertType.WARNING);
         try {
             if (cartesianChosen) {
@@ -767,6 +772,22 @@ public class CreateNewDrumController {
         root.setCenter(simulation.getRoot());
         btnConfirm.setVisible(false);
         simulation.physics.startTimer();
+    }
+    
+     public void legendSelected(ActionEvent event){
+        
+             Alert camInfo = new Alert(Alert.AlertType.INFORMATION);
+                camInfo.setHeaderText("Legend for camera controls");
+                camInfo.setContentText( "W/S: translation on green axis " + "\n" +
+                        "A/D : translation on purple axis " + "\n"
+                        + "X/C : rotates about purple axis " + "\n" + 
+                        "V/B : rotates about green axis" + "\n" + 
+                        " N/M : rotates about normal axis" + "\n" + 
+                        "J : zoom in" +"\n" + "K : zooms out");
+                camInfo.showAndWait();
+        
+              
+        
     }
 
     public Simulation getSimulation() {

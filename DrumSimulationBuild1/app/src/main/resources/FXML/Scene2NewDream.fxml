@@ -128,6 +128,11 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="showLegend" mnemonicParsing="false" onAction="#legendSelected" text="Show Legend">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
             <CheckBox fx:id="displayCamera" mnemonicParsing="false" text="Display camera">
                <padding>
                   <Insets top="60.0" />
