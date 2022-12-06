@@ -37,7 +37,7 @@ public class DownloadSaveController {
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SaveRecording.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/DownloadSave.fxml"));
         loader.setController(this);
         BorderPane root = loader.load();
         stage.setScene(new Scene(root, root.getPrefWidth(), root.getPrefHeight()));
