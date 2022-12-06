@@ -191,6 +191,7 @@ public class CreateNewDrumController {
         });
         btnStopRecord.setOnAction((event) -> {
             try {
+                simulation.physics.endRecording();
                 currentSaveEnvelope.upload(simulation.formable);
                 btnStopRecord.setDisable(true);
                 btnStartRecord.setDisable(false);
@@ -249,16 +250,18 @@ public class CreateNewDrumController {
         
         displayCamera.setSelected(true);
         displayCamera.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            simulation.getCamX().setVisible(newValue);
-            simulation.getCamY().setVisible(newValue);
-            simulation.getCamZup().setVisible(newValue);
-            simulation.getCamZdown().setVisible(newValue);
-            simulation.getCameraCentre().setVisible(newValue);
+            try {
+                simulation.getCamX().setVisible(newValue);
+                simulation.getCamY().setVisible(newValue);
+                simulation.getCamZup().setVisible(newValue);
+                simulation.getCamZdown().setVisible(newValue);
+                simulation.getCameraCentre().setVisible(newValue);
+            } catch(NullPointerException e) {}
         });
 
     }
     
-    private void disableSettings() {
+    void disableSettings() {
         textF1.setEditable(false);
         textF2.setEditable(false);
         textF4.setEditable(false);
@@ -278,7 +281,7 @@ public class CreateNewDrumController {
         label6.setVisible(false);
     }
     
-    private void menuDuringSim() {
+    void menuDuringSim() {
         shapesMenu.setDisable(true);
         massMenu.setDisable(true);
         textureMenu.setDisable(true);
@@ -334,25 +337,11 @@ public class CreateNewDrumController {
     }
     
     @FXML
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void handleLoadSavedDrum(ActionEvent event) {
         try {
-            stage.close();
-            try {
-                simulation.physics.stopTimer();
-            } catch(NullPointerException e) {
-                
-            }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene2NewDream.fxml"));
-            CreateNewDrumController mainController = new CreateNewDrumController(stage);
-            loader.setController(mainController);
-            root = loader.load();
-            Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
-            stage.setScene(scene);
-            stage.setTitle("Drum Simulation.");
-            stage.sizeToScene();
-            stage.show();
-        } catch (IOException ex) {}
-        //TODO load saved drum
+            new DownloadSaveController(stage, this);
+        } catch(IOException e) {}
     }
 
     public void rectangleChosen(ActionEvent event) {
@@ -363,7 +352,7 @@ public class CreateNewDrumController {
         label2.setVisible(true);
         textF2.setEditable(true);
         textF2.setVisible(true);
-        //TODO
+        
         label3.setVisible(false);
         spinner.setVisible(false);
         if (spinner.getValue() != null) {

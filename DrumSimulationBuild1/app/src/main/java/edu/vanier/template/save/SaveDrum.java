@@ -346,4 +346,8 @@ public class SaveDrum {
         }
     }
     
+    public Formable getFormable() {
+        return formable;
+    }
+    
 }

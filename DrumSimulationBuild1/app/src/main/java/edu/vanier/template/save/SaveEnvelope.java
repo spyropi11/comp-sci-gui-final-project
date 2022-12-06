@@ -17,7 +17,7 @@ public class SaveEnvelope {
     /**
      * Creates a SaveEnvelope that encompasses all the necessary saving mechanisms.
      * @param folderPath The name of the folder the end user chooses to save.
-     *                   Remind the end user that all save folders appear in System.getProperty("user.home") + "\\Drum Sim save folders"
+     *                   TODO Remind the end user that all save folders appear in System.getProperty("user.home") + "\\Drum Sim save folders"
      */
     public SaveEnvelope(String folderPath) {
         saveFolder = new File(folderPath);

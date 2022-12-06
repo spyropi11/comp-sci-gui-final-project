@@ -235,6 +235,10 @@ public final class Physics {
         playingBack = false;
     }
     
+    public void endRecording() {
+        recording = false;
+    }
+    
     public void resetWaves() {
         //TODO
         for(Point point : drummer.mesh) {
@@ -286,6 +290,14 @@ public final class Physics {
     
     public double[] getBeta() {
         return beta;
+    }
+    
+    public boolean isPlayingBack() {
+        return playingBack;
+    }
+    
+    public void setSaveEnvelope(SaveEnvelope saveEnvelope) {
+        this.saveEnvelope = saveEnvelope;
     }
     
 }

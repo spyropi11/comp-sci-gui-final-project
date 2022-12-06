@@ -147,7 +147,7 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleLoadSavedController" text="Load Saved Drum" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLoadSavedDrum" text="Load Saved Drum" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCreateNewDrum" text="Create New Drum" />
                </items>
             </Menu>

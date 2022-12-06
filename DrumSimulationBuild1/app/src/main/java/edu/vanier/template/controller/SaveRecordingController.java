@@ -33,6 +33,7 @@ public class SaveRecordingController {
         loader.setController(this);
         BorderPane root = loader.load();
         stage.setScene(new Scene(root, root.getPrefWidth(), root.getPrefHeight()));
+        stage.setTitle(owner.getTitle());
         stage.show();
         
         double prevDeltaTime = CreateNewDrumController.deltaTimeValue;
@@ -44,7 +45,6 @@ public class SaveRecordingController {
                     String folderName = nameTxt.getText();
                     saver = new SaveEnvelope(folderName);
                     saver.create();
-                    controller.simulation.physics.startRecording();
                     cancelled = false;
                 }
             } catch(IOException e) {}
@@ -56,6 +56,8 @@ public class SaveRecordingController {
                 controller.btnStopRecord.setDisable(false);
                 controller.btnStartRecord.setDisable(true);
                 controller.currentSaveEnvelope = saver;
+                controller.simulation.getPhysics().setSaveEnvelope(saver);
+                controller.simulation.physics.startRecording();
             }
             CreateNewDrumController.deltaTimeValue = prevDeltaTime;
         });
