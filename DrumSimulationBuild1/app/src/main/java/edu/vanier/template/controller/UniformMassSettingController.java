@@ -57,7 +57,7 @@ public class UniformMassSettingController {
             try {
                 setMassOne(Double.valueOf(massOneText.getText()));
                 if(massOne <= 0) {
-                    throw new NumberFormatException("Mass must be positive.");
+                    throw new NumberFormatException("Please enter a positive mass.");
                 }
                 controller.setMassOneDC(getMassOne());
             } catch(NumberFormatException | NullPointerException e) {

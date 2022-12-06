@@ -61,10 +61,12 @@ public class GradientMassSettingController {
             try {
                 setMassOne(Double.valueOf(massOneText.getText()));
                 setMassTwo(Double.valueOf(massTwoText.getText()));
+                if(massOne <= 0 || massTwo <= 0) {
+                    throw new NumberFormatException("Please enter a positive mass.");
+                }
                 controller.setMassOneDC(getMassOne());
                 controller.setMassTwoDC(getMassTwo());
-                
-            }catch(Exception e) {
+            } catch(NumberFormatException | NullPointerException e) {
                 Alert massError = new Alert(Alert.AlertType.ERROR);
                 massError.setHeaderText("Incorrect input for mass");
                 massError.setContentText(e.getMessage());
