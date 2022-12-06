@@ -12,7 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,12 +27,19 @@ import javafx.stage.Stage;
  */
 public class UniformMassSettingController {
     
+    @FXML
+    Button confirmButton;
+            
+    @FXML
+    TextField massOneText;
+    
+    public double massOne = 1;
+    
     private final Stage owner;
     private final Stage stage;
     
     private final CreateNewDrumController controller;
     
-    //@SuppressWarnings("LeakingThisInConstructor")
     public UniformMassSettingController(Stage owner, CreateNewDrumController controller) throws IOException {
         this.owner = owner;
         this.controller = controller;
@@ -38,7 +49,7 @@ public class UniformMassSettingController {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/uniformMass.fxml"));
         loader.setController(this);
-        BorderPane root = loader.load();
+        AnchorPane root = loader.load();
         stage.setScene(new Scene(root, root.getPrefWidth(), root.getPrefHeight()));
         stage.setTitle(owner.getTitle());
         stage.show();
@@ -49,6 +60,35 @@ public class UniformMassSettingController {
         
         
         
+        
+        confirmButton.setOnAction((event) -> {
+            try {
+                setMassOne(Double.valueOf(massOneText.getText()));
+                controller.setMassOneDC(getMassOne());
+                
+            }catch(Exception e) {
+                Alert massError = new Alert(Alert.AlertType.ERROR);
+                massError.setHeaderText("Incorrect input for mass");
+                massError.setContentText(e.getMessage());
+                massError.setTitle(stage.getTitle());
+                massError.showAndWait();
+            }
+            stage.close();
+        });
+
+        
+        
     }
+
+    public double getMassOne() {
+        return this.massOne;
+    }
+
+    public void setMassOne(double massOne) {
+        this.massOne = massOne;
+    }
+
+    
+    
     
 }

@@ -64,10 +64,14 @@ public class CreateNewDrumController {
     public static double amplitudeValue;
     public static double deltaTimeValue;
     public static double densityValue;
-
-    public static final double[] defaultStops = {1};
+    
+    public static final double DEFAULTMASS = 1.0;
+    public static final double[] defaultStops = {DEFAULTMASS};
     public static Distribution distributionValue = new Distribution(Distribution.Surface.UNIFORM, defaultStops);
     public static Arrangement arrangementValue;
+    
+    public double massOneDC = 1.0;
+    public double massTwoDC = 1.0;
 
     Simulation simulation = new Simulation();
 
@@ -566,19 +570,19 @@ public class CreateNewDrumController {
 
     public void handleUniformMassDChosen(ActionEvent event) {
         try {
-            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
             this.UniformMassDChosen = true;
             this.HorizontalMassDChosen = false;
             this.VerticalMassDChosen = false;
             this.RadialMassDChosen = false;
         } catch (IOException ex) {
-            Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
 
     public void handleHorizontalMassDChosen(ActionEvent event) {
         try {
-            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
             this.UniformMassDChosen = false;
             this.HorizontalMassDChosen = true;
             this.VerticalMassDChosen = false;
@@ -590,25 +594,26 @@ public class CreateNewDrumController {
 
     public void handleVerticalMassDChosen(ActionEvent event) {
         try {
-            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            System.out.println("mass chosen");
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
             this.UniformMassDChosen = false;
             this.HorizontalMassDChosen = false;
             this.VerticalMassDChosen = true;
             this.RadialMassDChosen = false;
         } catch (IOException ex) {
-            Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
 
     public void handleRadialMassDChosen(ActionEvent event) {
         try {
-            UniformMassSettingController UC = new UniformMassSettingController(stage, this);
+            UniformMassSettingController UC = new UniformMassSettingController(stage,this);
             this.UniformMassDChosen = false;
             this.HorizontalMassDChosen = false;
             this.VerticalMassDChosen = false;
             this.RadialMassDChosen = true;
         } catch (IOException ex) {
-            Logger.getLogger(CreateNewDrumController.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
 
     }
@@ -678,7 +683,7 @@ public class CreateNewDrumController {
             }
 
             if (UniformMassDChosen) {
-                double[] stops = new double[]{1};
+                double[] stops = new double[]{massOneDC};
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
                 System.out.println("chosen");
             } else if (HorizontalMassDChosen) {
@@ -828,5 +833,24 @@ public class CreateNewDrumController {
         this.simulation = simulation;
         this.simulation.setController(this);
     }
+
+    public double getMassOneDC() {
+        return this.massOneDC;
+    }
+
+    public void setMassOneDC(double massOneDC) {
+        this.massOneDC = massOneDC;
+    }
+
+    public double getMassTwoDC() {
+        return this.massTwoDC;
+    }
+
+    public void setMassTwoDC(double massTwoDC) {
+        this.massTwoDC = massTwoDC;
+    }
+
+    
+    
 
 }
