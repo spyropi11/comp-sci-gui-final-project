@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enter mass :" wrappingWidth="175.21630859375" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+   </top>
+   <center>
+      <VBox prefHeight="182.0" prefWidth="382.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="massText" prefHeight="7.0" prefWidth="467.0">
+               <VBox.margin>
+                  <Insets top="60.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="btnConfirm" mnemonicParsing="false" text="Confirm">
+               <VBox.margin>
+                  <Insets bottom="30.0" left="150.0" top="30.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
