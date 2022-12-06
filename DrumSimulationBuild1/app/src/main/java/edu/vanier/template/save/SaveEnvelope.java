@@ -13,6 +13,7 @@ public class SaveEnvelope {
     private TimeTracker timeTracker;
     
     private final File saveFolder;
+    private static final String saveDirectory = System.getProperty("user.home") + "\\Drum Sim save folders";
     
     /**
      * Creates a SaveEnvelope that encompasses all the necessary saving mechanisms.
@@ -20,7 +21,7 @@ public class SaveEnvelope {
      *                   TODO Remind the end user that all save folders appear in System.getProperty("user.home") + "\\Drum Sim save folders"
      */
     public SaveEnvelope(String folderPath) {
-        saveFolder = new File(folderPath);
+        saveFolder = new File(folderPath + saveDirectory);
     }
     
     /**
@@ -58,10 +59,12 @@ public class SaveEnvelope {
      * @throws IOException 
      */
     public void create() throws IOException {
-        saveFolder.mkdir();
-        saveDrum = new SaveDrum(new File(saveFolder.getAbsolutePath() + "Save Drum.txt"));
-        savedSim = new SavedSim(new File(saveFolder.getAbsolutePath() + "Saved Sim.csv"));
-        timeTracker = new TimeTracker(new File(saveFolder.getAbsoluteFile() + "Time Tracker.txt"));
+        if(!saveFolder.mkdir()) {
+            throw new IOException("Save folder of the same name already exists.");
+        }
+        saveDrum = new SaveDrum(new File(saveFolder.getAbsolutePath() + "\\Save Drum.txt"));
+        savedSim = new SavedSim(new File(saveFolder.getAbsolutePath() + "\\Saved Sim.csv"));
+        timeTracker = new TimeTracker(new File(saveFolder.getAbsoluteFile() + "\\Time Tracker.txt"));
     }
     
     /**
@@ -78,7 +81,7 @@ public class SaveEnvelope {
     }
     
     public static void createDirectory() {
-        File dir = new File(System.getProperty("user.home") + "\\Drum Sim save folders");
+        File dir = new File(saveDirectory);
         dir.mkdir();
     }
     
