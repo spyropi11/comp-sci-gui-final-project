@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" prefHeight="759.0" prefWidth="1000.0" style="-fx-background-color: #f0dbed77;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" prefHeight="759.0" prefWidth="1000.0" style="-fx-background-color: #f0dbed77;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="767.0" prefWidth="147.0" style="-fx-background-color: #f0dbed77;" BorderPane.alignment="CENTER">
          <children>
@@ -247,4 +247,11 @@
          </menus>
       </MenuBar>
    </top>
+   <center>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Intro/XQC.png" />
+         </image>
+      </ImageView>
+   </center>
 </BorderPane>
