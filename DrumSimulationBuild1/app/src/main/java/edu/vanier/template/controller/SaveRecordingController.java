@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -59,7 +60,12 @@ public class SaveRecordingController {
                     controller.simulation.getPhysics().setSaveEnvelope(saver);
                     controller.simulation.physics.startRecording();
                 }
-            } catch(IOException e) {}
+            } catch(IOException e) {
+                Alert fileError = new Alert(Alert.AlertType.ERROR);
+                fileError.setHeaderText("Errot saving recording.");
+                fileError.setContentText(e.getMessage());
+                fileError.showAndWait();
+            }
             stage.close();
         });
         
