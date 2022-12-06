@@ -13,39 +13,39 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class SaveRecordingController {
-    
+
     @FXML
     TextField nameTxt;
-    
+
     @FXML
     Button saveBtn;
-    
+
     SaveEnvelope saver;
-    
+
     private final Stage stage;
-    
+
     private final CreateNewDrumController controller;
-    
+
     private final double prevDeltaTime;
-    
+
     @SuppressWarnings("LeakingThisInConstructor")
     public SaveRecordingController(Stage owner, CreateNewDrumController controller) throws IOException {
         this.controller = controller;
         stage = new Stage();
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SaveRecording.fxml"));
         loader.setController(this);
         BorderPane root = loader.load();
         stage.setScene(new Scene(root, root.getPrefWidth(), root.getPrefHeight()));
         stage.setTitle(owner.getTitle());
         stage.show();
-        
+
         prevDeltaTime = CreateNewDrumController.deltaTimeValue;
         CreateNewDrumController.deltaTimeValue = 0;
     }
-    
+
     @FXML
     public void initialize() {
         saveBtn.setOnAction((event) -> {
@@ -62,17 +62,17 @@ public class SaveRecordingController {
                 }
             } catch(IOException e) {
                 Alert fileError = new Alert(Alert.AlertType.ERROR);
-                fileError.setHeaderText("Errot saving recording.");
+                fileError.setHeaderText("Error saving recording.");
                 fileError.setContentText(e.getMessage());
                 fileError.setTitle(stage.getTitle());
                 fileError.showAndWait();
             }
             stage.close();
         });
-        
+
         stage.setOnCloseRequest((event) -> {
             CreateNewDrumController.deltaTimeValue = prevDeltaTime;
         });
     }
-    
+
 }
