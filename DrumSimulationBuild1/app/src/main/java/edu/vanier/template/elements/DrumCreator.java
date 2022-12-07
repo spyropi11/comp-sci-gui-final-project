@@ -1,14 +1,15 @@
 package edu.vanier.template.elements;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DrumCreator {
     
-    Set<Spring> drum = new HashSet<>();
-    Set<Point> mesh = new HashSet<>();
+    List<Spring> drum = new ArrayList<>();
+    List<Point> mesh = new ArrayList<>();
     
     /**
      * Adds spring to drum
@@ -95,19 +96,19 @@ public class DrumCreator {
     
     //Getters and Setters
     
-    public Set<Spring> getDrum() {
+    public List<Spring> getDrum() {
         return drum;
     }
     
-    public void setDrum(Set<Spring> drum) {
+    public void setDrum(ArrayList<Spring> drum) {
         this.drum = drum;
     }
     
-    public Set<Point> getMesh() {
+    public List<Point> getMesh() {
         return mesh;
     }
     
-    public void setMesh(Set<Point> mesh) {
+    public void setMesh(ArrayList<Point> mesh) {
         this.mesh = mesh;
     }
     

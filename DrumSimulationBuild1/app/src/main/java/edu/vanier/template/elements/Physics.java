@@ -72,19 +72,21 @@ public final class Physics {
                 }
                 point.updatePosition();
                 if(recording) {
-                    Instance instance = new Instance(CreateNewDrumController.deltaTimeValue, point.getI(), point.getJ(),
-                            point.getPosition(), point.getVelocity(), point.getVPrevious());
+                    Instance instance = new Instance(CreateNewDrumController.deltaTimeValue, point.getPosition(), point.getVelocity());
                     saveEnvelope.getTracker().record(instance);
                 }
             }
         } else {
             try {
-                Instance instance = saveEnvelope.getTracker().next();
-                CreateNewDrumController.deltaTimeValue = instance.getDeltaTime();
-                Point point = points[instance.getI()][instance.getJ()];
-                point.setPosition(instance.getPosition());
-                point.setVelocity(instance.getVelocity());
-                point.setVPrevious(instance.getVPrevious());
+                for(Point point : drummer.mesh) {
+                    if(terminated) {
+                        break;
+                    }
+                    Instance instance = saveEnvelope.getTracker().next();
+                    CreateNewDrumController.deltaTimeValue = instance.getDeltaTime();
+                    point.setPosition(instance.getPosition());
+                    point.setVelocity(instance.getVelocity());
+                }
             } catch(IndexOutOfBoundsException e) {
                 endPlayBack();
             }

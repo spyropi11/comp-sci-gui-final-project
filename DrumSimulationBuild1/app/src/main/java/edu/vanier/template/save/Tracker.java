@@ -45,26 +45,6 @@ public class Tracker {
                     }
                 }
                 cont = true;
-                String i = "";
-                while(cont) {
-                    char next = (char)fr.read();
-                    if(next == ' ') {
-                        cont = false;
-                    } else {
-                        i += next;
-                    }
-                }
-                cont = true;
-                String j = "";
-                while(cont) {
-                    char next = (char)fr.read();
-                    if(next == ' ') {
-                        cont = false;
-                    } else {
-                        j += next;
-                    }
-                }
-                cont = true;
                 String position = "";
                 while(cont) {
                     char next = (char)fr.read();
@@ -84,18 +64,7 @@ public class Tracker {
                         velocity += next;
                     }
                 }
-                cont = true;
-                String vPrevious = "";
-                while(cont) {
-                    char next = (char)fr.read();
-                    if(next == ' ') {
-                        cont = false;
-                    } else {
-                        vPrevious += next;
-                    }
-                }
-                Instance instance = new Instance(Double.parseDouble(deltaTime), Integer.parseInt(i), Integer.parseInt(j),
-                        Double.parseDouble(position), Double.parseDouble(velocity), Double.parseDouble(vPrevious));
+                Instance instance = new Instance(Double.parseDouble(deltaTime), Double.parseDouble(position), Double.parseDouble(velocity));
                 instances.add(instance);
             }
         }
