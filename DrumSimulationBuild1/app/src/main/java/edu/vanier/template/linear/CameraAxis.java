@@ -50,7 +50,7 @@ public class CameraAxis extends Line {
      * Displays a line on screen representing an axis in the current camera's frame of reference.
      * @param root The line is displayed on this pane.
      */
-    public void display(Pane root) {
+    public void displayOn(Pane root) {
         int component = -1;
         double direction = 0;
         switch(axis) {

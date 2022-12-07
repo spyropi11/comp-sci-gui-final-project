@@ -9,19 +9,17 @@ import java.io.IOException;
 public class SaveEnvelope {
 
     private SaveDrum saveDrum;
-    private SavedSim savedSim;
-    private TimeTracker timeTracker;
-
+    private Tracker tracker;
+    
     private final File saveFolder;
     private static final String saveDirectory = System.getProperty("user.home") + "\\Drum Sim save folders\\";
 
     /**
      * Creates a SaveEnvelope that encompasses all the necessary saving mechanisms.
      * @param folderPath The name of the folder the end user chooses to save.
-     *                   TODO Remind the end user that all save folders appear in System.getProperty("user.home") + "\\Drum Sim save folders"
      */
     public SaveEnvelope(String folderPath) {
-        saveFolder = new File(saveDirectory + folderPath);
+        saveFolder = new File(saveDirectory + folderPath + "\\");
     }
 
     /**
@@ -32,30 +30,22 @@ public class SaveEnvelope {
         if(!saveFolder.exists()) {
             throw new IOException("Please verify that the save folder exists in " + saveDirectory);
         }
-        
         for(File file : saveFolder.listFiles()) {
             if(file.getName().equals("Save Drum.txt")) {
                 saveDrum = new SaveDrum(file);
             }
-            if(file.getName().equals("Saved Sim.csv")) {
-                savedSim = new SavedSim(file);
-            }
-            if(file.getName().equals("Time Tracker.txt")) {
-                timeTracker = new TimeTracker(file);
+            if(file.getName().equals("Tracker.txt")) {
+                tracker = new Tracker(file);
             }
         }
         if(saveDrum == null) {
-            throw new IOException("Save Drum does not exist.");
+            throw new IOException(saveDirectory + "Save Drum.txt does not exist.");
         }
-        if(savedSim == null) {
-            throw new IOException("Saved Sim does not exist.");
-        }
-        if(timeTracker == null) {
-            throw new IOException("Time Tracker does not exist.");
+        if(tracker == null) {
+            throw new IOException(saveDirectory + "Tracker.txt does not exist.");
         }
         saveDrum.download();
-        savedSim.download();
-        timeTracker.download();
+        tracker.download();
     }
 
     /**
@@ -66,22 +56,21 @@ public class SaveEnvelope {
         if(!saveFolder.mkdir()) {
             throw new IOException("Save folder of the same name already exists.");
         }
-        saveDrum = new SaveDrum(new File(saveFolder.getAbsolutePath() + "\\Save Drum.txt"));
-        savedSim = new SavedSim(new File(saveFolder.getAbsolutePath() + "\\Saved Sim.csv"));
-        timeTracker = new TimeTracker(new File(saveFolder.getAbsoluteFile() + "\\Time Tracker.txt"));
+        saveDrum = new SaveDrum(new File(saveFolder.getAbsolutePath() + "Save Drum.txt"));
+        tracker = new Tracker(new File(saveFolder.getAbsoluteFile() + "Tracker.txt"));
     }
 
     /**
      * Uploads the necessary saving mechanisms for this SaveEnvelope.
      * @param formable The current formable.
      * @throws IOException
-     * @throws CsvDataTypeMismatchException
-     * @throws CsvRequiredFieldEmptyException
      */
-    public void upload(Formable formable) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    public void upload(Formable formable) throws IOException {
         saveDrum.upload(formable);
-        savedSim.upload();
-        timeTracker.upload();
+        tracker.upload();
+        for(File file : saveFolder.listFiles()) {
+            file.setWritable(false);
+        }
     }
 
     public static void createDirectory() {
@@ -92,13 +81,9 @@ public class SaveEnvelope {
     public SaveDrum getSaveDrum() {
         return saveDrum;
     }
-
-    public SavedSim getSavedSim() {
-        return savedSim;
-    }
-
-    public TimeTracker getTimeTracker() {
-        return timeTracker;
+    
+    public Tracker getTracker() {
+        return tracker;
     }
 
 }

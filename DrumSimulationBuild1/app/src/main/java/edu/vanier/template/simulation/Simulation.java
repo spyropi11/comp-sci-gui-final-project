@@ -196,10 +196,6 @@ public final class Simulation {
     }
 
     public void translate(KeyCode keyCode){
-        
-        if(physics.isPlayingBack()) {
-            return;
-        }
 
         switch(keyCode){
 

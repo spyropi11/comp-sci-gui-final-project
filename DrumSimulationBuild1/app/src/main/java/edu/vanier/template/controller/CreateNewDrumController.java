@@ -201,7 +201,7 @@ public class CreateNewDrumController {
                 currentSaveEnvelope.upload(simulation.formable);
                 btnStopRecord.setDisable(true);
                 btnStartRecord.setDisable(false);
-            } catch(IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {}
+            } catch(IOException e) {}
         });
         stage.setOnCloseRequest((event) -> {
             if(!Objects.isNull(currentSaveEnvelope)) {

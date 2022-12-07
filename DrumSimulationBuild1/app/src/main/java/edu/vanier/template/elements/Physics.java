@@ -3,6 +3,7 @@ package edu.vanier.template.elements;
 import edu.vanier.template.controller.CreateNewDrumController;
 import static edu.vanier.template.elements.Point.norm;
 import edu.vanier.template.linear.Matrix;
+import edu.vanier.template.save.Instance;
 import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
@@ -26,8 +27,7 @@ public final class Physics {
     double amplitude;
     double spread;
     
-    private int counter = 0;
-    private boolean playingBack = false;
+    private static boolean playingBack = false;
     private boolean recording = false;
     private SaveEnvelope saveEnvelope;
     
@@ -44,46 +44,56 @@ public final class Physics {
     
     public void setPoints(Point[][] points) {
         this.points = points;
-        for(Point[] pointList : this.points) {
-            for(Point point : pointList) {
-                point.setPhysics(this);
-            }
-        }
     }
     
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            if(!Objects.isNull(saveEnvelope) && playingBack) {
-                saveEnvelope.getSavedSim().play(counter, Physics.this);
-                CreateNewDrumController.deltaTimeValue = saveEnvelope.getTimeTracker().updateTime(counter);
-            }
             update(alpha, beta, n);
-            counter++;
-            if(recording) {
-                saveEnvelope.getTimeTracker().trackTime(counter, CreateNewDrumController.deltaTimeValue);
-            }
         }
     };
     
     public void update(double[] oa, double[] ob, double[] on) {
         
-        simulation.getCamX().display(simulation.getRoot());
-        simulation.getCamY().display(simulation.getRoot());
-        simulation.getCamZup().display(simulation.getRoot());
-        simulation.getCamZdown().display(simulation.getRoot());
+        simulation.getCamX().displayOn(simulation.getRoot());
+        simulation.getCamY().displayOn(simulation.getRoot());
+        simulation.getCamZup().displayOn(simulation.getRoot());
+        simulation.getCamZdown().displayOn(simulation.getRoot());
         
-        for(Point point : drummer.mesh) {
-            if(terminated) {
-                break;
+        if(!playingBack) {
+            for(Point point : drummer.mesh) {
+                if(terminated) {
+                    break;
+                }
+                point.updateVelocity();
             }
-            point.updateVelocity();
+            for(Point point : drummer.mesh) {
+                if(terminated) {
+                    break;
+                }
+                point.updatePosition();
+                if(recording) {
+                    Instance instance = new Instance(CreateNewDrumController.deltaTimeValue, point.getI(), point.getJ(),
+                            point.getPosition(), point.getVelocity(), point.getVPrevious());
+                    saveEnvelope.getTracker().record(instance);
+                }
+            }
+        } else {
+            try {
+                Instance instance = saveEnvelope.getTracker().next();
+                CreateNewDrumController.deltaTimeValue = instance.getDeltaTime();
+                Point point = points[instance.getI()][instance.getJ()];
+                point.setPosition(instance.getPosition());
+                point.setVelocity(instance.getVelocity());
+                point.setVPrevious(instance.getVPrevious());
+            } catch(IndexOutOfBoundsException e) {
+                endPlayBack();
+            }
         }
         for(Point point : drummer.mesh) {
             if(terminated) {
                 break;
             }
-            point.updatePosition();
             point.updateColour();
             project(point, oa, ob, on);
         }
@@ -128,9 +138,6 @@ public final class Physics {
                                     }
                                 }
                             }
-                        }
-                        if(recording) {
-                            saveEnvelope.getSavedSim().record(counter, iclicked, jclicked, spread, amplitude);
                         }
                     });
                 }
@@ -224,20 +231,16 @@ public final class Physics {
     
     private void startPlayBack() {
         playingBack = true;
-        saveEnvelope.getSavedSim().startCount(counter);
-        saveEnvelope.getTimeTracker().startCount(counter);
         controller.slider3.setDisable(true);
+    }
+    
+    private void endPlayBack() {
+        playingBack = false;
+        controller.slider3.setDisable(false);
     }
     
     public void startRecording() {
         recording = true;
-        saveEnvelope.getSavedSim().startCount(counter);
-        saveEnvelope.getTimeTracker().startCount(counter);
-    }
-    
-    public void endPlayBack() {
-        playingBack = false;
-        controller.slider3.setDisable(false);
     }
     
     public void endRecording() {

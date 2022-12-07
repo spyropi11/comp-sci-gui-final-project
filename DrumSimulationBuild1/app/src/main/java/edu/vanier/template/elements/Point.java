@@ -36,8 +36,6 @@ public class Point extends Sphere {
     
     static final double COLOUR_NORMALIZATION = 0.2;
     
-    private Physics physics;
-    
     /**
      * 
      * @param d Radius
@@ -132,14 +130,6 @@ public class Point extends Sphere {
         this.position = position;
     }
 
-    public double getvPrevious() {
-        return vPrevious;
-    }
-
-    public void setvPrevious(double vPrevious) {
-        this.vPrevious = vPrevious;
-    }
-
     public double getVelocity() {
         return velocity;
     }
@@ -148,6 +138,14 @@ public class Point extends Sphere {
         this.velocity = velocity;
     }
 
+    public double getVPrevious() {
+        return vPrevious;
+    }
+    
+    public void setVPrevious(double vPrevious) {
+        this.vPrevious = vPrevious;
+    }
+    
     public double getMass() {
         return mass;
     }
@@ -180,8 +178,12 @@ public class Point extends Sphere {
         this.dampeningConstant = dampeningConstant;
     }
     
-    public void setPhysics(Physics physics) {
-        this.physics = physics;
+    public int getI() {
+        return i;
+    }
+    
+    public int getJ() {
+        return j;
     }
     
 }
