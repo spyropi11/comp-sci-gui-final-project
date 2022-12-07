@@ -4,7 +4,7 @@ import edu.vanier.template.controller.CreateNewDrumController;
 import static edu.vanier.template.elements.Point.norm;
 import edu.vanier.template.linear.Matrix;
 import edu.vanier.template.save.Instance;
-import edu.vanier.template.save.SaveEnvelope;
+import edu.vanier.template.save.SaveHandler;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import javafx.animation.AnimationTimer;
@@ -28,7 +28,7 @@ public final class Physics {
     
     private static boolean playingBack = false;
     private boolean recording = false;
-    private SaveEnvelope saveEnvelope;
+    private SaveHandler saveHandler;
     
     final Simulation simulation;
     
@@ -73,7 +73,7 @@ public final class Physics {
                 point.updatePosition();
                 if(recording) {
                     Instance instance = new Instance(CreateNewDrumController.deltaTimeValue, point.getPosition(), point.getVelocity());
-                    saveEnvelope.getTracker().record(instance);
+                    saveHandler.getTracker().record(instance);
                 }
             }
         } else {
@@ -82,7 +82,7 @@ public final class Physics {
                     if(terminated) {
                         break;
                     }
-                    Instance instance = saveEnvelope.getTracker().next();
+                    Instance instance = saveHandler.getTracker().next();
                     CreateNewDrumController.deltaTimeValue = instance.getDeltaTime();
                     point.setPosition(instance.getPosition());
                     point.setVelocity(instance.getVelocity());
@@ -145,8 +145,8 @@ public final class Physics {
             }
     }
     
-    public void loadSaveEnvelope(SaveEnvelope downloaded) throws IOException {
-        saveEnvelope = downloaded;
+    public void loadSaveEnvelope(SaveHandler downloaded) throws IOException {
+        saveHandler = downloaded;
         startPlayBack();
     }
     
@@ -309,8 +309,8 @@ public final class Physics {
         return playingBack;
     }
     
-    public void setSaveEnvelope(SaveEnvelope saveEnvelope) {
-        this.saveEnvelope = saveEnvelope;
+    public void setSaveHandler(SaveHandler saveHandler) {
+        this.saveHandler = saveHandler;
     }
     
 }

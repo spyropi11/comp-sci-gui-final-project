@@ -3,7 +3,7 @@ package edu.vanier.template.controller;
 import edu.vanier.template.drumshapes.*;
 import edu.vanier.template.drumshapes.Formable.*;
 import static edu.vanier.template.drumshapes.Formable.Arrangement.*;
-import edu.vanier.template.save.SaveEnvelope;
+import edu.vanier.template.save.SaveHandler;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
 import java.util.Objects;
@@ -177,7 +177,7 @@ public class CreateNewDrumController {
     //Slider number value 3
     double numSlider3;
 
-    SaveEnvelope currentSaveEnvelope;
+    SaveHandler currentSaveHandler;
 
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void initialize() {
@@ -196,13 +196,13 @@ public class CreateNewDrumController {
         btnStopRecord.setOnAction((event) -> {
             try {
                 simulation.physics.endRecording();
-                currentSaveEnvelope.upload(simulation.formable);
+                currentSaveHandler.upload();
                 btnStopRecord.setDisable(true);
                 btnStartRecord.setDisable(false);
             } catch(IOException e) {}
         });
         stage.setOnCloseRequest((event) -> {
-            if(!Objects.isNull(currentSaveEnvelope)) {
+            if(!Objects.isNull(currentSaveHandler)) {
                 btnStopRecord.fire();
             }
         });

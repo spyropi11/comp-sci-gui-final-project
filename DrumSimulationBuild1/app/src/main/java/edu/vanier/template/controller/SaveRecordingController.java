@@ -1,6 +1,6 @@
 package edu.vanier.template.controller;
 
-import edu.vanier.template.save.SaveEnvelope;
+import edu.vanier.template.save.SaveHandler;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +20,7 @@ public class SaveRecordingController {
     @FXML
     Button saveBtn;
 
-    SaveEnvelope saver;
+    SaveHandler saver;
 
     private final Stage stage;
 
@@ -49,23 +49,15 @@ public class SaveRecordingController {
     @FXML
     public void initialize() {
         saveBtn.setOnAction((event) -> {
-            try {
-                if(!nameTxt.getText().isEmpty()) {
-                    String folderName = nameTxt.getText();
-                    saver = new SaveEnvelope(folderName);
-                    saver.create();
-                    controller.btnStopRecord.setDisable(false);
-                    controller.btnStartRecord.setDisable(true);
-                    controller.currentSaveEnvelope = saver;
-                    controller.simulation.getPhysics().setSaveEnvelope(saver);
-                    controller.simulation.physics.startRecording();
-                }
-            } catch(IOException e) {
-                Alert fileError = new Alert(Alert.AlertType.ERROR);
-                fileError.setHeaderText("Error saving recording.");
-                fileError.setContentText(e.getMessage());
-                fileError.setTitle(stage.getTitle());
-                fileError.showAndWait();
+            if(!nameTxt.getText().isEmpty()) {
+                String folderName = nameTxt.getText();
+                saver = new SaveHandler(folderName);
+                saver.createTracker(controller.simulation.formable);
+                controller.btnStopRecord.setDisable(false);
+                controller.btnStartRecord.setDisable(true);
+                controller.currentSaveHandler = saver;
+                controller.simulation.getPhysics().setSaveHandler(saver);
+                controller.simulation.physics.startRecording();
             }
             CreateNewDrumController.deltaTimeValue = prevDeltaTime;
             stage.close();

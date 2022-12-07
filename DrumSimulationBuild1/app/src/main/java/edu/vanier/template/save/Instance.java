@@ -1,6 +1,8 @@
 package edu.vanier.template.save;
 
-public class Instance {
+import java.io.Serializable;
+
+public class Instance implements Serializable {
     
     private final double deltaTime;
     

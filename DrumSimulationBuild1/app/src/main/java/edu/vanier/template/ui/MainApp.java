@@ -1,7 +1,7 @@
 package edu.vanier.template.ui;
 
 import edu.vanier.template.controller.MainAppController;
-import edu.vanier.template.save.SaveEnvelope;
+import edu.vanier.template.save.SaveHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -56,7 +56,7 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        SaveEnvelope.createDirectory();
+        SaveHandler.createDirectory();
         launch(args);
     }
 

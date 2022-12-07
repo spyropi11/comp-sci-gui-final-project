@@ -1,8 +1,10 @@
 package edu.vanier.template.controller;
 
-import edu.vanier.template.save.SaveEnvelope;
+import edu.vanier.template.save.SaveHandler;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,7 +24,7 @@ public class DownloadSaveController {
     @FXML
     Button loadBtn;
     
-    SaveEnvelope downloader;
+    SaveHandler downloader;
     
     private final Stage owner;
     private final Stage stage;
@@ -51,7 +53,7 @@ public class DownloadSaveController {
             try {
                 if(!nameTxt.getText().isEmpty()) {
                     String folderName = nameTxt.getText();
-                    downloader = new SaveEnvelope(folderName);
+                    downloader = new SaveHandler(folderName);
                     downloader.download();
                     try {
                         owner.close();
@@ -71,7 +73,7 @@ public class DownloadSaveController {
                         loadStage.sizeToScene();
                         loadStage.show();
 
-                        mainController.setSimulation(new Simulation(downloader.getSaveDrum().getFormable()));
+                        mainController.setSimulation(new Simulation(downloader.getTracker().getFormable()));
 
                         loadStage.addEventHandler(KeyEvent.KEY_PRESSED, (value) -> {
                             mainController.simulation.translate(value.getCode());
@@ -87,7 +89,7 @@ public class DownloadSaveController {
                     } catch (IOException ex) {}
                     stage.close();
                 }
-            } catch(IOException e) {
+            } catch(IOException | ClassNotFoundException e) {
                 Alert fileError = new Alert(Alert.AlertType.ERROR);
                 fileError.setHeaderText("Folder does not exist or is corrupted.");
                 fileError.setContentText(e.getMessage());

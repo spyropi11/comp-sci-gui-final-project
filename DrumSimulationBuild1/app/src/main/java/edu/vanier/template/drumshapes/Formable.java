@@ -3,13 +3,14 @@ package edu.vanier.template.drumshapes;
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.elements.Spring;
 import edu.vanier.template.simulation.Simulation;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * The Formable abstract class represents an arbitrary shape the drum can take on, along with properties and methods used to
  * generate the points and springs in the drum, in a particular arrangement.
  */
-public abstract class Formable {
+public abstract class Formable implements Serializable {
     /**
      * Constant denoting the maximum number of points possible that the application can handle.
      */
