@@ -253,7 +253,7 @@ public class CreateNewDrumController {
         resetCamera.setOnAction((event) -> {
             simulation.physics.resetCamera();
         });
-
+        
         displayCamera.setSelected(true);
         displayCamera.selectedProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -264,6 +264,7 @@ public class CreateNewDrumController {
                 simulation.getCameraCentre().setVisible(newValue);
             } catch(NullPointerException e) {}
         });
+        displayCamera.setDisable(true);
 
     }
 
@@ -681,7 +682,6 @@ public class CreateNewDrumController {
             if (UniformMassDChosen) {
                 double[] stops = new double[]{massOneDC};
                 distributionValue = new Distribution(Distribution.Surface.UNIFORM, stops);
-                System.out.println("chosen");
             } else if (HorizontalMassDChosen) {
                 double[] stops = new double[]{massOneDC, massTwoDC};
                 distributionValue = new Distribution(Distribution.Surface.HORIZONTAL_GRADIENT, stops);
@@ -855,6 +855,10 @@ public class CreateNewDrumController {
 
     public void setMassTwoDC(double massTwoDC) {
         this.massTwoDC = massTwoDC;
+    }
+    
+    public void enableCameraControl() {
+        displayCamera.setDisable(false);
     }
 
 }

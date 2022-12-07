@@ -234,6 +234,7 @@ public final class Simulation {
     
     public void setController(CreateNewDrumController controller) {
         physics.setController(controller);
+        controller.enableCameraControl();
     }
 
     public Pane getRoot() {
