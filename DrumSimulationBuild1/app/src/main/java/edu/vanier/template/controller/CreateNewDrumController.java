@@ -133,7 +133,7 @@ public class CreateNewDrumController {
     Slider slider2;
 
     @FXML
-    public Slider slider3;
+    Slider slider3;
 
     //Bottom button
     @FXML
@@ -816,9 +816,6 @@ public class CreateNewDrumController {
                         " N/M : rotates about normal axis" + "\n" +
                         "J : zoom in" +"\n" + "K : zooms out");
                 camInfo.showAndWait();
-
-
-
     }
 
     public Simulation getSimulation() {
@@ -828,6 +825,20 @@ public class CreateNewDrumController {
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
         this.simulation.setController(this);
+    }
+    
+    public void setDisableDuringPlayBack(boolean disable) {
+        slider3.setDisable(disable);
+        slider2.setDisable(disable);
+        slider.setDisable(disable);
+        resetWave.setDisable(disable);
+        recordingMenu.setDisable(disable);
+        spreadLabel.setDisable(disable);
+        powerLabel.setDisable(disable);
+        timeLabel.setDisable(disable);
+        numLabel.setDisable(disable);
+        numLabel2.setDisable(disable);
+        numLabel3.setDisable(disable);
     }
 
     public double getMassOneDC() {
@@ -845,8 +856,5 @@ public class CreateNewDrumController {
     public void setMassTwoDC(double massTwoDC) {
         this.massTwoDC = massTwoDC;
     }
-
-    
-    
 
 }

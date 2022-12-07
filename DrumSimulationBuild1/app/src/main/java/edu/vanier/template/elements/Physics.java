@@ -7,7 +7,6 @@ import edu.vanier.template.save.Instance;
 import edu.vanier.template.save.SaveEnvelope;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
-import java.util.Objects;
 import javafx.animation.AnimationTimer;
 
 public final class Physics {
@@ -231,12 +230,12 @@ public final class Physics {
     
     private void startPlayBack() {
         playingBack = true;
-        controller.slider3.setDisable(true);
+        controller.setDisableDuringPlayBack(true);
     }
     
     private void endPlayBack() {
         playingBack = false;
-        controller.slider3.setDisable(false);
+        controller.setDisableDuringPlayBack(false);
     }
     
     public void startRecording() {
