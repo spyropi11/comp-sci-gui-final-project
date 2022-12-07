@@ -17,7 +17,7 @@ public class SaveEnvelope {
      * @param folderPath The name of the folder the end user chooses to save.
      */
     public SaveEnvelope(String folderPath) {
-        saveFolder = new File(saveDirectory + folderPath + "\\");
+        saveFolder = new File(saveDirectory + folderPath);
     }
 
     /**
@@ -54,8 +54,8 @@ public class SaveEnvelope {
         if(!saveFolder.mkdir()) {
             throw new IOException("Save folder of the same name already exists.");
         }
-        saveDrum = new SaveDrum(new File(saveFolder.getAbsolutePath() + "Save Drum.txt"));
-        tracker = new Tracker(new File(saveFolder.getAbsoluteFile() + "Tracker.txt"));
+        saveDrum = new SaveDrum(new File(saveFolder.getAbsolutePath() + "\\Save Drum.txt"));
+        tracker = new Tracker(new File(saveFolder.getAbsoluteFile() + "\\Tracker.txt"));
     }
 
     /**
