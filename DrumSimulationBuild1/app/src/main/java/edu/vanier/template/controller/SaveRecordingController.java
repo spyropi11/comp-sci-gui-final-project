@@ -67,6 +67,7 @@ public class SaveRecordingController {
                 fileError.setTitle(stage.getTitle());
                 fileError.showAndWait();
             }
+            CreateNewDrumController.deltaTimeValue = prevDeltaTime;
             stage.close();
         });
 

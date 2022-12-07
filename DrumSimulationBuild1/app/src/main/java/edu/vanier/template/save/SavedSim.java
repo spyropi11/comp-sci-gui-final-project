@@ -12,11 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SavedSim {
     
-    private List<PulseInstance> sim;
+    private List<PulseInstance> sim = new ArrayList<>();
     
     private final File csvFile;
     
