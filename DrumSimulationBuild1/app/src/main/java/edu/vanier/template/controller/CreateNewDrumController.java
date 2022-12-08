@@ -199,7 +199,7 @@ public class CreateNewDrumController {
                 currentSaveHandler.upload();
                 btnStopRecord.setDisable(true);
                 btnStartRecord.setDisable(false);
-            } catch(IOException e) {}
+            } catch(IOException e) {e.printStackTrace();}
         });
         stage.setOnCloseRequest((event) -> {
             if(!Objects.isNull(currentSaveHandler)) {

@@ -1,12 +1,13 @@
 package edu.vanier.template.elements;
 
 import edu.vanier.template.controller.CreateNewDrumController;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
-public class Point extends Sphere {
+public class Point extends Sphere implements Serializable {
     
     double position = 0;
     double vPrevious = 0;

@@ -1,6 +1,6 @@
 package edu.vanier.template.save;
 
-import edu.vanier.template.drumshapes.Formable;
+import edu.vanier.template.drumshapes.ConstructFormable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,8 +20,8 @@ public class SaveHandler {
         fileName = saveDirectory + pathName + ".ser";
     }
     
-    public void createTracker(Formable formable) {
-        tracker = new Tracker(formable);
+    public void createTracker(ConstructFormable form) {
+        tracker = new Tracker(form);
     }
     
     public void upload() throws IOException {

@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -52,7 +51,7 @@ public class SaveRecordingController {
             if(!nameTxt.getText().isEmpty()) {
                 String folderName = nameTxt.getText();
                 saver = new SaveHandler(folderName);
-                saver.createTracker(controller.simulation.formable);
+                saver.createTracker(controller.simulation.formable.deconstruct());
                 controller.btnStopRecord.setDisable(false);
                 controller.btnStartRecord.setDisable(true);
                 controller.currentSaveHandler = saver;

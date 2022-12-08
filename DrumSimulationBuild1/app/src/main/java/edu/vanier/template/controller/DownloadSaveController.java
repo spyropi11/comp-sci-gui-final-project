@@ -1,10 +1,9 @@
 package edu.vanier.template.controller;
 
+import edu.vanier.template.drumshapes.Formable;
 import edu.vanier.template.save.SaveHandler;
 import edu.vanier.template.simulation.Simulation;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,7 +72,7 @@ public class DownloadSaveController {
                         loadStage.sizeToScene();
                         loadStage.show();
 
-                        mainController.setSimulation(new Simulation(downloader.getTracker().getFormable()));
+                        mainController.setSimulation(new Simulation(Formable.construct(downloader.getTracker().getForm())));
 
                         loadStage.addEventHandler(KeyEvent.KEY_PRESSED, (value) -> {
                             mainController.simulation.translate(value.getCode());

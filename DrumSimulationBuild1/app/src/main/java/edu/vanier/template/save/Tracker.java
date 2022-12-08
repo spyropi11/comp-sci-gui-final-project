@@ -1,20 +1,19 @@
 package edu.vanier.template.save;
 
-import edu.vanier.template.drumshapes.Formable;
+import edu.vanier.template.drumshapes.ConstructFormable;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Tracker implements Serializable {
     
-    private final List<Instance> instances = new ArrayList<>();
+    private final ArrayList<Instance> instances = new ArrayList<>();
     
-    private final Formable formable;
+    private final ConstructFormable form;
     
     private int index = 0;
     
-    public Tracker(Formable formable) {
-        this.formable = formable;
+    public Tracker(ConstructFormable form) {
+        this.form = form;
     }
     
     public void record(Instance instance) {
@@ -27,8 +26,8 @@ public class Tracker implements Serializable {
         return instance;
     }
     
-    public Formable getFormable() {
-        return formable;
+    public ConstructFormable getForm() {
+        return form;
     }
     
 }

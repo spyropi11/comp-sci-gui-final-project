@@ -1,9 +1,10 @@
 package edu.vanier.template.elements;
 
+import java.io.Serializable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-public class Spring extends Line {
+public class Spring extends Line implements Serializable {
     
     /**
      * Pair of points that the spring connects.

@@ -1,16 +1,16 @@
 package edu.vanier.template.drumshapes;
 
+import edu.vanier.template.drumshapes.ConstructFormable.Shape;
 import edu.vanier.template.elements.Point;
 import edu.vanier.template.elements.Spring;
 import edu.vanier.template.simulation.Simulation;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * The Formable abstract class represents an arbitrary shape the drum can take on, along with properties and methods used to
  * generate the points and springs in the drum, in a particular arrangement.
  */
-public abstract class Formable implements Serializable {
+public abstract class Formable {
     /**
      * Constant denoting the maximum number of points possible that the application can handle.
      */
@@ -48,6 +48,65 @@ public abstract class Formable implements Serializable {
     public Formable() {
         double[] defaultMass = {Simulation.NATURAL_MASS};
         mass = new Distribution(Distribution.Surface.UNIFORM, defaultMass);
+    }
+    /**
+     * Forms a shape from a save file.
+     * @param form
+     * @return A formable
+     */
+    public static Formable construct(ConstructFormable form) {
+        Formable construct = null;
+        switch(form.shape) {
+            case SQUARE -> {
+                construct = new SquareDrum(form.parameters[0]);
+            }
+            case RECTANGLE -> {
+                construct = new RectangleDrum(form.parameters[0], form.parameters[1]);
+            }
+            case PARALLELOGRAM -> {
+                construct = new ParallelogramDrum(form.parameters[0], form.parameters[1], form.parameters[2]);
+            }
+            case TRAPEZOID -> {
+                construct = new TrapezoidDrum(form.parameters[0], form.parameters[1], form.parameters[2], form.parameters[3]);
+            }
+        }
+        construct.setArrangement(form.texture);
+        construct.setMassDistribution(new Distribution(form.mass, form.stops));
+        return construct;
+    }
+    /**
+     * Creates a ConstructFormable equivalent of this instance.
+     * @return 
+     */
+    public ConstructFormable deconstruct() {
+        Shape shape;
+        int[] parameters;
+        if(this instanceof SquareDrum square) {
+            shape = Shape.SQUARE;
+            parameters = new int[1];
+            parameters[0] = square.getSide();
+        } else if(this instanceof RectangleDrum rectangle) {
+            shape = Shape.RECTANGLE;
+            parameters = new int[2];
+            parameters[0] = rectangle.getWidth();
+            parameters[1] = rectangle.getHeight();
+        } else if(this instanceof ParallelogramDrum parallelogram) {
+            shape = Shape.PARALLELOGRAM;
+            parameters = new int[3];
+            parameters[0] = parallelogram.getWidthSide();
+            parameters[1] = parallelogram.getHeightSide();
+            parameters[2] = parallelogram.getAngle();
+        } else if(this instanceof TrapezoidDrum trapezoid) {
+            shape = Shape.TRAPEZOID;
+            parameters = new int[4];
+            parameters[0] = trapezoid.getBaseOne();
+            parameters[1] = trapezoid.getBaseTwo();
+            parameters[2] = trapezoid.getHeightSide();
+            parameters[3] = trapezoid.getAngle();
+        } else {
+            return null;
+        }
+        return new ConstructFormable(shape, parameters, texture, mass.getSurface(), mass.getStops());
     }
     /**
      * Forms a mesh of points.
