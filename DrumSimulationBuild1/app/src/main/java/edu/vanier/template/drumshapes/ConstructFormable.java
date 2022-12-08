@@ -2,8 +2,9 @@ package edu.vanier.template.drumshapes;
 
 import edu.vanier.template.drumshapes.Distribution.Surface;
 import edu.vanier.template.drumshapes.Formable.Arrangement;
+import java.io.Serializable;
 
-public class ConstructFormable {
+public class ConstructFormable implements Serializable {
     
     enum Shape {
         SQUARE,

@@ -80,6 +80,7 @@ public class DownloadSaveController {
 
                         mainController.simulation.setCloseSim(stage);
                         rootLoadDrum.setCenter(mainController.simulation.getRoot());
+                        rootLoadDrum.getCenter().toBack();
                         mainController.btnConfirm.setVisible(false);
                         mainController.simulation.physics.startTimer();
                         mainController.disableSettings();
