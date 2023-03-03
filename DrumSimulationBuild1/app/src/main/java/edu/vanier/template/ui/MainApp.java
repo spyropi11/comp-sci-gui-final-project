@@ -40,7 +40,7 @@ public class MainApp extends Application {
         loader.setController(mainController);
 
         //load the FXML
-        Pane root = loader.load();
+        Pane root = loader.load();  
 
 
         Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());

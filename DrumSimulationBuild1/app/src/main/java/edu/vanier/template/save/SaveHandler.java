@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class SaveHandler {
     
-    private static final String saveDirectory = System.getProperty("user.home") + "\\Drum Sim\\";
+    private static final String saveDirectory = System.getProperty("D") + "\\Drum Sim\\";
     
     private Tracker tracker;
     
